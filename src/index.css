@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: "Helvetica", sans-serif;
+}
+
+.logo {
+  font-family: "HelveticaforTarget-Bold", sans-serif;
+}
+
+.helvetica {
+  font-family: "Helvetica Neue", sans-serif;
+  font-weight: 400 !important;
+}
+.space_grotesk {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 900 !important;
+}
+.space_grotesk2 {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+/* .active {
+  color: #3b82f6 !important;
+  background-color: #f7f8fa;
+  border-radius: 5px;
+}
+
+.dark .active {
+  color: #60a5fa !important;
+  background-color: #1f2937;
+  border-radius: 5px;
+}
+
+.active span,
+.active svg {
+  color: #2563eb !important;
+  font-weight: bold;
+} */
+
+@layer utilities {
+  .active {
+    @apply dark:bg-[#1f2937] bg-[#f7f8fa] rounded;
+  }
+
+  .active span,
+  .active svg {
+    @apply !text-[#3b82f6] dark:!text-white;
+  }
+  .dark {
+    @apply bg-[#161616];
+  }
+  ._shadow {
+    box-shadow:
+      0 4px 8px 0 rgba(0, 0, 0, 0.2),
+      0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  }
+  .expand {
+    @apply w-[13%];
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
