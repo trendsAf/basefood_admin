@@ -1,13 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { DynamicType, CountryState } from "../../../@types/fileTypes";
+import { DynamicType } from "../../../@types/fileTypes";
 import API from "../../api";
 import Cookies from "js-cookie";
 
-export const PostCountry = createAsyncThunk(
-  "country",
-  async (countryData: any, { rejectWithValue }) => {
+// const token = import.meta.env.ACCESS_TOKEN;
+export const fetchCountries = createAsyncThunk(
+  "fetchCountries",
+  async (_, { rejectWithValue }) => {
     try {
-      const { data } = await API.post("/admin/countries", countryData, {
+      const { data } = await API.get("/admin/countries", {
         headers: { "X-CSRF-TOKEN": `${Cookies.get("access_token")}` },
         withCredentials: true,
       });
@@ -21,23 +22,23 @@ export const PostCountry = createAsyncThunk(
   },
 );
 
-const initialState: CountryState = {
+const initialState = {
   isLoading: false,
   error: null,
   data: [],
 };
 
 const countrySlice = createSlice({
-  name: "country",
+  name: "fetchCountries",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(PostCountry.pending, (state) => {
+    builder.addCase(fetchCountries.pending, (state) => {
       state.isLoading = true;
       state.error = null;
     });
     builder.addCase(
-      PostCountry.fulfilled,
+      fetchCountries.fulfilled,
       (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.error = null;
@@ -45,7 +46,7 @@ const countrySlice = createSlice({
       },
     );
     builder.addCase(
-      PostCountry.rejected,
+      fetchCountries.rejected,
       (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.error = action.payload?.message || "Failed to submit country";
