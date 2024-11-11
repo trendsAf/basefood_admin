@@ -1,31 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { LuView } from "react-icons/lu";
+import { FaEye } from "react-icons/fa";
+
 import { MdAddCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { countries } from "../../utils/countriesData";
-import TablePagination from "@mui/material/TablePagination";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getCrops } from "../../redux/reducers/crops/cropSlice";
 import AddCrop from "./crude/AddCrop";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import TablePagination from "../common/TablePagination";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 const CropsComponent = () => {
+  const dispatch = useAppDispatch();
+  const { cropList, isLoading } = useAppSelector((state) => state.getCrops);
   const [addCropModal, setAddCropModal] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(8);
+  const theme = useSelector((state: RootState) => state.theme.value);
+
+  // Dispatch the action to fetch crops
+  useEffect(() => {
+    dispatch(getCrops());
+  }, [dispatch]);
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  const handleItemsPerPageChange = (
+    event: React.ChangeEvent<{ value: unknown }>,
   ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    setRowsPerPage(event.target.value as number);
+    setPage(1);
   };
 
+  // Toggle crop modal
   const toggleCropModal = () => {
     setAddCropModal(!addCropModal);
   };
+
+  // Pagination slicing
+  const indexOfLastCrop = page * rowsPerPage;
+  const indexOfFirstCrop = indexOfLastCrop - rowsPerPage;
+  const currentCrops = cropList?.slice(indexOfFirstCrop, indexOfLastCrop);
 
   return (
     <div className="dark:text-white p-6">
@@ -40,6 +60,7 @@ const CropsComponent = () => {
             Add crop
           </button>
         </div>
+
         <div className="overflow-x-auto">
           <table className="w-full text-left bg-white dark:bg-[#252525] border-separate border-spacing-0 p-2">
             <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
@@ -51,54 +72,86 @@ const CropsComponent = () => {
               </tr>
             </thead>
             <tbody className="text-gray-700 dark:text-gray-300">
-              {countries
-                ?.sort((a, b) => a.name.localeCompare(b.name))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((crop: any, idx) => (
-                  <tr key={idx} className="">
-                    <td
-                      className={`px-5  ${idx === countries.length - 1 ? "border-none" : "border-b dark:border-white/20"}`}
-                    >
-                      {idx + 1 + page * rowsPerPage}
-                    </td>
-                    <td
-                      className={`px-3  ${idx === countries.length - 1 ? "border-none" : "border-b dark:border-white/20"}`}
-                    >
-                      {crop.name}
-                    </td>
-                    <td
-                      className={`px-5 py-2  ${idx === countries.length - 1 ? "border-none" : "border-b dark:border-white/20"}`}
-                    >
-                      category
-                    </td>
-                    <td
-                      className={`px-2 py-4 space-x-2 flex items-center gap-1 ${idx === countries.length - 1 ? "border-none" : "border-b dark:border-white/20 "}`}
-                    >
-                      <Link to={`/crop/${crop.id}`} state={crop}>
-                        <button className="px-1 py-1 text-blue-500 rounded text-2xl">
-                          <LuView />
-                        </button>
-                      </Link>
-                      <div>
-                        <BsThreeDotsVertical className="text-2xl cursor-pointer" />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+              {isLoading
+                ? // Skeleton loading rows while data is being fetched
+                  [...Array(rowsPerPage)].map((_, idx) => (
+                    <tr key={idx}>
+                      <td className="p-3">
+                        <Skeleton height={20} width={50} />
+                      </td>
+                      <td className="p-3">
+                        <Skeleton height={20} width={150} />
+                      </td>
+                      <td className="p-3">
+                        <Skeleton height={20} width={100} />
+                      </td>
+                      <td className="p-3">
+                        <Skeleton circle width={30} height={30} />
+                      </td>
+                    </tr>
+                  ))
+                : currentCrops?.map((crop: any, idx) => (
+                    <tr key={crop.id}>
+                      <td
+                        className={`px-5 ${
+                          idx === currentCrops.length - 1
+                            ? "border-none"
+                            : "border-b dark:border-white/20"
+                        }`}
+                      >
+                        {idx + 1 + page * rowsPerPage}
+                      </td>
+                      <td
+                        className={`px-3 ${
+                          idx === currentCrops.length - 1
+                            ? "border-none"
+                            : "border-b dark:border-white/20"
+                        }`}
+                      >
+                        {crop.name}
+                      </td>
+                      <td
+                        className={`px-5 py-2 ${
+                          idx === currentCrops.length - 1
+                            ? "border-none"
+                            : "border-b dark:border-white/20"
+                        }`}
+                      >
+                        {crop.category || "Unknown Category"}
+                      </td>
+                      <td
+                        className={`px-2 py-4 space-x-2 flex items-center gap-1 ${
+                          idx === currentCrops.length - 1
+                            ? "border-none"
+                            : "border-b dark:border-white/20"
+                        }`}
+                      >
+                        <Link to={`/crop/${crop.id}`} state={crop}>
+                          <button className="px-1 py-1 text-blue-500 rounded text-2xl">
+                            <FaEye />
+                          </button>
+                        </Link>
+                        <div>
+                          <BsThreeDotsVertical className="text-2xl cursor-pointer" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>
+
         {/* Pagination */}
         <TablePagination
-          component="div"
-          count={countries.length}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          rowsPerPageOptions={[5, 8, 10, 15]}
+          totalItems={cropList.length}
+          currentPage={page}
+          handlePageChange={handleChangePage}
+          itemsPerPage={rowsPerPage}
+          handleItemsPerPageChange={handleItemsPerPageChange}
+          isDarkMode={theme === "dark"}
         />
       </div>
+
       {addCropModal && <AddCrop toggleAddCrop={toggleCropModal} />}
     </div>
   );

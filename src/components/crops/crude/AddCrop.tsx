@@ -1,24 +1,55 @@
 /* eslint-disable no-console */
+// import { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { crop } from "../../../redux/reducers/crops/cropSlice";
+import { getCropsCategory } from "../../../redux/reducers/crops/cropCategorySlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface CropFormValues {
   crop_name?: string;
+  crop_category?: string;
   toggleAddCrop: () => void;
 }
 
 const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
+  const dispatch = useAppDispatch();
+  const { error, cropCategoryList } = useAppSelector(
+    (state) => state.cropCategory,
+  );
+
+  const { isLoading } = useAppSelector((state) => state.crops);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<CropFormValues>();
 
-  const onSubmit = (data: CropFormValues) => {
-    console.log(data);
+  // Fetch crop categories when component mounts
+  useEffect(() => {
+    dispatch(getCropsCategory());
+  }, [dispatch]);
+
+  const onSubmit = async (data: CropFormValues) => {
+    console.log("Submitting data:", data);
+    try {
+      const result = await dispatch(crop(data)).unwrap();
+      toast.success(result.message);
+      reset();
+      toggleAddCrop();
+    } catch (error: any) {
+      console.error("Failed to add crop:", error);
+      toast.error(error.message);
+    }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div
         className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
         onClick={() => toggleAddCrop()}
@@ -38,7 +69,7 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
               </label>
               <input
                 {...register("crop_name", {
-                  required: "crop name is required",
+                  required: "Crop name is required",
                 })}
                 type="text"
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
@@ -50,14 +81,46 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                 </p>
               )}
             </div>
+
+            <div>
+              <label className="block text-gray-700 dark:text-gray-300 mb-1">
+                Crop category
+              </label>
+              <select
+                {...register("crop_category", {
+                  required: "Crop category is required",
+                })}
+                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
+              >
+                <option value="">Select crop category</option>
+                {cropCategoryList.map((category: any) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+              {errors.crop_category && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.crop_category.message}
+                </p>
+              )}
+            </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className={`w-full py-2 rounded-lg font-semibold text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
+              isLoading
+                ? "bg-blue-300 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600 focus:ring-blue-500"
+            }`}
+            disabled={isLoading}
           >
-            Add crop
+            {isLoading ? "Adding crop..." : "Add crop"}
           </button>
+          {error && (
+            <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+          )}
         </form>
       </div>
     </div>

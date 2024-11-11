@@ -16,4 +16,11 @@ export type CropState = {
   isLoading: boolean;
   error: string | null;
   data: string[];
+  cropList: string[];
+};
+export type CropCategoryState = {
+  isLoading: boolean;
+  error: string | null;
+  data: string[];
+  cropCategoryList: string[];
 };
