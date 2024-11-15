@@ -1,12 +1,18 @@
 /* eslint-disable no-console */
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { PostCountry } from "../../../redux/reducers/countries/countrySlice";
+import {
+  FetchCountries,
+  PostCountry,
+} from "../../../redux/reducers/countries/countrySlice";
 import { IoMdClose } from "react-icons/io";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { countries } from "../../../utils/countriesData";
 
 interface CountryFormValues {
   country_name?: string;
-  country_code?: number;
+  country_code?: string;
   toggleAddCountry: () => void;
 }
 
@@ -14,31 +20,43 @@ const AddCountry = ({ toggleAddCountry }: CountryFormValues) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<CountryFormValues>();
 
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.countries);
+  const { isLoading, error } = useAppSelector((state) => state.countries || []);
 
   const onSubmit = async (data: CountryFormValues) => {
-    console.log(data);
     try {
-      await dispatch(PostCountry(data)).unwrap();
+      const res = await dispatch(PostCountry(data)).unwrap();
+      toast.success(res.message);
+      dispatch(FetchCountries());
       toggleAddCountry();
-    } catch (err) {
-      console.error("Failed to add country:", err);
+    } catch (error: any) {
+      console.error("Failed to add country:", error);
+      toast.error(error.message);
+    }
+  };
+
+  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCountry = e.target.value;
+    const country = countries.find((c) => c.name === selectedCountry);
+    if (country) {
+      setValue("country_code", country.code);
     }
   };
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <ToastContainer position="top-right" autoClose={3000} />
       <div
         className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
         onClick={() => toggleAddCountry()}
       ></div>
       <div className="bg-white dark:bg-gray-800 rounded-lg p-8 w-full max-w-4xl mx-4 shadow-lg">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold   text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Add country
           </h2>
           <button
@@ -48,23 +66,26 @@ const AddCountry = ({ toggleAddCountry }: CountryFormValues) => {
             <IoMdClose />
           </button>
         </div>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 "
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="space-y-4">
             <div>
               <label className="block text-gray-700 dark:text-gray-300 mb-1">
                 Country name
               </label>
-              <input
+              <select
                 {...register("country_name", {
                   required: "Country name is required",
                 })}
-                type="text"
+                onChange={handleCountryChange}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                placeholder="Enter country name"
-              />
+              >
+                <option value="">Select a country</option>
+                {countries.map((country) => (
+                  <option key={country.code} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
               {errors.country_name && (
                 <p className="text-red-500 text-sm mt-1">
                   {errors.country_name.message}
@@ -79,14 +100,14 @@ const AddCountry = ({ toggleAddCountry }: CountryFormValues) => {
               <input
                 {...register("country_code", {
                   required: "Country code is required",
-                  // valueAsNumber: false,
                 })}
                 type="text"
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
                 placeholder="Enter country code"
+                disabled
               />
               {errors.country_code && (
-                <p className="text-red text-sm">
+                <p className="text-red-500 text-sm mt-1">
                   {errors.country_code.message}
                 </p>
               )}
