@@ -1,10 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "./reducers/themeReducer";
 import countriesSlice from "./reducers/countries/countrySlice";
-import cropsReducer from "./reducers/crops/cropSlice";
 import cropCategoryReducer from "./reducers/crops/cropCategorySlice";
-import getCropReducer from "./reducers/crops/getCropSlice";
-import addCropReducer from "./reducers/crops/addCropSlice";
+import cropsReducer from "./reducers/crops/cropSlice";
+import themeReducer from "./reducers/themeReducer";
 
 export const store = configureStore({
   reducer: {
@@ -12,8 +10,6 @@ export const store = configureStore({
     countries: countriesSlice,
     crops: cropsReducer,
     cropCategory: cropCategoryReducer,
-    getCrops: getCropReducer,
-    addCrops: addCropReducer,
   },
 });
 

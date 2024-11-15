@@ -1,8 +1,12 @@
 /* eslint-disable no-console */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CropState, DynamicType } from "../../../@types/fileTypes";
-import API from "../../api";
 import Cookies from "js-cookie";
+import {
+  AddCropState,
+  DynamicType,
+  GetCropState,
+} from "../../../@types/fileTypes";
+import API from "../../api";
 
 // Thunk to add a new crop
 export const crop = createAsyncThunk(
@@ -44,9 +48,10 @@ export const getCrops = createAsyncThunk(
   },
 );
 
-const initialState: CropState = {
+const initialState: AddCropState | GetCropState = {
   isLoading: false,
   error: null,
+  getError: null,
   data: [],
   cropList: [],
 };
@@ -72,16 +77,16 @@ const cropSlice = createSlice({
       })
       .addCase(getCrops.pending, (state) => {
         state.isLoading = true;
-        state.error = null;
+        state.getError = null;
       })
       .addCase(getCrops.fulfilled, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
-        state.error = null;
+        state.getError = null;
         state.cropList = action.payload;
       })
       .addCase(getCrops.rejected, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
-        state.error = action.payload?.message || "Failed to fetch crops";
+        state.getError = action.payload?.message || "Failed to fetch crops";
       });
   },
 });
