@@ -9,6 +9,7 @@ import { FetchCountries } from "../../redux/reducers/countries/countrySlice";
 import { RootState } from "../../redux/store";
 import TablePagination from "../common/TablePagination";
 import AddCountry from "./crude/AddCountries";
+import Skeleton from "react-loading-skeleton";
 
 const ProducerProductComponent = () => {
   const [addCountryModal, setAddCountryModal] = useState(false);
@@ -63,9 +64,7 @@ const ProducerProductComponent = () => {
           </button>
         </div>
 
-        {isLoading ? (
-          <p>Loading countries...</p>
-        ) : error ? (
+        {error ? (
           <p>Error loading countries: {error}</p>
         ) : (
           <div className="overflow-x-auto">
@@ -77,34 +76,49 @@ const ProducerProductComponent = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-700 dark:text-gray-300">
-                {currentCountry?.map((country: any, idx) => (
-                  <tr
-                    key={idx}
-                    className="!border-b my-1 gap-1 !dark:border-gray-600"
-                  >
-                    <td className="px-3 border-b-[0.5px] dark:border-gray-600">
-                      <div className="flex items-center gap-3">
-                        <img
-                          src={`https://flagsapi.com/${country.code}/flat/64.png`}
-                          alt={`${country.name} flag`}
-                          className="w-10"
-                        />
-                        {country.name}
-                      </div>
-                    </td>
-                    <td className="px-2 py-2 gap-1 border-b-[0.5px] dark:border-gray-600">
-                      <div className="flex items-center space-x-3">
-                        <button
-                          className="text-blue-600 hover:text-blue-800"
-                          title="View Details"
-                        >
-                          <FaEye className="text-lg" />
-                        </button>
-                        <BsThreeDotsVertical className="text-lg cursor-pointer" />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                {isLoading ? (
+                  [...Array(rowsPerPage)].map((_, idx) => (
+                    <tr key={idx}>
+                      <td className="p-3">
+                        <Skeleton height={20} width={400} />
+                      </td>
+                      <td className="p-3">
+                        <Skeleton circle width={30} height={30} />
+                      </td>
+                    </tr>
+                  ))
+                ) : currentCountry.length === 0 ? (
+                  <div className="text-lg mt-8 px-2">No country available</div>
+                ) : (
+                  currentCountry?.map((country: any, idx) => (
+                    <tr
+                      key={idx}
+                      className="!border-b my-1 gap-1 !dark:border-gray-600"
+                    >
+                      <td className="px-3 border-b-[0.5px] dark:border-gray-600">
+                        <div className="flex items-center gap-3">
+                          <img
+                            src={`https://flagsapi.com/${country.code}/flat/64.png`}
+                            alt={`${country.name} flag`}
+                            className="w-10"
+                          />
+                          {country.name}
+                        </div>
+                      </td>
+                      <td className="px-2 py-2 gap-1 border-b-[0.5px] dark:border-gray-600">
+                        <div className="flex items-center space-x-3">
+                          <button
+                            className="text-blue-600 hover:text-blue-800"
+                            title="View Details"
+                          >
+                            <FaEye className="text-lg" />
+                          </button>
+                          <BsThreeDotsVertical className="text-lg cursor-pointer" />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

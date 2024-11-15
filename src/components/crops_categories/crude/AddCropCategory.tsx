@@ -2,6 +2,7 @@
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { cropCategory } from "../../../redux/reducers/crops/cropCategorySlice";
+import { FetchCountries } from "../../../redux/reducers/countries/countrySlice";
 
 interface CropCategoryFormValues {
   crop_category_name?: string;
@@ -18,15 +19,14 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
     formState: { errors },
   } = useForm<CropCategoryFormValues>();
 
-  const onSubmit = (data: CropCategoryFormValues) => {
-    dispatch(cropCategory(data))
-      .unwrap()
-      .then(() => {
-        toggleAddCropCategory();
-      })
-      .catch((error) => {
-        console.error("Failed to add crop:", error);
-      });
+  const onSubmit = async (data: CropCategoryFormValues) => {
+    try {
+      await dispatch(cropCategory(data)).unwrap();
+      toggleAddCropCategory();
+      dispatch(FetchCountries());
+    } catch (error) {
+      console.error("Failed to add crop:", error);
+    }
   };
 
   return (

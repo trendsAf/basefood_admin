@@ -29,7 +29,6 @@ export const getCropsCategory = createAsyncThunk(
       const { data } = await API.get("/general_routes/cropcategories", {
         headers: {
           "X-CSRF-TOKEN": `${Cookies.get("access_token")}`,
-          // Accept: "application/json",
         },
         withCredentials: true,
       });

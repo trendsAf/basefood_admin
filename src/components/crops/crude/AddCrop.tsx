@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface CropFormValues {
   crop_name?: string;
-  crop_category?: string;
+  crop_category_id?: string;
   toggleAddCrop: () => void;
 }
 
@@ -87,7 +87,7 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                 Crop category
               </label>
               <select
-                {...register("crop_category", {
+                {...register("crop_category_id", {
                   required: "Crop category is required",
                 })}
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
@@ -99,9 +99,9 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                   </option>
                 ))}
               </select>
-              {errors.crop_category && (
+              {errors.crop_category_id && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.crop_category.message}
+                  {errors.crop_category_id.message}
                 </p>
               )}
             </div>
