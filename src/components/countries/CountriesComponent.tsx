@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
@@ -24,16 +23,21 @@ const ProducerProductComponent = () => {
     error,
   } = useAppSelector((state) => state.countries);
 
+  // Fetch countries when the component mounts
   useEffect(() => {
     dispatch(FetchCountries());
   }, [dispatch]);
 
-  console.log(countries, "Coutrrrrrrr");
+  // Debugging logs
+  // useEffect(() => {
+  //   console.log("Countries state updated:", countries);
+  // }, [countries]);
+
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleItemsPerPageChangeTransfers = (
+  const handleItemsPerPageChange = (
     event: React.ChangeEvent<{ value: unknown }>,
   ) => {
     setRowsPerPage(event.target.value as number);
@@ -44,6 +48,7 @@ const ProducerProductComponent = () => {
     setAddCountryModal(!addCountryModal);
   };
 
+  // Calculate current countries for the current page
   const indexOfLastCountry = page * rowsPerPage;
   const indexOfFirstCountry = indexOfLastCountry - rowsPerPage;
   const currentCountry = Array.isArray(countries)
@@ -64,8 +69,12 @@ const ProducerProductComponent = () => {
           </button>
         </div>
 
+        {/* checking error regarding APIs  */}
         {error ? (
-          <p>Error loading countries: {error}</p>
+          <p>
+            Error loading countries:
+            {typeof error === "string" ? error : "An unknown error occurred"}
+          </p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-separate border-spacing-0 p-2">
@@ -76,6 +85,7 @@ const ProducerProductComponent = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-700 dark:text-gray-300">
+                {/* Loading Skeleton */}
                 {isLoading ? (
                   [...Array(rowsPerPage)].map((_, idx) => (
                     <tr key={idx}>
@@ -88,9 +98,15 @@ const ProducerProductComponent = () => {
                     </tr>
                   ))
                 ) : currentCountry.length === 0 ? (
-                  <div className="text-lg mt-8 px-2">No country available</div>
+                  // Country Validation
+                  <tr>
+                    <td colSpan={2} className="text-center text-lg mt-8 px-2">
+                      No countries available
+                    </td>
+                  </tr>
                 ) : (
-                  currentCountry?.map((country: any, idx) => (
+                  // Getting all countries
+                  currentCountry.map((country: any, idx) => (
                     <tr
                       key={idx}
                       className="!border-b my-1 gap-1 !dark:border-gray-600"
@@ -124,16 +140,24 @@ const ProducerProductComponent = () => {
           </div>
         )}
 
+        {/* Pagination */}
         <TablePagination
           isDarkMode={theme === "dark"}
-          totalItems={countries.length}
+          totalItems={Array.isArray(countries) ? countries.length : 0}
           currentPage={page}
           handlePageChange={handleChangePage}
           itemsPerPage={rowsPerPage}
-          handleItemsPerPageChange={handleItemsPerPageChangeTransfers}
+          handleItemsPerPageChange={handleItemsPerPageChange}
         />
       </div>
-      {addCountryModal && <AddCountry toggleAddCountry={toggleCountryModal} />}
+
+      {/* Render form to add country */}
+      {addCountryModal && (
+        <AddCountry
+          toggleAddCountry={toggleCountryModal}
+          isInDarkMode={theme === "dark"}
+        />
+      )}
     </div>
   );
 };

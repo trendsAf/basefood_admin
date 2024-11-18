@@ -1,9 +1,23 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { CropCategoryState, DynamicType } from "../../../@types/fileTypes";
+import { DynamicType } from "../../../@types/fileTypes"; // Import DynamicType if needed
 import API from "../../api";
 
-// Thunk to add a new crop
+// Define the type for each crop category
+export interface CropCategory {
+  id: number;
+  name: string;
+}
+
+// Define the state structure for crop categories
+export interface CropCategoryState {
+  isLoading: boolean;
+  error: string | null;
+  data: any[]; // You can modify this to a more specific type if necessary
+  cropCategoryList: CropCategory[]; // Ensure this is typed as an array of CropCategory objects
+}
+
+// Thunk to add a new crop category
 export const cropCategory = createAsyncThunk(
   "cropCategory",
   async (cropData: any, { rejectWithValue }) => {
@@ -22,6 +36,7 @@ export const cropCategory = createAsyncThunk(
   },
 );
 
+// Thunk to get all crop categories
 export const getCropsCategory = createAsyncThunk(
   "crop/getCropsCategory",
   async (_, { rejectWithValue }) => {
@@ -32,7 +47,7 @@ export const getCropsCategory = createAsyncThunk(
         },
         withCredentials: true,
       });
-      return data;
+      return data as CropCategory[]; // Ensure the returned data is typed as CropCategory[]
     } catch (error) {
       return rejectWithValue(
         (error as DynamicType)?.response?.data ||
@@ -69,13 +84,14 @@ const cropCategorySlice = createSlice({
         state.error =
           action.payload?.message || "Failed to submit crop category";
       })
+
       .addCase(getCropsCategory.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(
         getCropsCategory.fulfilled,
-        (state, action: PayloadAction<any>) => {
+        (state, action: PayloadAction<CropCategory[]>) => {
           state.isLoading = false;
           state.error = null;
           state.cropCategoryList = action.payload;

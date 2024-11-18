@@ -1,5 +1,12 @@
-/* eslint-disable no-console */
 import { useForm } from "react-hook-form";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  TextField,
+} from "@mui/material";
 
 interface RegionFormValues {
   variety_name?: string;
@@ -15,6 +22,7 @@ const AddVariety = ({ toggleAddVariety }: RegionFormValues) => {
   } = useForm<RegionFormValues>();
 
   const onSubmit = (data: RegionFormValues) => {
+    // eslint-disable-next-line no-console
     console.log(data);
   };
 
@@ -33,48 +41,47 @@ const AddVariety = ({ toggleAddVariety }: RegionFormValues) => {
           className="flex flex-col gap-6 p-8"
         >
           <div className="space-y-4">
+            {/* Crop Dropdown (MUI Select) */}
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Crop
-              </label>
-              <select
-                {...register("crop_id", {
-                  required: "crop id is required",
-                })}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#252525] dark:text-white"
+              <FormControl
+                fullWidth
+                error={!!errors.crop_id}
+                variant="outlined"
               >
-                <option value="">Select a crop</option>
-                {[{ name: "maize", id: 1 }].map((crop) => (
-                  <option key={crop.id} value={crop.name}>
-                    {crop.name}
-                  </option>
-                ))}
-              </select>
-              {errors.crop_id && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.crop_id.message}
-                </p>
-              )}
+                <InputLabel>Select a crop</InputLabel>
+                <Select
+                  {...register("crop_id", { required: "Crop is required" })}
+                  label="Select a crop"
+                  className="dark:bg-[#252525] dark:text-white"
+                >
+                  <MenuItem value="">
+                    <em>Select a crop</em>
+                  </MenuItem>
+                  {[{ name: "maize", id: 1 }].map((crop) => (
+                    <MenuItem key={crop.id} value={crop.id}>
+                      {crop.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.crop_id && (
+                  <FormHelperText>{errors.crop_id.message}</FormHelperText>
+                )}
+              </FormControl>
             </div>
 
-            {/* Country Region Input */}
+            {/* Variety Name Input (MUI TextField) */}
             <div className="w-full">
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Variety name
-              </label>
-              <input
+              <TextField
                 {...register("variety_name", {
-                  required: "variety name required",
+                  required: "Variety name is required",
                 })}
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#252525] dark:text-white"
-                placeholder="Enter crop variety"
+                label="Variety name"
+                variant="outlined"
+                fullWidth
+                error={!!errors.variety_name}
+                helperText={errors.variety_name?.message}
+                className="dark:bg-[#252525] dark:text-white"
               />
-              {errors.variety_name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.variety_name.message}
-                </p>
-              )}
             </div>
           </div>
 

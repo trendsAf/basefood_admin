@@ -23,18 +23,23 @@ const CropsComponent = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const theme = useSelector((state: RootState) => state.theme.value);
 
-  // Fetch crops and crop categories
   useEffect(() => {
     dispatch(getCrops());
     dispatch(getCropsCategory());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (cropCategoryList.length > 0 && selectedCategory === null) {
+      setSelectedCategory(cropCategoryList[0].id);
+    }
+  }, [cropCategoryList, selectedCategory]);
 
   const handleCategoryChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     const categoryId = event.target.value ? parseInt(event.target.value) : null;
     setSelectedCategory(categoryId);
-    setPage(0); // Reset pagination when changing category
+    setPage(0);
   };
 
   const handleChangePage = (_: unknown, newPage: number) => {
@@ -123,7 +128,7 @@ const CropsComponent = () => {
                     <td className="px-2 py-4 space-x-2 flex items-center gap-1">
                       <Link to={`/crop/${crop.id}`} state={crop}>
                         <button className="px-1 py-1 text-blue-500 rounded text-2xl">
-                          <FaEye />
+                          <FaEye className="text-lg" />
                         </button>
                       </Link>
                       <div>
@@ -137,14 +142,16 @@ const CropsComponent = () => {
           </table>
         </div>
 
-        <TablePagination
-          isDarkMode={theme === "dark"}
-          totalItems={filteredCrops.length}
-          currentPage={page}
-          handlePageChange={handleChangePage}
-          itemsPerPage={rowsPerPage}
-          handleItemsPerPageChange={handleItemsPerPageChange}
-        />
+        {filteredCrops.length > 0 && (
+          <TablePagination
+            isDarkMode={theme === "dark"}
+            totalItems={filteredCrops.length}
+            currentPage={page}
+            handlePageChange={handleChangePage}
+            itemsPerPage={rowsPerPage}
+            handleItemsPerPageChange={handleItemsPerPageChange}
+          />
+        )}
       </div>
 
       {addCropModal && <AddCrop toggleAddCrop={toggleCropModal} />}

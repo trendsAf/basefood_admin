@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
+import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { cropCategory } from "../../../redux/reducers/crops/cropCategorySlice";
 import { FetchCountries } from "../../../redux/reducers/countries/countrySlice";
+import { cropCategory } from "../../../redux/reducers/crops/cropCategorySlice";
 
 interface CropCategoryFormValues {
   crop_category_name?: string;
@@ -35,9 +36,9 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
         className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
         onClick={() => toggleAddCropCategory()}
       ></div>
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-4xl mx-4 shadow-lg">
+      <div className="bg-white dark:bg-[#252525] rounded-lg p-6 w-full max-w-4xl mx-4 shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
-          Add category
+          Add Category
         </h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -45,22 +46,17 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
         >
           <div className="space-y-4">
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Category name
-              </label>
-              <input
+              <TextField
                 {...register("crop_category_name", {
                   required: "Crop category is required",
                 })}
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                placeholder="Enter crop category"
+                label="Category Name"
+                variant="outlined"
+                fullWidth
+                error={!!errors.crop_category_name}
+                helperText={errors.crop_category_name?.message}
+                className="dark:bg-[#252525] dark:text-white"
               />
-              {errors.crop_category_name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.crop_category_name.message}
-                </p>
-              )}
             </div>
           </div>
 
@@ -74,8 +70,8 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
 
           <button
             type="submit"
+            disabled={isLoading}
             className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-            disabled={isLoading} // Disable the button when loading
           >
             Add category
           </button>
