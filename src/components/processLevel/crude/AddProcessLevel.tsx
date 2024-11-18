@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 interface CropCategoryFormValues {
@@ -25,68 +26,56 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
         className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
         onClick={() => toggleAddProcessLevel()}
       ></div>
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-4xl mx-4 shadow-lg">
+      <div className="bg-white dark:bg-[#252525] rounded-lg p-6 w-full max-w-4xl mx-4 shadow-lg">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
-          Add process
+          Add Process
         </h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-6 p-8"
         >
           <div className="space-y-4">
+            {/* Crop id Input (MUI TextField) */}
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Crop id
-              </label>
-              <input
-                {...register("crop_id", {
-                  required: "crop id is required",
-                })}
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                placeholder="Enter crop id"
+              <TextField
+                {...register("crop_id", { required: "Crop ID is required" })}
+                label="Crop ID"
+                variant="outlined"
+                fullWidth
+                error={!!errors.crop_id}
+                helperText={errors.crop_id?.message}
+                className="dark:bg-[#252525] dark:text-white"
               />
-              {errors.crop_id && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.crop_id.message}
-                </p>
-              )}
             </div>
+
+            {/* Crop category id Input (MUI TextField) */}
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Crop category id
-              </label>
-              <input
+              <TextField
                 {...register("crop_category_id", {
-                  required: "crop category id is required",
+                  required: "Crop category ID is required",
                 })}
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                placeholder="Enter crop category id"
+                label="Crop Category ID"
+                variant="outlined"
+                fullWidth
+                error={!!errors.crop_category_id}
+                helperText={errors.crop_category_id?.message}
+                className="dark:bg-[#252525] dark:text-white"
               />
-              {errors.crop_category_id && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.crop_category_id.message}
-                </p>
-              )}
             </div>
+
+            {/* Crop process state Input (MUI TextField) */}
             <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Crop process state
-              </label>
-              <input
+              <TextField
                 {...register("process_state", {
-                  required: "crop process state is required",
+                  required: "Crop process state is required",
                 })}
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
-                placeholder="Enter crop process state"
+                label="Crop Process State"
+                variant="outlined"
+                fullWidth
+                error={!!errors.process_state}
+                helperText={errors.process_state?.message}
+                className="dark:bg-[#252525] dark:text-white"
               />
-              {errors.process_state && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.process_state.message}
-                </p>
-              )}
             </div>
           </div>
 
@@ -94,7 +83,7 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
             type="submit"
             className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
-            Add crop
+            Add process
           </button>
         </form>
       </div>

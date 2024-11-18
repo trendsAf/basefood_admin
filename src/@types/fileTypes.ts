@@ -12,8 +12,21 @@ export type CountryState = {
   error: string | null;
   data: string[];
 };
-export type CropState = {
+export type GetCropState = {
+  isLoading: boolean;
+  getError?: string | null;
+  data: string[];
+  error: string | null;
+  cropList: string[];
+};
+export type AddCropState = {
   isLoading: boolean;
   error: string | null;
   data: string[];
+};
+export type CropCategoryState = {
+  isLoading: boolean;
+  error: string | null;
+  data: string[];
+  cropCategoryList: string[];
 };
