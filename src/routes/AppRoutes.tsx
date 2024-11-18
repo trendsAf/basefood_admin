@@ -7,6 +7,7 @@ import CountriesComponent from "../components/countries/CountriesComponent";
 import RegionComponent from "../components/region/RegionComponent";
 import ProcessLevelComponent from "../components/processLevel/ProcessLevelComponent";
 import CropCategoriesComponent from "../components/crops_categories/CropCategoriesComponent";
+import VarietyComponent from "../components/variety/VarietyComponent";
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
             element={<CropCategoriesComponent />}
           />
           <Route path="/process_level" element={<ProcessLevelComponent />} />
+          <Route path="/variety" element={<VarietyComponent />} />
         </Route>
         <Route
           path="*"

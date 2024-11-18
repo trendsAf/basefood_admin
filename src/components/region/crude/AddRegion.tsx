@@ -1,45 +1,55 @@
-/* eslint-disable no-console */
+import {
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useEffect } from "react";
+import { FetchCountries } from "../../../redux/reducers/countries/countrySlice";
+import { PostRegion } from "../../../redux/reducers/regions/regionSlice";
+import { toast, ToastContainer } from "react-toastify";
 
 interface RegionFormValues {
-  name?: string;
-  region?: number;
+  country_id?: string;
+  region_name?: string;
   toggleAddRegion: () => void;
 }
 
-export const countries = [
-  { code: "BDI", name: "Burundi" },
-  { code: "COM", name: "Comoros" },
-  { code: "COD", name: "Democratic Republic of the Congo" },
-  { code: "DJI", name: "Djibouti" },
-  { code: "EGY", name: "Egypt" },
-  { code: "ERI", name: "Eritrea" },
-  { code: "ETH", name: "Ethiopia" },
-  { code: "KEN", name: "Kenya" },
-  { code: "LBA", name: "Libya" },
-  { code: "MDG", name: "Madagascar" },
-  { code: "MWI", name: "Malawi" },
-  { code: "MUS", name: "Mauritius" },
-  { code: "RWA", name: "Rwanda" },
-  { code: "SYC", name: "Seychelles" },
-  { code: "SDN", name: "Sudan" },
-  { code: "SWZ", name: "Eswatini" },
-  { code: "UGA", name: "Uganda" },
-  { code: "ZMB", name: "Zambia" },
-  { code: "ZWE", name: "Zimbabwe" },
-  { code: "SOM", name: "Somalia" },
-  { code: "TUN", name: "Tunisia" },
-];
-
 const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
+  const { data: countries } = useAppSelector((state) => state.countries);
+  const { isLoading, error } = useAppSelector((state) => state.regions);
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(FetchCountries());
+  }, [dispatch]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<RegionFormValues>();
 
-  const onSubmit = (data: RegionFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: RegionFormValues) => {
+    try {
+      const res = await dispatch(PostRegion(data)).unwrap();
+      toast.success(res.message || "Region added successfully!");
+      setTimeout(() => {
+        toggleAddRegion();
+      }, 3800);
+
+      reset();
+    } catch (err: any) {
+      const errorMessage =
+        err?.message || "Something went wrong, please try again.";
+      toast.error(errorMessage);
+    }
   };
 
   return (
@@ -57,59 +67,63 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
           className="flex flex-col gap-6 p-8"
         >
           <div className="space-y-4">
-            {/* Country Dropdown */}
-            <div>
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Country name
-              </label>
-              <select
-                {...register("name", { required: "Country name is required" })}
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#252525] dark:text-white"
+            {/* Country Select Input */}
+            <FormControl fullWidth error={!!errors.country_id}>
+              <InputLabel>Select a country</InputLabel>
+              <Select
+                {...register("country_id", {
+                  required: "Country name is required",
+                })}
+                defaultValue=""
+                label="Select a country"
+                className="dark:bg-[#252525] dark:text-white"
               >
-                <option value="">Select a country</option>
-                {countries.map((country) => (
-                  <option key={country.code} value={country.name}>
+                <MenuItem value="">
+                  <em>Select a country</em>
+                </MenuItem>
+                {countries.map((country: any) => (
+                  <MenuItem key={country.id} value={country.id}>
                     {country.name}
-                  </option>
+                  </MenuItem>
                 ))}
-              </select>
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
-                </p>
+              </Select>
+              {errors.country_id && (
+                <FormHelperText>{errors.country_id.message}</FormHelperText>
               )}
-            </div>
+            </FormControl>
 
             {/* Country Region Input */}
-            <div className="w-full">
-              <label className="block text-gray-700 dark:text-gray-300 mb-1">
-                Country region
-              </label>
-              <input
-                {...register("region", {
-                  required: "Region is required",
-                  valueAsNumber: true,
-                })}
-                type="text"
-                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-[#252525] dark:text-white"
-                placeholder="Enter country region"
-              />
-              {errors.region && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.region.message}
-                </p>
-              )}
-            </div>
+            <TextField
+              {...register("region_name", {
+                required: "Region is required",
+              })}
+              type="text"
+              label="Country region"
+              variant="outlined"
+              fullWidth
+              error={!!errors.region_name}
+              helperText={errors.region_name?.message}
+              InputLabelProps={{ className: "dark:text-gray-300" }}
+              className="dark:bg-[#252525] dark:text-white"
+            />
           </div>
+
+          {error && (
+            <p className="text-red-500 text-sm mt-2">
+              {typeof error === "string" ? error : "Failed to add region"}
+            </p>
+          )}
 
           <button
             type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            disabled={isLoading}
+            className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
           >
-            Add region
+            {isLoading ? "Adding Region..." : "Add Region"}
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

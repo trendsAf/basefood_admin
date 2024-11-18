@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { jwtDecode } from "jwt-decode";
 
 interface DecodedToken {
