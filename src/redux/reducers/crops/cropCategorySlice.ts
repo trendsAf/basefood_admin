@@ -3,21 +3,18 @@ import Cookies from "js-cookie";
 import { DynamicType } from "../../../@types/fileTypes"; // Import DynamicType if needed
 import API from "../../api";
 
-// Define the type for each crop category
 export interface CropCategory {
   id: number;
   name: string;
 }
 
-// Define the state structure for crop categories
 export interface CropCategoryState {
   isLoading: boolean;
   error: string | null;
-  data: any[]; // You can modify this to a more specific type if necessary
-  cropCategoryList: CropCategory[]; // Ensure this is typed as an array of CropCategory objects
+  data: any[];
+  cropCategoryList: CropCategory[];
 }
 
-// Thunk to add a new crop category
 export const cropCategory = createAsyncThunk(
   "cropCategory",
   async (cropData: any, { rejectWithValue }) => {
@@ -36,7 +33,6 @@ export const cropCategory = createAsyncThunk(
   },
 );
 
-// Thunk to get all crop categories
 export const getCropsCategory = createAsyncThunk(
   "crop/getCropsCategory",
   async (_, { rejectWithValue }) => {
@@ -47,7 +43,7 @@ export const getCropsCategory = createAsyncThunk(
         },
         withCredentials: true,
       });
-      return data as CropCategory[]; // Ensure the returned data is typed as CropCategory[]
+      return data as CropCategory[];
     } catch (error) {
       return rejectWithValue(
         (error as DynamicType)?.response?.data ||

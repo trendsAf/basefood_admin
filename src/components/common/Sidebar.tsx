@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createTheme, ThemeProvider, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";

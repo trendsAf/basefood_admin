@@ -11,7 +11,10 @@ import { Controller, useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { getCropsCategory } from "../../../redux/reducers/crops/cropCategorySlice";
+import {
+  cropCategory,
+  getCropsCategory,
+} from "../../../redux/reducers/crops/cropCategorySlice";
 import { crop } from "../../../redux/reducers/crops/cropSlice";
 
 interface CropFormValues {
@@ -26,6 +29,9 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
     (state) => state.cropCategory,
   );
 
+  useEffect(() => {
+    dispatch(cropCategory);
+  });
   const { isLoading } = useAppSelector((state) => state.crops);
 
   const {

@@ -63,7 +63,7 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
         className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
         onClick={() => toggleAddCountry()}
       ></div>
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-8 w-full max-w-4xl mx-4 shadow-lg">
+      <div className="bg-white dark:bg-[#252525] rounded-lg p-8 w-full max-w-4xl mx-4 shadow-lg">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
             Add Country

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
@@ -12,6 +11,7 @@ import TablePagination from "../common/TablePagination";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import Skeleton from "react-loading-skeleton";
+import { toast, ToastContainer } from "react-toastify";
 
 const CropCategoriesComponent = () => {
   const [addCropCategoryModal, setAddCropCategoryModal] = useState(false);
@@ -43,8 +43,8 @@ const CropCategoriesComponent = () => {
     const fetchCrops = async () => {
       try {
         await dispatch(getCropsCategory()).unwrap();
-      } catch (err) {
-        console.error("Error fetching crops:", err);
+      } catch (err: any) {
+        toast.error(err.message);
       }
     };
 
@@ -78,7 +78,6 @@ const CropCategoriesComponent = () => {
           <table className="w-full text-left bg-white dark:bg-[#252525] border-separate border-spacing-0 p-2">
             <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
               <tr>
-                <th className="p-3 rounded-l-lg">No</th>
                 <th className="p-3">Crop Name</th>
                 <th className="p-3 rounded-r-lg expand">Action</th>
               </tr>
@@ -101,9 +100,8 @@ const CropCategoriesComponent = () => {
               ) : currentCategories.length === 0 ? (
                 <div className="text-lg mt-8 px-2">No category available</div>
               ) : (
-                currentCategories?.map((crop: any, idx) => (
+                currentCategories?.map((crop) => (
                   <tr key={crop.id} className="border-b dark:border-white/20">
-                    <td className="px-5">{idx + 1 + indexOfFirstCategory}</td>
                     <td className="px-3">{crop.name}</td>
                     <td className="px-2 py-4 flex items-center gap-1">
                       <Link to={`/crop/${crop.id}`} state={crop}>
@@ -134,6 +132,7 @@ const CropCategoriesComponent = () => {
       {addCropCategoryModal && (
         <AddCropCategory toggleAddCropCategory={toggleCropCategoryModal} />
       )}
+      <ToastContainer />
     </div>
   );
 };

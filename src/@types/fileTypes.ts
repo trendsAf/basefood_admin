@@ -10,16 +10,29 @@ export type CountryTypes = {
 export type CountryState = {
   isLoading: boolean;
   error: string | null;
-  data: string[];
+  data: any[];
 };
 export type GetCropState = {
   isLoading: boolean;
   getError?: string | null;
   data: string[];
   error: string | null;
-  cropList: string[];
+  cropList: any[];
 };
+
 export type AddCropState = {
+  isLoading: boolean;
+  error: string | null;
+  data: string[];
+};
+export type GetRegionState = {
+  isLoading: boolean;
+  getError?: string | null;
+  data: string[];
+  error: string | null;
+  regionList: [];
+};
+export type AddRegionState = {
   isLoading: boolean;
   error: string | null;
   data: string[];
@@ -29,4 +42,10 @@ export type CropCategoryState = {
   error: string | null;
   data: string[];
   cropCategoryList: string[];
+};
+
+export type VarietyState = {
+  isLoading: boolean;
+  error: string | null;
+  data: string[];
 };

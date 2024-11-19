@@ -1,29 +1,66 @@
-import { useForm } from "react-hook-form";
 import {
+  CircularProgress,
   FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   FormHelperText,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
 } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import {
+  FetchVarieties,
+  PostVariety,
+} from "../../../redux/reducers/variety/varietySlice";
+import { useEffect } from "react";
+import { getCrops } from "../../../redux/reducers/crops/cropSlice";
+import { toast, ToastContainer } from "react-toastify";
 
-interface RegionFormValues {
-  variety_name?: string;
+interface VarietyFormValues {
+  crop_variety_name?: string;
   crop_id?: number;
   toggleAddVariety: () => void;
 }
 
-const AddVariety = ({ toggleAddVariety }: RegionFormValues) => {
+const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
+  const dispatch = useAppDispatch();
+
+  // Access the crops and loading state from Redux store
+  const { cropList, isLoading: cropLoading } = useAppSelector(
+    (state) => state.crops,
+  );
+  const { isLoading, error } = useAppSelector((state) => state.viriety);
+
+  useEffect(() => {
+    const fetchCrops = async () => {
+      try {
+        await dispatch(getCrops()).unwrap();
+      } catch (error) {
+        toast.error("Failed to load crops. Please try again.");
+      }
+    };
+
+    fetchCrops();
+  }, [dispatch]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegionFormValues>();
+  } = useForm<VarietyFormValues>();
 
-  const onSubmit = (data: RegionFormValues) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
+  const onSubmit = async (data: VarietyFormValues) => {
+    try {
+      const res = await dispatch(PostVariety(data)).unwrap();
+      toast.success(res.message);
+      dispatch(FetchVarieties());
+      setTimeout(() => {
+        toggleAddVariety();
+      }, 3800);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -53,15 +90,25 @@ const AddVariety = ({ toggleAddVariety }: RegionFormValues) => {
                   {...register("crop_id", { required: "Crop is required" })}
                   label="Select a crop"
                   className="dark:bg-[#252525] dark:text-white"
+                  disabled={cropLoading}
+                  defaultValue={""}
                 >
-                  <MenuItem value="">
-                    <em>Select a crop</em>
-                  </MenuItem>
-                  {[{ name: "maize", id: 1 }].map((crop) => (
-                    <MenuItem key={crop.id} value={crop.id}>
-                      {crop.name}
+                  {cropLoading ? (
+                    <MenuItem value="">
+                      <CircularProgress size={24} />
                     </MenuItem>
-                  ))}
+                  ) : (
+                    [
+                      <MenuItem value="" key="default">
+                        <em>Select a crop</em>
+                      </MenuItem>,
+                      cropList.map((crop: any) => (
+                        <MenuItem key={crop.id} value={crop.id}>
+                          {crop.name}
+                        </MenuItem>
+                      )),
+                    ]
+                  )}
                 </Select>
                 {errors.crop_id && (
                   <FormHelperText>{errors.crop_id.message}</FormHelperText>
@@ -72,27 +119,35 @@ const AddVariety = ({ toggleAddVariety }: RegionFormValues) => {
             {/* Variety Name Input (MUI TextField) */}
             <div className="w-full">
               <TextField
-                {...register("variety_name", {
+                {...register("crop_variety_name", {
                   required: "Variety name is required",
                 })}
                 label="Variety name"
                 variant="outlined"
                 fullWidth
-                error={!!errors.variety_name}
-                helperText={errors.variety_name?.message}
+                error={!!errors.crop_variety_name}
+                helperText={errors.crop_variety_name?.message}
                 className="dark:bg-[#252525] dark:text-white"
               />
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            disabled={isLoading}
           >
-            Add variety
+            {isLoading ? "Adding variety..." : "Add variety"}
           </button>
+
+          {/* Error Handling */}
+          {error && (
+            <div className="mt-4 text-red-500 text-center">{error}</div>
+          )}
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

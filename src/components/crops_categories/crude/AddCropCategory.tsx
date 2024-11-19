@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
