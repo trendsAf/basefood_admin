@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createTheme, ThemeProvider, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
@@ -13,6 +12,7 @@ import { base_food_white_logo } from "../../assets/images";
 import { RootState } from "../../redux/store";
 import LogoutModal from "../modals/Logout";
 import ModeToggle from "./ModeToggle";
+import { MdHub } from "react-icons/md";
 
 const tooltipTheme = createTheme({
   components: {
@@ -171,6 +171,23 @@ const Sidebar = ({
                   </Tooltip>
                 </ThemeProvider>
               </NavLink>
+              <NavLink to="crop_categories">
+                <ThemeProvider theme={tooltipTheme}>
+                  <Tooltip
+                    title={`${isCollapsed ? "Crop Category" : ""}`}
+                    placement="right"
+                  >
+                    <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
+                      <GiFruitBowl className="text-lg text-gray-900 dark:text-white" />
+                      {!isCollapsed && (
+                        <span className="ml-4 text-gray-900 dark:text-white">
+                          Crops category
+                        </span>
+                      )}
+                    </li>
+                  </Tooltip>
+                </ThemeProvider>
+              </NavLink>
               <NavLink to="crops">
                 <ThemeProvider theme={tooltipTheme}>
                   <Tooltip
@@ -188,17 +205,17 @@ const Sidebar = ({
                   </Tooltip>
                 </ThemeProvider>
               </NavLink>
-              <NavLink to="crop_categories">
+              <NavLink to="variety">
                 <ThemeProvider theme={tooltipTheme}>
                   <Tooltip
-                    title={`${isCollapsed ? "Crop Category" : ""}`}
+                    title={`${isCollapsed ? "Crop variety" : ""}`}
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <GiFruitBowl className="text-lg text-gray-900 dark:text-white" />
+                      <MdHub className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-4 text-gray-900 dark:text-white">
-                          Crops category
+                          Crops variety
                         </span>
                       )}
                     </li>

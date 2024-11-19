@@ -1,17 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 import {
-  AddCropState,
+  AddRegionState,
   DynamicType,
-  GetCropState,
+  GetRegionState,
 } from "../../../@types/fileTypes";
 import API from "../../api";
 
-export const crop = createAsyncThunk(
-  "crop",
+export const PostRegion = createAsyncThunk(
+  "region",
   async (cropData: any, { rejectWithValue }) => {
     try {
-      const { data } = await API.post("/admin/crops", cropData, {
+      const { data } = await API.post("/admin/countries/regions", cropData, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRF-TOKEN": `${Cookies.get("access_token")}`,
@@ -28,64 +28,64 @@ export const crop = createAsyncThunk(
   },
 );
 
-export const getCrops = createAsyncThunk(
-  "crop/getCrops",
+export const getRegions = createAsyncThunk(
+  "region/getRegions",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await API.get("/general_routes/crops", {
+      const { data } = await API.get("/general_routes/regions", {
         headers: { "X-CSRF-TOKEN": `${Cookies.get("access_token")}` },
         withCredentials: true,
       });
       return data;
     } catch (error) {
       return rejectWithValue(
-        (error as DynamicType)?.response?.data || "Failed to fetch crops",
+        (error as DynamicType)?.response?.data || "Failed to fetch regions",
       );
     }
   },
 );
 
-const initialState: AddCropState | GetCropState = {
+const initialState: AddRegionState | GetRegionState = {
   isLoading: false,
   error: null,
   getError: null,
   data: [],
-  cropList: [],
+  regionList: [],
 };
 
-const cropSlice = createSlice({
-  name: "crop",
+const regionSlice = createSlice({
+  name: "region",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(crop.pending, (state) => {
+      .addCase(PostRegion.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(crop.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(PostRegion.fulfilled, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.error = null;
         state.data = action.payload;
       })
-      .addCase(crop.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(PostRegion.rejected, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
-        state.error = action.payload?.message || "Failed to submit crop";
+        state.error = action.payload?.message || "Failed to submit region";
       })
-      .addCase(getCrops.pending, (state) => {
+      .addCase(getRegions.pending, (state) => {
         state.isLoading = true;
         state.getError = null;
       })
-      .addCase(getCrops.fulfilled, (state, action: PayloadAction<any>) => {
+      .addCase(getRegions.fulfilled, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.getError = null;
-        state.cropList = action.payload;
+        state.regionList = action.payload;
       })
-      .addCase(getCrops.rejected, (state, action: PayloadAction<any>) => {
+      .addCase(getRegions.rejected, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
-        state.getError = action.payload?.message || "Failed to fetch crops";
+        state.getError = action.payload?.message || "Failed to fetch regions";
       });
   },
 });
 
-export default cropSlice.reducer;
+export default regionSlice.reducer;

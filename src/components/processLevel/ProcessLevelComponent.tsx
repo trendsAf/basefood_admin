@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { LuView } from "react-icons/lu";
+import { FaEye } from "react-icons/fa";
+
 import { MdAddCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { countries } from "../../utils/countriesData";
@@ -82,7 +83,7 @@ const ProcessLevelComponent = () => {
                     >
                       <Link to={`/crop/${crop.id}`} state={crop}>
                         <button className="px-1 py-1 text-blue-500 rounded text-2xl">
-                          <LuView />
+                          <FaEye className="text-lg" />
                         </button>
                       </Link>
                       <div>
