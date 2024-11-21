@@ -10,7 +10,10 @@ import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect } from "react";
 import { FetchCountries } from "../../../redux/reducers/countries/countrySlice";
-import { PostRegion } from "../../../redux/reducers/regions/regionSlice";
+import {
+  getRegions,
+  PostRegion,
+} from "../../../redux/reducers/regions/regionSlice";
 import { toast, ToastContainer } from "react-toastify";
 
 interface RegionFormValues {
@@ -40,6 +43,7 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
     try {
       const res = await dispatch(PostRegion(data)).unwrap();
       toast.success(res.message || "Region added successfully!");
+      dispatch(getRegions());
       setTimeout(() => {
         toggleAddRegion();
       }, 3800);

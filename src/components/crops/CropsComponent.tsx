@@ -12,6 +12,13 @@ import "react-loading-skeleton/dist/skeleton.css";
 import TablePagination from "../common/TablePagination";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from "@mui/material";
 
 const CropsComponent = () => {
   const dispatch = useAppDispatch();
@@ -34,9 +41,7 @@ const CropsComponent = () => {
     }
   }, [cropCategoryList, selectedCategory]);
 
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleCategoryChange = (event: SelectChangeEvent<string>) => {
     const categoryId = event.target.value ? parseInt(event.target.value) : null;
     setSelectedCategory(categoryId);
     setPage(0);
@@ -71,20 +76,26 @@ const CropsComponent = () => {
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-8">
             <h1 className="text-2xl font-bold">Crops</h1>
-            <select
-              name="cropCategory"
-              id="cropCategory"
-              className="border rounded p-1 dark:bg-[#252525]"
-              onChange={handleCategoryChange}
-              value={selectedCategory || ""}
-            >
-              <option value="">Select a category</option>
-              {cropCategoryList.map((category: any) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel id="demo-select-small-label">
+                Select a category
+              </InputLabel>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                onChange={handleCategoryChange}
+                label="CropCategory"
+                value={
+                  selectedCategory !== null ? selectedCategory.toString() : ""
+                }
+              >
+                {cropCategoryList.map((category: any) => (
+                  <MenuItem value={category.id} key={category.id}>
+                    {category.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <button
             className="bg-blue-500 px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
