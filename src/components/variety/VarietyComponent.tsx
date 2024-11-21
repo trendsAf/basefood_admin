@@ -12,6 +12,13 @@ import { RootState } from "../../redux/store";
 import TablePagination from "../common/TablePagination";
 import AddVariety from "./crude/AddVariety";
 import Skeleton from "react-loading-skeleton";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
+} from "@mui/material";
 
 const VarietyComponent = () => {
   const dispatch = useAppDispatch();
@@ -41,9 +48,7 @@ const VarietyComponent = () => {
     }
   }, [cropList]);
 
-  const handleCategoryChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
+  const handleCategoryChange = (event: SelectChangeEvent<string>) => {
     const crop_id = event.target.value ? parseInt(event.target.value) : null;
     setSelectedCrop(crop_id);
     setPage(1);
@@ -75,21 +80,26 @@ const VarietyComponent = () => {
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-8">
-            <h1 className="text-2xl font-bold">Crops</h1>
-            <select
-              name="cropCategory"
-              id="cropCategory"
-              className="border rounded p-1 dark:bg-[#252525]"
-              onChange={handleCategoryChange}
-              value={selectedCrop || ""}
-            >
-              <option value="">Select a crop</option>
-              {cropList.map((crop: any) => (
-                <option key={crop.id} value={crop.id}>
-                  {crop.name}
-                </option>
-              ))}
-            </select>
+            <h1 className="text-2xl font-bold">Crop varieties</h1>
+
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel id="demo-select-small-label">
+                Select Variety
+              </InputLabel>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                onChange={handleCategoryChange}
+                label="Variety"
+                value={selectedCrop !== null ? selectedCrop.toString() : ""}
+              >
+                {cropList.map((variet: any) => (
+                  <MenuItem value={variet.id} key={variet.id}>
+                    {variet.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <button
             className="bg-blue-500 px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
