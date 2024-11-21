@@ -10,16 +10,21 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast, ToastContainer } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { getCropsCategory } from "../../../redux/reducers/crops/cropCategorySlice";
 import { getCrops } from "../../../redux/reducers/crops/cropSlice";
-import { PostProcessLevel } from "../../../redux/reducers/processLevel/processLevelSlice";
+import {
+  FetchProcessLevel,
+  PostProcessLevel,
+} from "../../../redux/reducers/processLevel/processLevelSlice";
+import { FetchVarieties } from "../../../redux/reducers/variety/varietySlice";
 
 interface CropCategoryFormValues {
   crop_id?: number | "";
-  crop_category_id?: number | "";
+  crop_variety_id?: number | "";
   process_state?: string;
   toggleAddProcessLevel: () => void;
 }
+
+// Inside your AddProcessLevel component
 
 const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
   const {
@@ -31,30 +36,33 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
   } = useForm<CropCategoryFormValues>({
     defaultValues: {
       crop_id: "",
-      crop_category_id: "",
+      crop_variety_id: "",
     },
   });
 
   const dispatch = useAppDispatch();
 
   const crop_id = watch("crop_id");
-  const crop_category_id = watch("crop_category_id");
+  const crop_variety_id = watch("crop_variety_id");
 
   const { cropList } = useAppSelector((state) => state.crops);
-  const { cropCategoryList } = useAppSelector((state) => state.cropCategory);
+  const { data: varieties } = useAppSelector((state) => state.viriety);
   const { isLoading, error } = useAppSelector((state) => state.processLevel);
 
   useEffect(() => {
     dispatch(getCrops());
-  }, []);
-  useEffect(() => {
-    dispatch(getCropsCategory());
-  }, []);
+    dispatch(FetchVarieties());
+  }, [dispatch]);
+
+  const filteredVarieties = Array.isArray(varieties)
+    ? varieties.filter((variety: any) => variety.crop_id === crop_id)
+    : [];
 
   const onSubmit = async (data: CropCategoryFormValues) => {
     try {
       const res = await dispatch(PostProcessLevel(data)).unwrap();
       toast.success(res.message);
+      dispatch(FetchProcessLevel());
       setTimeout(() => {
         toggleAddProcessLevel();
       }, 3800);
@@ -84,7 +92,10 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
               <Select
                 {...register("crop_id", { required: "Crop ID is required" })}
                 value={crop_id}
-                onChange={(e) => setValue("crop_id", e.target.value as number)}
+                onChange={(e) => {
+                  setValue("crop_id", e.target.value as number);
+                  setValue("crop_variety_id", "");
+                }}
                 label="Select a Crop"
                 className="dark:bg-[#252525] dark:text-white"
               >
@@ -92,7 +103,7 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
                   <em>Select a Crop</em>
                 </MenuItem>
                 {cropList.map((crop: any) => (
-                  <MenuItem key={crop.id} value={crop.id}>
+                  <MenuItem key={crop.id} value={crop.id} defaultValue={""}>
                     {crop.name}
                   </MenuItem>
                 ))}
@@ -102,36 +113,40 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
               )}
             </FormControl>
 
-            {/* Crop Category Dropdown */}
+            {/* Crop Variety Dropdown */}
             <FormControl
               fullWidth
-              error={!!errors.crop_category_id}
+              error={!!errors.crop_variety_id}
               variant="outlined"
             >
-              <InputLabel>Select a Crop Category</InputLabel>
+              <InputLabel>Select a Crop Variety</InputLabel>
               <Select
-                {...register("crop_category_id", {
-                  required: "Crop Category ID is required",
+                {...register("crop_variety_id", {
+                  required: "Crop Variety ID is required",
                 })}
-                value={crop_category_id}
+                value={crop_variety_id}
                 onChange={(e) =>
-                  setValue("crop_category_id", e.target.value as number)
+                  setValue("crop_variety_id", e.target.value as number)
                 }
-                label="Select a Crop Category"
+                label="Select a Crop Variety"
                 className="dark:bg-[#252525] dark:text-white"
               >
                 <MenuItem value="">
-                  <em>Select a Crop Category</em>
+                  <em>Select a Crop Variety</em>
                 </MenuItem>
-                {cropCategoryList.map((category: any) => (
-                  <MenuItem key={category.id} value={category.id}>
-                    {category.name}
+                {filteredVarieties.map((variety: any) => (
+                  <MenuItem
+                    key={variety.id}
+                    value={variety.id}
+                    defaultValue={""}
+                  >
+                    {variety.name}
                   </MenuItem>
                 ))}
               </Select>
-              {errors.crop_category_id && (
+              {errors.crop_variety_id && (
                 <FormHelperText>
-                  {errors.crop_category_id.message}
+                  {errors.crop_variety_id.message}
                 </FormHelperText>
               )}
             </FormControl>

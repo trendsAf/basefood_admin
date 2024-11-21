@@ -67,7 +67,6 @@ const Sidebar = ({
   };
 
   const handleConfirmLogout = () => {
-    console.log("User logged out");
     setOpenLogoutModal(false);
   };
 
@@ -215,7 +214,7 @@ const Sidebar = ({
                       <MdHub className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-4 text-gray-900 dark:text-white">
-                          Crops variety
+                          Crop variety
                         </span>
                       )}
                     </li>
@@ -232,7 +231,7 @@ const Sidebar = ({
                       <MdEventRepeat className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-4 text-gray-900 dark:text-white">
-                          Process level
+                          Process state
                         </span>
                       )}
                     </li>

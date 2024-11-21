@@ -11,6 +11,7 @@ import { FetchCountries } from "../../redux/reducers/countries/countrySlice";
 import TablePagination from "../common/TablePagination";
 import AddRegion from "./crude/AddRegion";
 import Skeleton from "react-loading-skeleton";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 const RegionComponent = () => {
   const theme = useSelector((state: RootState) => state.theme.value);
@@ -68,18 +69,25 @@ const RegionComponent = () => {
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-8">
             <h1 className="text-2xl font-bold">Regions</h1>
-            <select
-              className="border rounded p-1 dark:bg-[#252525]"
-              value={selectedCountry || ""}
-              onChange={(e) => setSelectedCountry(Number(e.target.value))}
-            >
-              <option value="">Select a country</option>
-              {data.map((country: any) => (
-                <option key={country.id} value={country.id}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
+
+            <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+              <InputLabel id="demo-select-small-label">
+                Select Variety
+              </InputLabel>
+              <Select
+                labelId="demo-select-small-label"
+                id="demo-select-small"
+                value={selectedCountry ? selectedCountry : " "}
+                label="Variety"
+                onChange={(e) => setSelectedCountry(Number(e.target.value))}
+              >
+                {data.map((variet: any) => (
+                  <MenuItem value={variet.id} key={variet.id}>
+                    {variet.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
           <button
             className="bg-blue-500 px-6 py-2 flex items-center gap-1 text-xl rounded text-white"

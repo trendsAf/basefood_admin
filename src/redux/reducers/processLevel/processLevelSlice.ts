@@ -28,7 +28,7 @@ export const FetchProcessLevel = createAsyncThunk(
   "country/fetchProcessLevel",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await API.get("/general_routes/process", {
+      const { data } = await API.get("/general_routes/crops/process_state", {
         headers: { "X-CSRF-TOKEN": `${Cookies.get("access_token")}` },
         withCredentials: true,
       });
