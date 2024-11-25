@@ -13,6 +13,7 @@ import { RootState } from "../../redux/store";
 import LogoutModal from "../modals/Logout";
 import ModeToggle from "./ModeToggle";
 import { MdHub } from "react-icons/md";
+import { AiOutlineProduct } from "react-icons/ai";
 
 const tooltipTheme = createTheme({
   components: {
@@ -77,7 +78,7 @@ const Sidebar = ({
           isCollapsed
             ? "w-20 border-r border-bg-gray dark:border-[#404040]"
             : "w-[80%] sm:w-[40%] md:w-[30%] lg:w-[16%] md:transition-none transition-all duration-300"
-        } border-r border-bg-gray dark:border-[#404040] bg-white px-4 flex flex-col  justify-between dark:bg-[#252525] transform ${
+        } border-r border-bg-gray dark:border-[#404040] bg-white px-4 flex flex-col  justify-between dark:bg-secondary-black transform ${
           isSidebarVisible ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0`}
       >
@@ -128,7 +129,7 @@ const Sidebar = ({
                     <li className="flex items-center px-2 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
                       <GoHome className="text-lg whitespace-nowrap text-gray-900 dark:text-white" />
                       {!isCollapsed && (
-                        <span className="ml-4 text-gray-900 dark:text-white">
+                        <span className="ml-2 text-gray-900 dark:text-white">
                           Dashboard
                         </span>
                       )}
@@ -145,7 +146,7 @@ const Sidebar = ({
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
                       <GiWorld className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
-                        <span className="ml-4 text-gray-900 dark:text-white">
+                        <span className="ml-2 text-gray-900 dark:text-white">
                           Countries
                         </span>
                       )}
@@ -162,7 +163,7 @@ const Sidebar = ({
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
                       <FaLocationDot className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
-                        <span className="ml-4 text-gray-900 dark:text-white">
+                        <span className="ml-2 text-gray-900 dark:text-white">
                           Region
                         </span>
                       )}
@@ -179,8 +180,25 @@ const Sidebar = ({
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
                       <GiFruitBowl className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
-                        <span className="ml-4 text-gray-900 dark:text-white">
+                        <span className="ml-2 text-gray-900 dark:text-white">
                           Crops category
+                        </span>
+                      )}
+                    </li>
+                  </Tooltip>
+                </ThemeProvider>
+              </NavLink>
+              <NavLink to="products">
+                <ThemeProvider theme={tooltipTheme}>
+                  <Tooltip
+                    title={`${isCollapsed ? "Products" : ""}`}
+                    placement="right"
+                  >
+                    <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
+                      <AiOutlineProduct className="text-lg text-gray-900 dark:text-white" />
+                      {!isCollapsed && (
+                        <span className="ml-2 text-gray-900 dark:text-white">
+                          Products
                         </span>
                       )}
                     </li>
@@ -196,7 +214,7 @@ const Sidebar = ({
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
                       <GiThreeLeaves className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
-                        <span className="ml-4 text-gray-900 dark:text-white">
+                        <span className="ml-2 text-gray-900 dark:text-white">
                           Crops
                         </span>
                       )}
@@ -213,7 +231,7 @@ const Sidebar = ({
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
                       <MdHub className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
-                        <span className="ml-4 text-gray-900 dark:text-white">
+                        <span className="ml-2 text-gray-900 dark:text-white">
                           Crop variety
                         </span>
                       )}
@@ -230,7 +248,7 @@ const Sidebar = ({
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
                       <MdEventRepeat className="text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
-                        <span className="ml-4 text-gray-900 dark:text-white">
+                        <span className="ml-2 text-gray-900 dark:text-white">
                           Process state
                         </span>
                       )}
