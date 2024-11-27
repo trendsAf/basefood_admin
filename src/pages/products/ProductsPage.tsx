@@ -1,23 +1,18 @@
-// import Layout from "../components/Layout";
-// import CustomSelect from "../components/stocks/CustomSelect";
-// import CustomSelect from "../components/products/CustomSelect";
-// import Table from "../components/stocks/Table";
-import { Link } from "react-router-dom";
-import Table from "../../components/products/Table";
-import CustomSelect from "../../components/products/CustomSelect";
-import AddProductModal from "../../components/products/AddProduct";
+/* eslint-disable no-console */
 import { useState } from "react";
-// import Table from "../components/products/Table";
+import AddProductModal from "../../components/products/crude/AddProduct";
+import CustomSelect from "../../components/common/select/CustomSelect";
+import Table from "../../components/products/Table";
+import { MdAddCircle } from "react-icons/md";
 
-const Stocks = () => {
+const ProductsPage = () => {
   const handleSortSelect = (option: string) => {
     console.log("Selected sort option:", option);
   };
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // const handleCategorySelect = (option: string) => {
-  //   console.log("Selected category option:", option);
-  // };
+  const toggleProductModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   return (
     <section>
@@ -38,27 +33,24 @@ const Stocks = () => {
               defaultValue="Best sellers"
               onSelect={handleSortSelect}
             />
-            {/* <CustomSelect
-              options={["All Categories", "Electronics", "Fashion", "Home"]}
-              defaultValue="All Categories"
-              onSelect={handleCategorySelect}
-            /> */}
           </div>
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-brand-blue text-white w-full md:w-1/5 text-center px-2 py-2 rounded-[8px]"
-          >
-            Add Product
-          </button>
+          <div className="w-full flex items-center justify-end">
+            <button
+              className="bg-brand-blue hover:bg-blue-500 px-4 py-2 flex items-center gap-1 text-xl rounded text-white"
+              onClick={() => toggleProductModal()}
+            >
+              <MdAddCircle className="text-2xl" />
+              Add Products
+            </button>
+          </div>
         </div>
         <Table />
       </section>
-      <AddProductModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+      {isModalOpen && (
+        <AddProductModal toggleAddProduct={() => toggleProductModal()} />
+      )}
     </section>
   );
 };
 
-export default Stocks;
+export default ProductsPage;

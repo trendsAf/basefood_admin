@@ -188,23 +188,7 @@ const Sidebar = ({
                   </Tooltip>
                 </ThemeProvider>
               </NavLink>
-              <NavLink to="products">
-                <ThemeProvider theme={tooltipTheme}>
-                  <Tooltip
-                    title={`${isCollapsed ? "Products" : ""}`}
-                    placement="right"
-                  >
-                    <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <AiOutlineProduct className="text-lg text-gray-900 dark:text-white" />
-                      {!isCollapsed && (
-                        <span className="ml-2 text-gray-900 dark:text-white">
-                          Products
-                        </span>
-                      )}
-                    </li>
-                  </Tooltip>
-                </ThemeProvider>
-              </NavLink>
+
               <NavLink to="crops">
                 <ThemeProvider theme={tooltipTheme}>
                   <Tooltip
@@ -250,6 +234,23 @@ const Sidebar = ({
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Process state
+                        </span>
+                      )}
+                    </li>
+                  </Tooltip>
+                </ThemeProvider>
+              </NavLink>
+              <NavLink to="products">
+                <ThemeProvider theme={tooltipTheme}>
+                  <Tooltip
+                    title={`${isCollapsed ? "Products" : ""}`}
+                    placement="right"
+                  >
+                    <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
+                      <AiOutlineProduct className="text-lg text-gray-900 dark:text-white" />
+                      {!isCollapsed && (
+                        <span className="ml-2 text-gray-900 dark:text-white">
+                          Products
                         </span>
                       )}
                     </li>

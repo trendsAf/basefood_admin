@@ -15,11 +15,11 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange }) => {
         onChange={onChange}
       />
       <div
-        className={`block w-14 h-8 rounded-full ${checked ? "bg-brand-blue" : "bg-[#D4D4D4] dark:bg-[#687588]"}`}
+        className={`block w-10 h-6 rounded-full ${checked ? "bg-brand-blue" : "bg-[#D4D4D4] dark:bg-[#687588]"}`}
       />
       <div
-        className={`dot absolute left-1 top-1 flex justify-center bg-white w-6 h-6 rounded-full transition ${
-          checked ? "transform translate-x-6" : ""
+        className={`dot absolute left-1 top-1 flex justify-center bg-white w-4 h-4 rounded-full transition ${
+          checked ? "transform translate-x-6 -left-1" : ""
         }`}
       >
         {checked ? (
