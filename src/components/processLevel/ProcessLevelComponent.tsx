@@ -35,9 +35,11 @@ const ProcessLevelComponent = () => {
   );
 
   // Filter process states based on selected variety
-  const filteredProcessStates = processStates.filter(
-    (state: any) => state.crop_variety_id === Number(selectedVarietyId),
-  );
+  const filteredProcessStates = Array.isArray(processStates)
+    ? processStates.filter(
+        (state: any) => state.crop_variety_id === Number(selectedVarietyId),
+      )
+    : [];
 
   const handleChangePage = (_: unknown, newPage: number) => {
     setPage(newPage);

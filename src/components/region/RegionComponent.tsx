@@ -81,11 +81,15 @@ const RegionComponent = () => {
                 label="Variety"
                 onChange={(e) => setSelectedCountry(Number(e.target.value))}
               >
-                {data.map((variet: any) => (
-                  <MenuItem value={variet.id} key={variet.id}>
-                    {variet.name}
-                  </MenuItem>
-                ))}
+                {Array.isArray(data) && data.length > 0 ? (
+                  data.map((variet: any) => (
+                    <MenuItem value={variet.id} key={variet.id}>
+                      {variet.name}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>No countries available</MenuItem>
+                )}
               </Select>
             </FormControl>
           </div>

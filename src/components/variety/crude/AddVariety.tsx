@@ -7,17 +7,19 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import { CloudUpload } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   FetchVarieties,
   PostVariety,
 } from "../../../redux/reducers/variety/varietySlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getCrops } from "../../../redux/reducers/crops/cropSlice";
 import { toast, ToastContainer } from "react-toastify";
 
 interface VarietyFormValues {
+  image?: string;
   crop_variety_name?: string;
   crop_id?: number;
   toggleAddVariety: () => void;
@@ -31,6 +33,15 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
     (state) => state.crops,
   );
   const { isLoading, error } = useAppSelector((state) => state.viriety);
+
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   useEffect(() => {
     const fetchCrops = async () => {
@@ -69,16 +80,50 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
         className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
         onClick={() => toggleAddVariety()}
       ></div>
-      <div className="bg-white dark:bg-[#252525] rounded-lg p-6 w-full max-w-4xl mx-4 shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
+      <div className="bg-white dark:bg-[#252525] rounded-lg p-6 w-full max-w-4xl mx-4 _shadow">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white logo ml-52">
           Add Variety
         </h2>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 p-8"
-        >
-          <div className="space-y-4">
-            {/* Crop Dropdown (MUI Select) */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex  gap-6 px-8">
+          {/* Image Upload */}
+          <div className="w-1/2 mb-4">
+            <input
+              type="file"
+              id="image-upload"
+              className="hidden"
+              {...register("image", { required: "Image is required" })}
+              onChange={(e) => {
+                handleImageChange(e); // Update the preview
+              }}
+            />
+            <label
+              htmlFor="image-upload"
+              className={`flex flex-col items-center justify-center w-full h-40 px-4 py-6 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer transition-all text-gray-600 dark:text-gray-300 text-sm ${
+                imagePreview
+                  ? "bg-cover bg-center"
+                  : "bg-gray-100 dark:bg-[#333] hover:bg-gray-200 dark:hover:bg-[#444]"
+              }`}
+              style={
+                imagePreview
+                  ? { backgroundImage: `url(${imagePreview})` }
+                  : undefined
+              }
+            >
+              {!imagePreview && (
+                <>
+                  <CloudUpload fontSize="large" className="mb-2" />
+                  <span>Upload an image</span>
+                </>
+              )}
+            </label>
+            {errors.image && (
+              <span className="text-sm text-red-500">
+                {errors.image.message}
+              </span>
+            )}
+          </div>
+
+          <div className="w-full flex flex-col gap-6">
             <div>
               <FormControl
                 fullWidth
@@ -130,21 +175,20 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
                 className="dark:bg-[#252525] dark:text-white"
               />
             </div>
+            {/* Submit Button */}
+            <button
+              type="submit"
+              className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              disabled={isLoading}
+            >
+              {isLoading ? "Adding variety..." : "Add variety"}
+            </button>
+
+            {/* Error Handling */}
+            {error && (
+              <div className="mt-4 text-red-500 text-center">{error}</div>
+            )}
           </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-            disabled={isLoading}
-          >
-            {isLoading ? "Adding variety..." : "Add variety"}
-          </button>
-
-          {/* Error Handling */}
-          {error && (
-            <div className="mt-4 text-red-500 text-center">{error}</div>
-          )}
         </form>
       </div>
       <ToastContainer />

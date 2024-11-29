@@ -93,11 +93,15 @@ const VarietyComponent = () => {
                 label="Variety"
                 value={selectedCrop !== null ? selectedCrop.toString() : ""}
               >
-                {cropList.map((variet: any) => (
-                  <MenuItem value={variet.id} key={variet.id}>
-                    {variet.name}
-                  </MenuItem>
-                ))}
+                {Array.isArray(cropList) && cropList.length > 0 ? (
+                  cropList.map((variet: any) => (
+                    <MenuItem value={variet.id} key={variet.id}>
+                      {variet.name}
+                    </MenuItem>
+                  ))
+                ) : (
+                  <MenuItem disabled>No crops available</MenuItem>
+                )}
               </Select>
             </FormControl>
           </div>

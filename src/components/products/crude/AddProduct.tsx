@@ -1,10 +1,17 @@
-/* eslint-disable no-console */
 import { yupResolver } from "@hookform/resolvers/yup";
-import React, { useState } from "react";
+import { MenuItem, Select, TextField } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IoCloseSharp } from "react-icons/io5";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { FetchCountries } from "../../../redux/reducers/countries/countrySlice";
+import { getCropsCategory } from "../../../redux/reducers/crops/cropCategorySlice";
+import { getCrops } from "../../../redux/reducers/crops/cropSlice";
+import { getRegions } from "../../../redux/reducers/regions/regionSlice";
+import { FetchVarieties } from "../../../redux/reducers/variety/varietySlice";
 import { ProductFormValidation } from "../../../validations/formValidations";
-// import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { PostProduct } from "../../../redux/reducers/products/productSlice";
+import { toast, ToastContainer } from "react-toastify";
 
 interface AddProductModalProps {
   toggleAddProduct: () => void;
@@ -16,37 +23,65 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(ProductFormValidation),
   });
 
-  // const dispatch = useAppDispatch();
-  // const {cropList} = useAppSelector((state) => state.crops);
+  const [selectedCategory, setSelectedCategory] = useState<string | number>("");
+  const [selectedVariety, setSlectedVariety] = useState<string | number>("");
+  const [selectedRegion, setSelectedRegion] = useState<string | number>("");
 
-  const [imagePreview, setImagePreview] = useState("");
+  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.products);
+  const { cropCategoryList: crop_categories } = useAppSelector(
+    (state) => state.cropCategory,
+  );
+  const { cropList: crops } = useAppSelector((state) => state.crops);
+  const { data: countries } = useAppSelector((state) => state.countries);
+  const { data: varieties } = useAppSelector((state) => state.viriety);
+  const { regionList: regions } = useAppSelector((state) => state.regions);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    toggleAddProduct();
-  };
+  useEffect(() => {
+    dispatch(getCrops());
+    dispatch(FetchCountries());
+    dispatch(FetchVarieties());
+    dispatch(getRegions());
+    dispatch(getCropsCategory());
+  }, [dispatch]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-      setValue("image", file);
+  const onSubmit = async (data: any) => {
+    toast.info("Form submission triggered!");
+    try {
+      const res = await dispatch(PostProduct(data)).unwrap();
+      toast.success(res.message || "Product added successfully!");
+      setTimeout(() => {
+        toggleAddProduct();
+      }, 3500);
+    } catch (error: any) {
+      toast.error(error.message || "Failed to add product.");
     }
   };
 
+  const filteredCrops = crops.filter(
+    (crop: any) => crop.crop_category === selectedCategory,
+  );
+
+  const filteredVarietis = varieties.filter(
+    (variety: any) => variety.crop_id === selectedVariety,
+  );
+
+  const filteredRegions = regions.filter(
+    (region: any) => region.country_id === selectedRegion,
+  );
+
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-secondary-black rounded-lg p-6 w-full max-w-4xl shadow-xl">
+      <div className="bg-white dark:bg-secondary-black rounded-lg p-6 w-full max-w-4xl _shadow">
         {/* Header */}
         <div className="flex justify-between items-center mb-6 relative">
-          <h2 className="text-2xl logo text-center ml-52 text-black dark:text-white w-full">
-            Add New Crop
+          <h2 className="text-2xl logo text-center text-black dark:text-white w-full">
+            Add New Product
           </h2>
           <div className="absolute right-0 -top-2">
             <button
@@ -61,214 +96,223 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
         {/* Form */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 px-4"
+          className="flex flex-col gap-6 px-8 py-4"
         >
-          <div className="flex gap-6">
-            {/* Image Upload Section */}
-            <div className="w-3/5 h-72 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-[#252525] hover:border-brand-blue transition relative">
-              <label
-                htmlFor="image"
-                className="flex flex-col h-full w-full items-center cursor-pointer text-gray-700 dark:text-gray-300"
-              >
-                {imagePreview ? (
-                  <img
-                    src={imagePreview}
-                    alt="Crop Preview"
-                    className="w-full h-full object-cover rounded-lg"
-                  />
-                ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center">
-                    <svg
-                      className="h-12 w-12 text-gray-400 mb-2"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M7 16l-4-4m0 0l4-4m-4 4h14m-6 4l4-4m0 0l-4-4m4 4H3"
-                      />
-                    </svg>
-                    <span>Upload image</span>
-                  </div>
+          {/* Crop Category */}
+          <Controller
+            name="crop_category"
+            control={control}
+            defaultValue={undefined}
+            render={({ field }) => (
+              <>
+                <Select
+                  {...field}
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  error={!!errors.crop_category}
+                  displayEmpty
+                  onChange={(event) => {
+                    field.onChange(event);
+                    setSelectedCategory(event.target.value);
+                  }}
+                  value={field.value ?? ""}
+                >
+                  <MenuItem value="" disabled>
+                    Select a category
+                  </MenuItem>
+                  {crop_categories?.map((category: any) => (
+                    <MenuItem key={category.id} value={category.id}>
+                      {category.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.crop_category && (
+                  <p className="text-sm text-red mt-1">
+                    {errors.crop_category.message}
+                  </p>
                 )}
-                <input
-                  type="file"
-                  name="image"
-                  id="image"
-                  onChange={handleImageChange}
-                  className="hidden"
-                />
-              </label>
-              {errors.image && (
-                <p className="text-sm text-red mt-1">{errors.image.message}</p>
-              )}
-            </div>
+              </>
+            )}
+          />
 
-            {/* Inputs Section */}
-            <div className="flex flex-col gap-4 w-full">
-              {/* Crop Name */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+          {/* Crop Name */}
+          <Controller
+            name="crop_id"
+            control={control}
+            defaultValue={undefined}
+            render={({ field }) => (
+              <>
+                <Select
+                  {...field}
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  error={!!errors.crop_id}
+                  displayEmpty
+                  onChange={(event) => {
+                    field.onChange(event);
+                    setSlectedVariety(event.target.value);
+                  }}
                 >
-                  Crop Name
-                </label>
-                <Controller
-                  name="name"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <input
-                        type="text"
-                        id="name"
-                        {...field}
-                        className="mt-1 block w-full bg-gray-50 dark:bg-[#252525] border border-gray-300 dark:border-gray-700 rounded-md py-2 px-3 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-blue transition"
-                      />
-                      {errors.name && (
-                        <p className="text-sm text-red mt-1">
-                          {errors.name.message}
-                        </p>
-                      )}
-                    </>
-                  )}
-                />
-              </div>
+                  <MenuItem value={undefined} disabled>
+                    Select a crop
+                  </MenuItem>
+                  {filteredCrops?.map((crop: any) => (
+                    <MenuItem key={crop.id} value={crop.id}>
+                      {crop.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.crop_id && (
+                  <p className="text-sm text-red mt-1">
+                    {errors.crop_id.message}
+                  </p>
+                )}
+              </>
+            )}
+          />
 
-              {/* Country */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="country"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+          {/* Crop Variety */}
+          <Controller
+            name="crop_variety_id"
+            control={control}
+            defaultValue={undefined}
+            render={({ field }) => (
+              <>
+                <Select
+                  {...field}
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  error={!!errors.crop_variety_id}
+                  displayEmpty
                 >
-                  Country
-                </label>
-                <Controller
-                  name="country"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <input
-                        type="text"
-                        id="country"
-                        {...field}
-                        className="mt-1 block w-full bg-gray-50 dark:bg-[#252525] border border-gray-300 dark:border-gray-700 rounded-md py-2 px-3 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-blue transition"
-                      />
-                      {errors.country && (
-                        <p className="text-sm text-red mt-1">
-                          {errors.country.message}
-                        </p>
-                      )}
-                    </>
-                  )}
-                />
-              </div>
+                  <MenuItem value={undefined} disabled>
+                    Select a crop variety
+                  </MenuItem>
+                  {filteredVarietis?.map((variety: any) => (
+                    <MenuItem key={variety.id} value={variety.id}>
+                      {variety.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.crop_variety_id && (
+                  <p className="text-sm text-red mt-1">
+                    {errors.crop_variety_id.message}
+                  </p>
+                )}
+              </>
+            )}
+          />
 
-              {/* Region */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="region"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+          {/* Country */}
+          <Controller
+            name="country_id"
+            control={control}
+            defaultValue={undefined}
+            render={({ field }) => (
+              <>
+                <Select
+                  {...field}
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  error={!!errors.country_id}
+                  displayEmpty
+                  onChange={(event) => {
+                    field.onChange(event);
+                    setSelectedRegion(event.target.value);
+                  }}
                 >
-                  Region
-                </label>
-                <Controller
-                  name="region"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <input
-                        type="text"
-                        id="region"
-                        {...field}
-                        className="mt-1 block w-full bg-gray-50 dark:bg-[#252525] border border-gray-300 dark:border-gray-700 rounded-md py-2 px-3 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-blue transition"
-                      />
-                      {errors.region && (
-                        <p className="text-sm text-red mt-1">
-                          {errors.region.message}
-                        </p>
-                      )}
-                    </>
-                  )}
-                />
-              </div>
+                  <MenuItem value={undefined} disabled>
+                    Select a country
+                  </MenuItem>
+                  {countries?.map((country: any) => (
+                    <MenuItem key={country.code} value={country.id}>
+                      {country.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.country_id && (
+                  <p className="text-sm text-red mt-1">
+                    {errors.country_id.message}
+                  </p>
+                )}
+              </>
+            )}
+          />
 
-              {/* Crop Variety */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="cropVariety"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
+          {/* Region */}
+          <Controller
+            name="region_id"
+            control={control}
+            defaultValue={undefined}
+            render={({ field }) => (
+              <>
+                <Select
+                  {...field}
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  error={!!errors.region_id}
+                  displayEmpty
                 >
-                  Crop Variety
-                </label>
-                <Controller
-                  name="cropVariety"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <input
-                        type="text"
-                        id="cropVariety"
-                        {...field}
-                        className="mt-1 block w-full bg-gray-50 dark:bg-[#252525] border border-gray-300 dark:border-gray-700 rounded-md py-2 px-3 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-blue transition"
-                      />
-                      {errors.cropVariety && (
-                        <p className="text-sm text-red mt-1">
-                          {errors.cropVariety.message}
-                        </p>
-                      )}
-                    </>
-                  )}
-                />
-              </div>
+                  <MenuItem value={undefined} disabled>
+                    Select a region
+                  </MenuItem>
+                  {filteredRegions?.map((region: any) => (
+                    <MenuItem key={region.region_id} value={region.region_id}>
+                      {region.region_name}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.region_id && (
+                  <p className="text-sm text-red mt-1">
+                    {errors.region_id.message}
+                  </p>
+                )}
+              </>
+            )}
+          />
 
-              {/* Price (per ton) */}
-              <div className="flex flex-col">
-                <label
-                  htmlFor="price"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-200"
-                >
-                  Price (per ton)
-                </label>
-                <Controller
-                  name="price"
-                  control={control}
-                  render={({ field }) => (
-                    <>
-                      <input
-                        type="text"
-                        id="price"
-                        {...field}
-                        placeholder="$0.00"
-                        className="mt-1 block w-full bg-gray-50 dark:bg-[#252525] border border-gray-300 dark:border-gray-700 rounded-md py-2 px-3 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-brand-blue transition"
-                      />
-                      {errors.price && (
-                        <p className="text-sm text-red mt-1">
-                          {errors.price.message}
-                        </p>
-                      )}
-                    </>
-                  )}
+          {/* Price Field */}
+          <Controller
+            name="price"
+            control={control}
+            defaultValue={undefined}
+            render={({ field }) => (
+              <>
+                <TextField
+                  {...field}
+                  fullWidth
+                  type="number"
+                  variant="outlined"
+                  placeholder="$0.00"
+                  error={!!errors.price}
+                  helperText={errors.price?.message}
                 />
-              </div>
-            </div>
-          </div>
+              </>
+            )}
+          />
 
           {/* Submit Button */}
-          <div className="flex items-center justify-end gap-4 mt-2">
+          <div className="flex justify-end gap-2 ">
             <button
               type="submit"
-              className="mb-5 py-2 bg-brand-blue text-white rounded-md hover:bg-blue-600 transition w-3/5"
+              disabled={isLoading}
+              className={`px-4 py-2 bg-brand-blue text-white rounded-md w-full ${
+                isLoading
+                  ? "cursor-not-allowed opacity-70"
+                  : "hover:bg-blue-600"
+              }`}
             >
-              Add Crop
+              {isLoading ? "Submitting..." : "Add Crop"}
             </button>
           </div>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

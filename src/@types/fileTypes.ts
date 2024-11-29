@@ -25,6 +25,21 @@ export type AddCropState = {
   error: string | null;
   data: string[];
 };
+
+export type AddProductState = {
+  isLoading: boolean;
+  error: string | null;
+  data: string[];
+};
+
+export type GetProductState = {
+  isLoading: boolean;
+  getError?: string | null;
+  data: string[];
+  error: string | null;
+  cropList: any[];
+};
+
 export type GetRegionState = {
   isLoading: boolean;
   getError?: string | null;

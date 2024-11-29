@@ -75,20 +75,11 @@ export const passwordSchema = yup.object().shape({
 //add product
 
 export const ProductFormValidation = yup.object().shape({
-  name: yup.string().required("Crop name is required"),
-  country: yup.string().required("Country is required"),
-  region: yup.string().required("Region is required"),
-  cropVariety: yup.string().required("Crop variety is required"),
-  price: yup
-    .string()
-    .required("Price is required")
-    .matches(/^\d+(\.\d{1,2})?$/, "Price must be a valid number"),
-  image: yup
-    .mixed()
-    .required("Image is required")
-    .test(
-      "fileSize",
-      "File too large",
-      (value: any) => value && value.size <= 5000000,
-    ),
+  crop_id: yup.number().required("Crop name is required"),
+  crop_category: yup.number().required("Crop category is required"),
+  country_id: yup.number().required("Country is required"),
+  region_id: yup.number().required("Region is required"),
+  crop_variety_id: yup.number().required("Crop variety is required"),
+  price: yup.number().required("Price is required"),
+  // .matches(/^\d+(\.\d{1,2})?$/, "Price must be a valid number"),
 });

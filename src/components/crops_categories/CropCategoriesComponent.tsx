@@ -97,10 +97,15 @@ const CropCategoriesComponent = () => {
                     </td>
                   </tr>
                 ))
-              ) : currentCategories.length === 0 ? (
-                <div className="text-lg mt-8 px-2">No category available</div>
-              ) : (
-                currentCategories?.map((crop) => (
+              ) : Array.isArray(currentCategories) &&
+                currentCategories.length === 0 ? (
+                <tr>
+                  <td colSpan={2} className="text-center py-4">
+                    No category available
+                  </td>
+                </tr>
+              ) : Array.isArray(currentCategories) ? (
+                currentCategories.map((crop) => (
                   <tr key={crop.id} className="border-b dark:border-white/20">
                     <td className="px-3">{crop.name}</td>
                     <td className="px-2 py-4 flex items-center gap-1">
@@ -113,6 +118,13 @@ const CropCategoriesComponent = () => {
                     </td>
                   </tr>
                 ))
+              ) : (
+                // Handle unexpected scenarios
+                <tr>
+                  <td colSpan={2} className="text-center py-4 text-red-500">
+                    An error occurred while fetching categories.
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
