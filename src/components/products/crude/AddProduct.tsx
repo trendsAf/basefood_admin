@@ -51,7 +51,6 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
   }, [dispatch]);
 
   const onSubmit = async (data: any) => {
-    toast.info("Form submission triggered!");
     try {
       const res = await dispatch(PostProduct(data)).unwrap();
       toast.success(res.message || "Product added successfully!");
