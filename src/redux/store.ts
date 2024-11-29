@@ -6,6 +6,7 @@ import themeReducer from "./reducers/themeReducer";
 import varietyReducer from "./reducers/variety/varietySlice";
 import processLevelReducer from "./reducers/processLevel/processLevelSlice";
 import regionReducer from "./reducers/regions/regionSlice";
+import productReducer from "./reducers/products/productSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     viriety: varietyReducer,
     processLevel: processLevelReducer,
     regions: regionReducer,
+    products: productReducer,
   },
 });
 

@@ -116,6 +116,7 @@ const CropsComponent = () => {
             </thead>
             <tbody className="text-gray-700 dark:text-gray-300">
               {isLoading ? (
+                // Render skeleton rows while data is loading
                 [...Array(rowsPerPage)].map((_, idx) => (
                   <tr key={idx}>
                     <td className="p-3">
@@ -126,14 +127,19 @@ const CropsComponent = () => {
                     </td>
                   </tr>
                 ))
-              ) : currentCrops.length === 0 ? (
+              ) : Array.isArray(currentCrops) && currentCrops.length === 0 ? (
+                // Show message if no crops are available
                 <tr>
-                  <td colSpan={2} className="text-lg mt-8 px-2">
+                  <td
+                    colSpan={2}
+                    className="text-center py-4 text-lg mt-8 px-2"
+                  >
                     No crops available
                   </td>
                 </tr>
-              ) : (
-                currentCrops.map((crop: any) => (
+              ) : Array.isArray(currentCrops) ? (
+                // Map through crops and render rows
+                currentCrops.map((crop) => (
                   <tr key={crop.id}>
                     <td className="px-3">{crop.name}</td>
                     <td className="px-2 py-4 space-x-2 flex items-center gap-1">
@@ -148,6 +154,13 @@ const CropsComponent = () => {
                     </td>
                   </tr>
                 ))
+              ) : (
+                // Handle unexpected scenarios
+                <tr>
+                  <td colSpan={2} className="text-center py-4 text-red-500">
+                    An error occurred while fetching crops.
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
