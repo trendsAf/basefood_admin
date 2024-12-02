@@ -85,10 +85,11 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
                 <MenuItem value="">
                   <em>Select a country</em>
                 </MenuItem>
-                {Array.isArray(countries) && countries.length === 0 ? (
+                {Array.isArray(countries) && countries?.length === 0 ? (
                   <MenuItem>No country found</MenuItem>
                 ) : (
-                  countries.map((country: any) => (
+                  Array.isArray(countries) &&
+                  countries?.map((country: any) => (
                     <MenuItem key={country.id} value={country.id}>
                       {country.name}
                     </MenuItem>
