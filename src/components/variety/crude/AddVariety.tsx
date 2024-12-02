@@ -147,11 +147,16 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
                       <MenuItem value="" key="default">
                         <em>Select a crop</em>
                       </MenuItem>,
-                      cropList.map((crop: any) => (
-                        <MenuItem key={crop.id} value={crop.id}>
-                          {crop.name}
-                        </MenuItem>
-                      )),
+                      Array.isArray(cropList) && cropList?.length === 0 ? (
+                        <MenuItem>No crops available</MenuItem>
+                      ) : (
+                        Array.isArray(cropList) &&
+                        cropList?.map((crop: any) => (
+                          <MenuItem key={crop.id} value={crop.id}>
+                            {crop.name}
+                          </MenuItem>
+                        ))
+                      ),
                     ]
                   )}
                 </Select>
