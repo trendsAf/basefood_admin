@@ -122,11 +122,17 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                     <MenuItem value="" disabled>
                       Select crop category
                     </MenuItem>
-                    {cropCategoryList.map((category: any) => (
-                      <MenuItem key={category.id} value={category.id}>
-                        {category.name}
-                      </MenuItem>
-                    ))}
+                    {Array.isArray(cropCategoryList) &&
+                    cropCategoryList?.length === 0 ? (
+                      <MenuItem>No categories found</MenuItem>
+                    ) : (
+                      Array.isArray(cropCategoryList) &&
+                      cropCategoryList?.map((category: any) => (
+                        <MenuItem key={category.id} value={category.id}>
+                          {category.name}
+                        </MenuItem>
+                      ))
+                    )}
                   </Select>
                 )}
               />
