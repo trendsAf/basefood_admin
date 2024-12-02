@@ -102,11 +102,15 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
                 <MenuItem value="">
                   <em>Select a Crop</em>
                 </MenuItem>
-                {cropList.map((crop: any) => (
-                  <MenuItem key={crop.id} value={crop.id} defaultValue={""}>
-                    {crop.name}
-                  </MenuItem>
-                ))}
+                {Array.isArray(cropList) && cropList?.length === 0 ? (
+                  <MenuItem>No categories found</MenuItem>
+                ) : (
+                  cropList?.map((crop: any) => (
+                    <MenuItem key={crop.id} value={crop.id} defaultValue={""}>
+                      {crop.name}
+                    </MenuItem>
+                  ))
+                )}
               </Select>
               {errors.crop_id && (
                 <FormHelperText>{errors.crop_id.message}</FormHelperText>
@@ -134,15 +138,21 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
                 <MenuItem value="">
                   <em>Select a Crop Variety</em>
                 </MenuItem>
-                {filteredVarieties.map((variety: any) => (
-                  <MenuItem
-                    key={variety.id}
-                    value={variety.id}
-                    defaultValue={""}
-                  >
-                    {variety.name}
-                  </MenuItem>
-                ))}
+                {Array.isArray(filteredVarieties) &&
+                filteredVarieties?.length === 0 ? (
+                  <MenuItem>No categories found</MenuItem>
+                ) : (
+                  Array.isArray(filteredVarieties) &&
+                  filteredVarieties?.map((variety: any) => (
+                    <MenuItem
+                      key={variety.id}
+                      value={variety.id}
+                      defaultValue={""}
+                    >
+                      {variety.name}
+                    </MenuItem>
+                  ))
+                )}
               </Select>
               {errors.crop_variety_id && (
                 <FormHelperText>
