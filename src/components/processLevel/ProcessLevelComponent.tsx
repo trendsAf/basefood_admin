@@ -83,6 +83,7 @@ const ProcessLevelComponent = () => {
                   {Array.isArray(cropList) && cropList?.length === 0 ? (
                     <MenuItem>No crop found</MenuItem>
                   ) : (
+                    Array.isArray(cropList) &&
                     cropList?.map((crop: any) => (
                       <MenuItem value={crop.id} key={crop.id}>
                         {crop.name}
