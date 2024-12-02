@@ -120,11 +120,16 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   <MenuItem value="" disabled>
                     Select a category
                   </MenuItem>
-                  {crop_categories?.map((category: any) => (
-                    <MenuItem key={category.id} value={category.id}>
-                      {category.name}
-                    </MenuItem>
-                  ))}
+                  {Array.isArray(crop_categories) &&
+                  crop_categories.length === 0 ? (
+                    <MenuItem>No categories found</MenuItem>
+                  ) : (
+                    crop_categories?.map((category: any) => (
+                      <MenuItem key={category.id} value={category.id}>
+                        {category.name}
+                      </MenuItem>
+                    ))
+                  )}
                 </Select>
                 {errors.crop_category && (
                   <p className="text-sm text-red mt-1">
@@ -157,11 +162,16 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   <MenuItem value={undefined} disabled>
                     Select a crop
                   </MenuItem>
-                  {filteredCrops?.map((crop: any) => (
-                    <MenuItem key={crop.id} value={crop.id}>
-                      {crop.name}
-                    </MenuItem>
-                  ))}
+                  {Array.isArray(filteredCrops) &&
+                  filteredCrops.length === 0 ? (
+                    <MenuItem>No categories found</MenuItem>
+                  ) : (
+                    filteredCrops?.map((crop: any) => (
+                      <MenuItem key={crop.id} value={crop.id}>
+                        {crop.name}
+                      </MenuItem>
+                    ))
+                  )}
                 </Select>
                 {errors.crop_id && (
                   <p className="text-sm text-red mt-1">
@@ -190,11 +200,16 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   <MenuItem value={undefined} disabled>
                     Select a crop variety
                   </MenuItem>
-                  {filteredVarietis?.map((variety: any) => (
-                    <MenuItem key={variety.id} value={variety.id}>
-                      {variety.name}
-                    </MenuItem>
-                  ))}
+                  {Array.isArray(filteredVarietis) &&
+                  filteredVarietis.length === 0 ? (
+                    <MenuItem>No categories found</MenuItem>
+                  ) : (
+                    filteredVarietis?.map((variety: any) => (
+                      <MenuItem key={variety.id} value={variety.id}>
+                        {variety.name}
+                      </MenuItem>
+                    ))
+                  )}
                 </Select>
                 {errors.crop_variety_id && (
                   <p className="text-sm text-red mt-1">
@@ -227,11 +242,15 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   <MenuItem value={undefined} disabled>
                     Select a country
                   </MenuItem>
-                  {countries?.map((country: any) => (
-                    <MenuItem key={country.code} value={country.id}>
-                      {country.name}
-                    </MenuItem>
-                  ))}
+                  {Array.isArray(countries) && countries.length === 0 ? (
+                    <MenuItem>No categories found</MenuItem>
+                  ) : (
+                    countries?.map((country: any) => (
+                      <MenuItem key={country.code} value={country.id}>
+                        {country.name}
+                      </MenuItem>
+                    ))
+                  )}
                 </Select>
                 {errors.country_id && (
                   <p className="text-sm text-red mt-1">
@@ -260,11 +279,16 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   <MenuItem value={undefined} disabled>
                     Select a region
                   </MenuItem>
-                  {filteredRegions?.map((region: any) => (
-                    <MenuItem key={region.region_id} value={region.region_id}>
-                      {region.region_name}
-                    </MenuItem>
-                  ))}
+                  {Array.isArray(filteredRegions) &&
+                  filteredRegions.length === 0 ? (
+                    <MenuItem>No categories found</MenuItem>
+                  ) : (
+                    filteredRegions?.map((region: any) => (
+                      <MenuItem key={region.region_id} value={region.region_id}>
+                        {region.region_name}
+                      </MenuItem>
+                    ))
+                  )}
                 </Select>
                 {errors.region_id && (
                   <p className="text-sm text-red mt-1">

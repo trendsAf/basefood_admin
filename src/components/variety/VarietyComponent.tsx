@@ -91,7 +91,7 @@ const VarietyComponent = () => {
                 id="demo-select-small"
                 onChange={handleCategoryChange}
                 label="Variety"
-                value={selectedCrop !== null ? selectedCrop.toString() : ""}
+                value={selectedCrop ? selectedCrop.toString() : ""}
               >
                 {Array.isArray(cropList) && cropList.length > 0 ? (
                   cropList.map((variet: any) => (
