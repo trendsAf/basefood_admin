@@ -38,25 +38,25 @@ const Table: React.FC = () => {
         <table className="min-w-full bg-white dark:bg-secondary-black border-collapse text-left">
           <thead>
             <tr className=" bg-light-blue dark:bg-[#1f2937] rounded-lg">
-              <th className="py-2 text-md font-medium px-4 text-left dark:bg-[#1f2937] text-black dark:text-white rounded-l-sm">
+              <th className="py-2 text-md px-4 text-left dark:bg-[#1f2937] text-black dark:text-white rounded-l-sm">
                 Crop
               </th>
-              <th className="py-2 text-md font-medium px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
+              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
                 Country
               </th>
-              <th className="py-2 text-md font-medium px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
+              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
                 Region
               </th>
-              <th className="py-2 text-md font-medium px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
+              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
                 Variety
               </th>
-              <th className="py-2 text-md font-medium px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
+              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
                 Price
               </th>
-              <th className="py-2 text-md font-medium px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
+              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
                 Active
               </th>
-              <th className="py-2 text-md font-medium px-2 text-left dark:bg-[#1f2937] text-black dark:text-white rounded-r-sm">
+              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white rounded-r-sm">
                 Action
               </th>
             </tr>
