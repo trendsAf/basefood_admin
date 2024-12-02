@@ -80,11 +80,15 @@ const ProcessLevelComponent = () => {
                     setSelectedVarietyId("");
                   }}
                 >
-                  {cropList.map((crop: any) => (
-                    <MenuItem value={crop.id} key={crop.id}>
-                      {crop.name}
-                    </MenuItem>
-                  ))}
+                  {Array.isArray(cropList) && cropList?.length === 0 ? (
+                    <MenuItem>No crop found</MenuItem>
+                  ) : (
+                    cropList?.map((crop: any) => (
+                      <MenuItem value={crop.id} key={crop.id}>
+                        {crop.name}
+                      </MenuItem>
+                    ))
+                  )}
                 </Select>
               </FormControl>
 
@@ -101,11 +105,16 @@ const ProcessLevelComponent = () => {
                     label="Variety"
                     onChange={(e) => setSelectedVarietyId(e.target.value)}
                   >
-                    {filteredVarieties.map((variet: any) => (
-                      <MenuItem value={variet.id} key={variet.id}>
-                        {variet.name}
-                      </MenuItem>
-                    ))}
+                    {Array.isArray(filteredVarieties) &&
+                    filteredVarieties?.length === 0 ? (
+                      <MenuItem>No variety found</MenuItem>
+                    ) : (
+                      filteredVarieties?.map((variet: any) => (
+                        <MenuItem value={variet.id} key={variet.id}>
+                          {variet.name}
+                        </MenuItem>
+                      ))
+                    )}
                   </Select>
                 </FormControl>
               ) : (
