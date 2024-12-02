@@ -93,6 +93,7 @@ const CropsComponent = () => {
                 cropCategoryList.length === 0 ? (
                   <MenuItem>No categories found</MenuItem>
                 ) : (
+                  Array.isArray(cropCategoryList) &&
                   cropCategoryList.map((category: any) => (
                     <MenuItem value={category.id} key={category.id}>
                       {category.name}
