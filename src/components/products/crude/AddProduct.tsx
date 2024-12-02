@@ -245,6 +245,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   {Array.isArray(countries) && countries.length === 0 ? (
                     <MenuItem>No categories found</MenuItem>
                   ) : (
+                    Array.isArray(countries) &&
                     countries?.map((country: any) => (
                       <MenuItem key={country.code} value={country.id}>
                         {country.name}
