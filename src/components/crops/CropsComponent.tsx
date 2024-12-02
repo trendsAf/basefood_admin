@@ -89,11 +89,16 @@ const CropsComponent = () => {
                   selectedCategory !== null ? selectedCategory.toString() : ""
                 }
               >
-                {cropCategoryList.map((category: any) => (
-                  <MenuItem value={category.id} key={category.id}>
-                    {category.name}
-                  </MenuItem>
-                ))}
+                {Array.isArray(cropCategoryList) &&
+                cropCategoryList.length === 0 ? (
+                  <MenuItem>No categories found</MenuItem>
+                ) : (
+                  cropCategoryList.map((category: any) => (
+                    <MenuItem value={category.id} key={category.id}>
+                      {category.name}
+                    </MenuItem>
+                  ))
+                )}
               </Select>
             </FormControl>
           </div>

@@ -30,9 +30,11 @@ const ProcessLevelComponent = () => {
   }, [dispatch]);
 
   // Filter varieties based on selected crop
-  const filteredVarieties = varieties.filter(
-    (variety: any) => variety.crop_id === Number(selectedCropId),
-  );
+  const filteredVarieties = Array.isArray(varieties)
+    ? varieties.filter(
+        (variety: any) => variety.crop_id === Number(selectedCropId),
+      )
+    : [];
 
   // Filter process states based on selected variety
   const filteredProcessStates = Array.isArray(processStates)
