@@ -85,14 +85,13 @@ const CropsComponent = () => {
                 id="demo-select-small"
                 onChange={handleCategoryChange}
                 label="CropCategory"
-                value={
-                  selectedCategory !== null ? selectedCategory.toString() : ""
-                }
+                value={selectedCategory ? selectedCategory.toString() : ""}
               >
                 {Array.isArray(cropCategoryList) &&
                 cropCategoryList.length === 0 ? (
                   <MenuItem>No categories found</MenuItem>
                 ) : (
+                  Array.isArray(cropCategoryList) &&
                   cropCategoryList.map((category: any) => (
                     <MenuItem value={category.id} key={category.id}>
                       {category.name}
