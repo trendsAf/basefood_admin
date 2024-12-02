@@ -62,9 +62,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
     }
   };
 
-  const filteredCrops = crops.filter(
-    (crop: any) => crop.crop_category === selectedCategory,
-  );
+  const filteredCrops = Array.isArray(crops)
+    ? crops.filter((crop: any) => crop.crop_category === selectedCategory)
+    : [];
 
   const filteredVarietis = varieties.filter(
     (variety: any) => variety.crop_id === selectedVariety,
@@ -245,6 +245,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   {Array.isArray(countries) && countries.length === 0 ? (
                     <MenuItem>No categories found</MenuItem>
                   ) : (
+                    Array.isArray(countries) &&
                     countries?.map((country: any) => (
                       <MenuItem key={country.code} value={country.id}>
                         {country.name}
