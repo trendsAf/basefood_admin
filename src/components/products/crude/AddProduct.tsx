@@ -124,6 +124,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   crop_categories.length === 0 ? (
                     <MenuItem>No categories found</MenuItem>
                   ) : (
+                    Array.isArray(crop_categories) &&
                     crop_categories?.map((category: any) => (
                       <MenuItem key={category.id} value={category.id}>
                         {category.name}
@@ -166,6 +167,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   filteredCrops.length === 0 ? (
                     <MenuItem>No categories found</MenuItem>
                   ) : (
+                    Array.isArray(filteredCrops) &&
                     filteredCrops?.map((crop: any) => (
                       <MenuItem key={crop.id} value={crop.id}>
                         {crop.name}
@@ -204,6 +206,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   filteredVarietis.length === 0 ? (
                     <MenuItem>No categories found</MenuItem>
                   ) : (
+                    Array.isArray(filteredVarietis) &&
                     filteredVarietis?.map((variety: any) => (
                       <MenuItem key={variety.id} value={variety.id}>
                         {variety.name}
@@ -284,6 +287,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   filteredRegions.length === 0 ? (
                     <MenuItem>No categories found</MenuItem>
                   ) : (
+                    Array.isArray(filteredRegions) &&
                     filteredRegions?.map((region: any) => (
                       <MenuItem key={region.region_id} value={region.region_id}>
                         {region.region_name}
