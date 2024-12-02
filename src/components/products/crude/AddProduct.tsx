@@ -70,9 +70,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
     ? varieties.filter((variety: any) => variety.crop_id === selectedVariety)
     : [];
 
-  const filteredRegions = regions.filter(
-    (region: any) => region.country_id === selectedRegion,
-  );
+  const filteredRegions = Array.isArray(regions)
+    ? regions.filter((region: any) => region.country_id === selectedRegion)
+    : [];
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
