@@ -105,6 +105,7 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
                 {Array.isArray(cropList) && cropList?.length === 0 ? (
                   <MenuItem>No categories found</MenuItem>
                 ) : (
+                  Array.isArray(cropList) &&
                   cropList?.map((crop: any) => (
                     <MenuItem key={crop.id} value={crop.id} defaultValue={""}>
                       {crop.name}

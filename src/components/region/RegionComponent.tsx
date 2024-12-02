@@ -52,9 +52,9 @@ const RegionComponent = () => {
   };
 
   // Filter regions based on selected country
-  const filteredRegionList = regionList.filter(
-    (region: any) => region.country_id === selectedCountry,
-  );
+  const filteredRegionList = Array.isArray(regionList)
+    ? regionList.filter((region: any) => region.country_id === selectedCountry)
+    : [];
 
   const indexOfLastRegion = page * rowsPerPage;
   const indexOfFirstRegion = indexOfLastRegion - rowsPerPage;
