@@ -62,9 +62,9 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
     }
   };
 
-  const filteredCrops = crops.filter(
-    (crop: any) => crop.crop_category === selectedCategory,
-  );
+  const filteredCrops = Array.isArray(crops)
+    ? crops.filter((crop: any) => crop.crop_category === selectedCategory)
+    : [];
 
   const filteredVarietis = varieties.filter(
     (variety: any) => variety.crop_id === selectedVariety,
