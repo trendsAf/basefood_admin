@@ -1,5 +1,4 @@
 import {
-  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -8,6 +7,7 @@ import {
 } from "@mui/material";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { IoMdClose } from "react-icons/io";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -55,8 +55,10 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
     try {
       const result = await dispatch(crop(data)).unwrap();
       toast.success(result.message);
-      reset();
-      toggleAddCrop();
+      setTimeout(() => {
+        reset();
+        toggleAddCrop();
+      }, 3500);
     } catch (error: any) {
       // console.error("Failed to add crop:", error);
       toast.error(error.message || "An error occurred");
@@ -66,23 +68,29 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div
-        className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
-        onClick={() => toggleAddCrop()}
-      ></div>
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-4xl mx-4 shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
-          Add Crop
-        </h2>
+      <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
+      <div className="bg-white dark:bg-[#252525] rounded-lg pb-4 w-[40%] max-w-4xl mx-4 _shadow ">
+        <div className="flex items-center justify-between ">
+          <div className="w-full relative py-4">
+            <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+              Add Crop
+            </h2>
+            <div className=" absolute top-2 right-2">
+              <button
+                onClick={() => toggleAddCrop()}
+                className=" text-brand-blue  dark:text-white text-4xl "
+              >
+                <IoMdClose className="hover:text-red" />
+              </button>
+            </div>
+          </div>
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 p-8"
+          className="flex flex-col gap-6 px-8 pb-4 py-2"
         >
-          {/* Crop Name */}
-          <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">
-              Crop Name
-            </label>
+          <div className="flex flex-row-reverse items-center gap-4">
+            {/* Crop Name */}
             <Controller
               name="crop_name"
               control={control}
@@ -92,6 +100,7 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                   {...field}
                   variant="outlined"
                   fullWidth
+                  size="small"
                   placeholder="Enter crop name"
                   error={!!errors.crop_name}
                   helperText={errors.crop_name?.message}
@@ -99,14 +108,13 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                 />
               )}
             />
-          </div>
 
-          {/* Crop Category */}
-          <div>
-            <label className="block text-gray-700 dark:text-gray-300 mb-1">
-              Crop Category
-            </label>
-            <FormControl fullWidth error={!!errors.crop_category_id}>
+            {/* Crop Category */}
+            <FormControl
+              fullWidth
+              size="small"
+              error={!!errors.crop_category_id}
+            >
               <InputLabel>Select crop category</InputLabel>
               <Controller
                 name="crop_category_id"
@@ -115,13 +123,11 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                 render={({ field }) => (
                   <Select
                     {...field}
-                    label="Select crop category"
+                    // label="Select crop category"
                     fullWidth
+                    size="small"
                     displayEmpty
                   >
-                    <MenuItem value="" disabled>
-                      Select crop category
-                    </MenuItem>
                     {Array.isArray(cropCategoryList) &&
                     cropCategoryList?.length === 0 ? (
                       <MenuItem>No categories found</MenuItem>
@@ -147,16 +153,12 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
             type="submit"
             className={`w-full py-2 rounded-lg font-semibold text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
               isLoading
-                ? "bg-blue-300 cursor-not-allowed"
-                : "bg-blue-500 hover:bg-blue-600 focus:ring-blue-500"
+                ? "bg-brand-blue cursor-not-allowed"
+                : "bg-brand-blue hover:bg-blue-600"
             }`}
             disabled={isLoading}
           >
-            {isLoading ? (
-              <CircularProgress size={24} color="inherit" />
-            ) : (
-              "Add Crop"
-            )}
+            {isLoading ? "Adding crop..." : "Add Crop"}
           </button>
 
           {/* Error Display */}

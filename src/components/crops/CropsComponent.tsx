@@ -102,7 +102,7 @@ const CropsComponent = () => {
             </FormControl>
           </div>
           <button
-            className="bg-blue-500 px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
+            className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
             onClick={toggleCropModal}
           >
             <MdAddCircle className="text-2xl" />

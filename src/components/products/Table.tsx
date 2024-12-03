@@ -34,7 +34,7 @@ const Table: React.FC = () => {
 
   return (
     <div className="">
-      <div className="table-container overflow-x-scroll">
+      <div className="table-container">
         <table className="min-w-full bg-white dark:bg-secondary-black border-collapse text-left">
           <thead>
             <tr className=" bg-light-blue dark:bg-[#1f2937] rounded-lg">

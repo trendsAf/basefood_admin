@@ -17,6 +17,7 @@ import {
 import { useEffect, useState } from "react";
 import { getCrops } from "../../../redux/reducers/crops/cropSlice";
 import { toast, ToastContainer } from "react-toastify";
+import { IoMdClose } from "react-icons/io";
 
 interface VarietyFormValues {
   image?: string;
@@ -76,15 +77,27 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div
-        className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
-        onClick={() => toggleAddVariety()}
-      ></div>
-      <div className="bg-white dark:bg-[#252525] rounded-lg p-6 w-full max-w-4xl mx-4 _shadow">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white logo ml-52">
-          Add Variety
-        </h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex  gap-6 px-8">
+      <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
+      <div className="bg-white dark:bg-[#252525] rounded-lg  w-[40%] max-w-4xl mx-4 _shadow">
+        <div className="flex items-center justify-between ">
+          <div className="w-full relative py-4">
+            <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white ml-40">
+              Add Variety
+            </h2>
+            <div className=" absolute top-2 right-2">
+              <button
+                onClick={() => toggleAddVariety()}
+                className=" text-brand-blue  dark:text-white text-4xl  "
+              >
+                <IoMdClose className="hover:text-red" />
+              </button>
+            </div>
+          </div>
+        </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex  gap-6 px-8 pb-6"
+        >
           {/* Image Upload */}
           <div className="w-1/2 mb-4">
             <input
@@ -93,7 +106,7 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
               className="hidden"
               {...register("image", { required: "Image is required" })}
               onChange={(e) => {
-                handleImageChange(e); // Update the preview
+                handleImageChange(e);
               }}
             />
             <label
@@ -123,12 +136,13 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
             )}
           </div>
 
-          <div className="w-full flex flex-col gap-6">
-            <div>
+          <div className="w-full flex flex-col mb-4 justify-between">
+            <div className="flex flex-col items-center gap-6">
               <FormControl
                 fullWidth
                 error={!!errors.crop_id}
                 variant="outlined"
+                size="small"
               >
                 <InputLabel>Select a crop</InputLabel>
                 <Select
@@ -137,6 +151,7 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
                   className="dark:bg-[#252525] dark:text-white"
                   disabled={cropLoading}
                   defaultValue={""}
+                  size="small"
                 >
                   {cropLoading ? (
                     <MenuItem value="">
@@ -164,10 +179,8 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
                   <FormHelperText>{errors.crop_id.message}</FormHelperText>
                 )}
               </FormControl>
-            </div>
 
-            {/* Variety Name Input (MUI TextField) */}
-            <div className="w-full">
+              {/* Variety Name Input (MUI TextField) */}
               <TextField
                 {...register("crop_variety_name", {
                   required: "Variety name is required",
@@ -175,6 +188,7 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
                 label="Variety name"
                 variant="outlined"
                 fullWidth
+                size="small"
                 error={!!errors.crop_variety_name}
                 helperText={errors.crop_variety_name?.message}
                 className="dark:bg-[#252525] dark:text-white"
@@ -183,7 +197,7 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="w-full py-2 bg-brand-blue text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               disabled={isLoading}
             >
               {isLoading ? "Adding variety..." : "Add variety"}

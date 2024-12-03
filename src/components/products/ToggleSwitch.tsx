@@ -19,7 +19,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange }) => {
       />
       <div
         className={`dot absolute left-1 top-1 flex justify-center bg-white w-4 h-4 rounded-full transition ${
-          checked ? "transform translate-x-6 -left-1" : ""
+          checked ? "transform translate-x-6 -left-[0.3rem]" : ""
         }`}
       >
         {checked ? (
