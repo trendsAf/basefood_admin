@@ -59,25 +59,29 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <ToastContainer position="top-right" autoClose={3000} />
-      <div
-        className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
-        onClick={() => toggleAddCountry()}
-      ></div>
-      <div className="bg-white dark:bg-[#252525] rounded-lg p-8 w-full max-w-4xl mx-4 shadow-lg">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
-            Add Country
-          </h2>
-          <button
-            onClick={toggleAddCountry}
-            className="bg-bg-gray rounded px-3 text-brand-blue hover:text-red dark:text-white dark:bg-black flex items-center justify-center text-xl py-2 dark:hover:bg-[#161616]"
-          >
-            <IoMdClose />
-          </button>
+      <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
+      <div className="bg-white dark:bg-[#252525] rounded-lg  w-[40%] max-w-4xl  shadow-lg">
+        <div className="flex items-center justify-between ">
+          <div className="w-full relative py-4">
+            <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+              Add Country
+            </h2>
+            <div className=" absolute top-2 right-2">
+              <button
+                onClick={() => toggleAddCountry()}
+                className=" text-brand-blue  dark:text-white text-4xl "
+              >
+                <IoMdClose className="hover:text-red" />
+              </button>
+            </div>
+          </div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
-          <div className="space-y-4">
-            <FormControl fullWidth>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-6 px-8 py-3 pb-8"
+        >
+          <div className="flex items-center gap-4">
+            <FormControl fullWidth size="small">
               <InputLabel>Country Name</InputLabel>
               <Select
                 {...register("country_name", {
@@ -113,6 +117,7 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
               })}
               label="Country Code"
               fullWidth
+              size="small"
               disabled
               InputLabelProps={{
                 shrink: true,

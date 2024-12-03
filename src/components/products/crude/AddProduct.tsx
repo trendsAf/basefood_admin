@@ -87,7 +87,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
               onClick={() => toggleAddProduct()}
               className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white transition"
             >
-              <IoCloseSharp className="text-4xl" />
+              <IoCloseSharp className="text-4xl hover:text-red" />
             </button>
           </div>
         </div>
@@ -95,7 +95,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
         {/* Form */}
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 px-8 py-4"
+          className="grid grid-cols-2 gap-6 px-8 py-4"
         >
           {/* Crop Category */}
           <Controller
@@ -107,6 +107,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 <Select
                   {...field}
                   fullWidth
+                  size="small"
                   type="number"
                   variant="outlined"
                   error={!!errors.crop_category}
@@ -125,7 +126,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                     <MenuItem>No categories found</MenuItem>
                   ) : (
                     Array.isArray(crop_categories) &&
-                    crop_categories?.map((category: any) => (
+                    crop_categories.map((category: any) => (
                       <MenuItem key={category.id} value={category.id}>
                         {category.name}
                       </MenuItem>
@@ -151,6 +152,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 <Select
                   {...field}
                   fullWidth
+                  size="small"
                   type="number"
                   variant="outlined"
                   error={!!errors.crop_id}
@@ -165,10 +167,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   </MenuItem>
                   {Array.isArray(filteredCrops) &&
                   filteredCrops.length === 0 ? (
-                    <MenuItem>No categories found</MenuItem>
+                    <MenuItem>No crops found</MenuItem>
                   ) : (
                     Array.isArray(filteredCrops) &&
-                    filteredCrops?.map((crop: any) => (
+                    filteredCrops.map((crop: any) => (
                       <MenuItem key={crop.id} value={crop.id}>
                         {crop.name}
                       </MenuItem>
@@ -194,6 +196,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 <Select
                   {...field}
                   fullWidth
+                  size="small"
                   type="number"
                   variant="outlined"
                   error={!!errors.crop_variety_id}
@@ -204,10 +207,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   </MenuItem>
                   {Array.isArray(filteredVarietis) &&
                   filteredVarietis.length === 0 ? (
-                    <MenuItem>No categories found</MenuItem>
+                    <MenuItem>No varieties found</MenuItem>
                   ) : (
                     Array.isArray(filteredVarietis) &&
-                    filteredVarietis?.map((variety: any) => (
+                    filteredVarietis.map((variety: any) => (
                       <MenuItem key={variety.id} value={variety.id}>
                         {variety.name}
                       </MenuItem>
@@ -233,6 +236,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 <Select
                   {...field}
                   fullWidth
+                  size="small"
                   type="number"
                   variant="outlined"
                   error={!!errors.country_id}
@@ -246,10 +250,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                     Select a country
                   </MenuItem>
                   {Array.isArray(countries) && countries.length === 0 ? (
-                    <MenuItem>No categories found</MenuItem>
+                    <MenuItem>No countries found</MenuItem>
                   ) : (
                     Array.isArray(countries) &&
-                    countries?.map((country: any) => (
+                    countries.map((country: any) => (
                       <MenuItem key={country.code} value={country.id}>
                         {country.name}
                       </MenuItem>
@@ -275,6 +279,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 <Select
                   {...field}
                   fullWidth
+                  size="small"
                   type="number"
                   variant="outlined"
                   error={!!errors.region_id}
@@ -285,10 +290,10 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   </MenuItem>
                   {Array.isArray(filteredRegions) &&
                   filteredRegions.length === 0 ? (
-                    <MenuItem>No categories found</MenuItem>
+                    <MenuItem>No regions found</MenuItem>
                   ) : (
                     Array.isArray(filteredRegions) &&
-                    filteredRegions?.map((region: any) => (
+                    filteredRegions.map((region: any) => (
                       <MenuItem key={region.region_id} value={region.region_id}>
                         {region.region_name}
                       </MenuItem>
@@ -314,6 +319,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 <TextField
                   {...field}
                   fullWidth
+                  size="small"
                   type="number"
                   variant="outlined"
                   placeholder="$0.00"
@@ -325,7 +331,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
           />
 
           {/* Submit Button */}
-          <div className="flex justify-end gap-2 ">
+          <div className="flex justify-end gap-2 col-span-2">
             <button
               type="submit"
               disabled={isLoading}

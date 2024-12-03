@@ -15,6 +15,7 @@ import {
   PostRegion,
 } from "../../../redux/reducers/regions/regionSlice";
 import { toast, ToastContainer } from "react-toastify";
+import { IoMdClose } from "react-icons/io";
 
 interface RegionFormValues {
   country_id?: string;
@@ -58,21 +59,30 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div
-        className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"
-        onClick={() => toggleAddRegion()}
-      ></div>
-      <div className="bg-white dark:bg-[#252525] rounded-lg p-6 w-full max-w-4xl mx-4 shadow-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center text-gray-900 dark:text-white">
-          Add Region
-        </h2>
+      <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
+      <div className="bg-white dark:bg-[#252525] rounded-lg  w-[40%] max-w-4xl _shadow">
+        <div className="flex items-center justify-between ">
+          <div className="w-full relative py-4">
+            <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+              Add Region
+            </h2>
+            <div className=" absolute top-2 right-2">
+              <button
+                onClick={() => toggleAddRegion()}
+                className=" text-brand-blue  dark:text-white text-4xl "
+              >
+                <IoMdClose className="hover:text-red" />
+              </button>
+            </div>
+          </div>
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-6 p-8"
+          className="flex flex-col gap-6 px-8 py-4 pb-8"
         >
-          <div className="space-y-4">
+          <div className="flex items-center gap-4">
             {/* Country Select Input */}
-            <FormControl fullWidth error={!!errors.country_id}>
+            <FormControl fullWidth size="small" error={!!errors.country_id}>
               <InputLabel>Select a country</InputLabel>
               <Select
                 {...register("country_id", {
@@ -110,6 +120,7 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
               label="Country region"
               variant="outlined"
               fullWidth
+              size="small"
               error={!!errors.region_name}
               helperText={errors.region_name?.message}
               InputLabelProps={{ className: "dark:text-gray-300" }}
@@ -126,7 +137,7 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2 bg-blue-500 text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
+            className="w-full py-2 bg-brand-blue text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
           >
             {isLoading ? "Adding Region..." : "Add Region"}
           </button>

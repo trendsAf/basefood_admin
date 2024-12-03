@@ -72,13 +72,13 @@ const RegionComponent = () => {
 
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="demo-select-small-label">
-                Select Variety
+                Select country
               </InputLabel>
               <Select
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={selectedCountry ? selectedCountry : " "}
-                label="Variety"
+                label="country"
                 onChange={(e) => setSelectedCountry(Number(e.target.value))}
               >
                 {Array.isArray(data) && data.length > 0 ? (
@@ -94,7 +94,7 @@ const RegionComponent = () => {
             </FormControl>
           </div>
           <button
-            className="bg-blue-500 px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
+            className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
             onClick={() => setAddCountryModal(!addCountryModal)}
           >
             <MdAddCircle className="text-2xl" />
