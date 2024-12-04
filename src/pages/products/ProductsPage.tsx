@@ -16,7 +16,7 @@ const ProductsPage = () => {
   return (
     <section>
       <div className=" mb-4 md:hidden">
-        <h1 className="text-2xl font-bold text-black dark:text-white">
+        <h1 className="text-2xl font-medium text-black dark:text-white">
           Products List
         </h1>
         <p className="text-dark-gray dark:text-white">
@@ -24,7 +24,7 @@ const ProductsPage = () => {
         </p>
       </div>
       <section className="bg-white dark:bg-secondary-black p-4 ">
-        <div className="flex justify-between w-full flex-col md:flex-row gap-2 items-center p-4 font-bold italic text-2xl">
+        <div className="flex justify-between w-full flex-col md:flex-row gap-2 items-center p-4 font-medium  text-2xl">
           <h1>Products</h1>
           {/* <div className="flex text-dark-gray flex-col md:flex-row w-full gap-2">
             <CustomSelect

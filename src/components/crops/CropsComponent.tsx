@@ -70,7 +70,7 @@ const CropsComponent = () => {
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
         <div className="flex items-center justify-between px-3">
           <div className="flex items-center gap-8">
-            <h1 className="text-2xl font-bold italic">Crops</h1>
+            <h1 className="text-2xl font-medium ">Crops</h1>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
               <InputLabel id="crop-category-select-label">
                 Select a category

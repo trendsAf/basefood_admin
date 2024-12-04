@@ -78,7 +78,7 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
       <div className="bg-white dark:bg-[#252525] rounded-lg  w-[40%] max-w-4xl mx-4 _shadow">
         <div className="flex items-center justify-between ">
           <div className="w-full relative py-4">
-            <h2 className="text-2xl font-bold text-center text-gray-900 dark:text-white">
+            <h2 className="text-2xl font-medium text-center text-gray-900 dark:text-white">
               Add Process
             </h2>
             <div className=" absolute top-2 right-2">

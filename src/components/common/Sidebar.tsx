@@ -91,7 +91,7 @@ const Sidebar = ({
             {!isCollapsed && (
               <div className="flex items-center">
                 {/* <FiDatabase className="text-2xl text-blue-600 mr-2" />
-                <span className="text-xl logo font-bold text-blue-600">
+                <span className="text-xl logo font-medium text-blue-600">
                   baseFood
                 </span> */}
                 <img

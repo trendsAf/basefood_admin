@@ -42,7 +42,7 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
       <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
       <div className="bg-white dark:bg-[#252525] rounded-lg pb-6 w-[40%] max-w-4xl mx-4 _shadow">
         <div className="relative py-4">
-          <h2 className="text-2xl font-bold mb-2 text-center text-gray-900 dark:text-white">
+          <h2 className="text-2xl font-medium mb-2 text-center text-gray-900 dark:text-white">
             Add Category
           </h2>
           <div className="absolute top-2 right-2 text-4xl">

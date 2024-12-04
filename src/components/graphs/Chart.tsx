@@ -123,7 +123,7 @@ const Chart = () => {
       style: {
         color: isDarkMode ? "#fff" : "#444",
         fontSize: "20px",
-        fontWeight: "bold",
+        fontWeight: "medium",
       },
     },
   };
