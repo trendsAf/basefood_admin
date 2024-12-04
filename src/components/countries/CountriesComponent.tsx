@@ -50,7 +50,7 @@ const ProducerProductComponent = () => {
     <div className="dark:text-white py-4">
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
         <div className="flex items-center justify-between px-2 mb-4">
-          <h1 className="text-2xl font-bold italic">Countries</h1>
+          <h1 className="text-2xl font-medium ">Countries</h1>
           <button
             className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
             onClick={toggleCountryModal}
