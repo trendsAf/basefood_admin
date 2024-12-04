@@ -56,8 +56,8 @@ const CropCategoriesComponent = () => {
   return (
     <div className="dark:text-white p-6">
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
-        <div className="flex items-center justify-between px-2 mb-4">
-          <h1 className="text-2xl font-bold">Crop Categories</h1>
+        <div className="flex items-center justify-between px-3 mb-4">
+          <h1 className="text-2xl font-bold italic">Crop Categories</h1>
           <button
             className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
             onClick={toggleCropCategoryModal}
@@ -71,10 +71,10 @@ const CropCategoriesComponent = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left bg-white dark:bg-[#252525] border-separate border-spacing-0 p-2">
-            <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+            <thead className="text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
               <tr>
-                <th className="p-3">Crop Name</th>
-                <th className="p-3 rounded-r-lg expand">Action</th>
+                <th className="p-3 rounded-l-md font-normal">Crop Name</th>
+                <th className="p-3 rounded-r-md font-normal expand">Action</th>
               </tr>
             </thead>
             <tbody className="text-gray-700 dark:text-gray-300">

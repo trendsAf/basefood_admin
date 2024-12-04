@@ -60,7 +60,7 @@ const ProcessLevelComponent = () => {
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
         <div className="flex items-center justify-between px-2">
           <div className="flex items-center gap-8">
-            <h1 className="text-2xl font-bold">Process state</h1>
+            <h1 className="text-2xl font-bold italic">Process state</h1>
             <div className="flex items-center gap-2">
               {/* Crop dropdown */}
               <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
@@ -122,10 +122,10 @@ const ProcessLevelComponent = () => {
         </div>
         <div className="overflow-x-auto">
           <table className="w-full text-left bg-white dark:bg-[#252525] border-separate border-spacing-0 p-2">
-            <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
+            <thead className="text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
               <tr>
-                <th className="p-3">Process State</th>
-                <th className="p-3 rounded-r-lg expand">Action</th>
+                <th className="p-3 font-normal rounded-l-md">Process State</th>
+                <th className="p-3 font-normal rounded-r-md expand">Action</th>
               </tr>
             </thead>
             <tbody className="text-gray-700 dark:text-gray-300">

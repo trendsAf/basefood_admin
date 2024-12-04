@@ -2,7 +2,7 @@ import React from "react";
 
 interface ToggleSwitchProps {
   checked: boolean;
-  onChange: () => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange }) => {
@@ -19,7 +19,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ checked, onChange }) => {
       />
       <div
         className={`dot absolute left-1 top-1 flex justify-center bg-white w-4 h-4 rounded-full transition ${
-          checked ? "transform translate-x-6 -left-[0.2rem]" : ""
+          checked ? "transform translate-x-4" : ""
         }`}
       >
         {checked ? (

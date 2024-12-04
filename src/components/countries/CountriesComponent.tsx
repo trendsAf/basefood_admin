@@ -50,7 +50,7 @@ const ProducerProductComponent = () => {
     <div className="dark:text-white py-4">
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
         <div className="flex items-center justify-between px-2 mb-4">
-          <h1 className="text-2xl font-bold">Countries</h1>
+          <h1 className="text-2xl font-bold italic">Countries</h1>
           <button
             className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
             onClick={toggleCountryModal}
@@ -70,7 +70,9 @@ const ProducerProductComponent = () => {
             <table className="w-full text-left border-separate border-spacing-0 p-2">
               <thead className="text-base bg-bg-gray dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
                 <tr>
-                  <th className="px-3 py-2 rounded-l-lg">Country</th>
+                  <th className="px-3 py-2 rounded-l-lg font-normal">
+                    Country
+                  </th>
                   <th className="px-3 py-2 rounded-r-lg expand">Actions</th>
                 </tr>
               </thead>

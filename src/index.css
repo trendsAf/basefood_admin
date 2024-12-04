@@ -3,11 +3,7 @@
 @tailwind utilities;
 
 * {
-  font-family: "Helvetica", sans-serif;
-}
-
-.logo {
-  font-family: "HelveticaforTarget-Bold", sans-serif;
+  font-family: "Helvetica Neue", sans-serif;
 }
 
 body::-webkit-scrollbar {
@@ -27,36 +23,6 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
-
-.helvetica {
-  font-family: "Helvetica Neue", sans-serif;
-  font-weight: 400 !important;
-}
-.space_grotesk {
-  font-family: "Space Grotesk", sans-serif;
-  font-weight: 900 !important;
-}
-.space_grotesk2 {
-  font-family: "Space Grotesk", sans-serif;
-}
-
-/* .active {
-  color: #3b82f6 !important;
-  background-color: #f7f8fa;
-  border-radius: 5px;
-}
-
-.dark .active {
-  color: #60a5fa !important;
-  background-color: #1f2937;
-  border-radius: 5px;
-}
-
-.active span,
-.active svg {
-  color: #2563eb !important;
-  font-weight: bold;
-} */
 
 @layer utilities {
   .active {
