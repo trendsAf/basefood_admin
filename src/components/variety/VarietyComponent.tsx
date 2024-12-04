@@ -2,29 +2,27 @@ import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getCrops } from "../../redux/reducers/crops/cropSlice";
-import { FetchVarieties } from "../../redux/reducers/variety/varietySlice";
-import { RootState } from "../../redux/store";
-import TablePagination from "../common/TablePagination";
-import AddVariety from "./crude/AddVariety";
-import Skeleton from "react-loading-skeleton";
 import {
   FormControl,
   InputLabel,
-  Select,
   MenuItem,
+  Select,
   SelectChangeEvent,
 } from "@mui/material";
+import Skeleton from "react-loading-skeleton";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getCrops } from "../../redux/reducers/crops/cropSlice";
+import { FetchVarieties } from "../../redux/reducers/variety/varietySlice";
+import CustomPagination from "../common/pagination/CustomPagination";
+import AddVariety from "./crude/AddVariety";
 
 const VarietyComponent = () => {
   const dispatch = useAppDispatch();
   const [addVarietyModal, setAddVarietyModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const [selectedCrop, setSelectedCrop] = useState<number | null>(null);
 
   const { cropList } = useAppSelector((state) => state.crops);
@@ -34,8 +32,6 @@ const VarietyComponent = () => {
     isLoading,
     error,
   } = useAppSelector((state) => state.viriety);
-
-  const theme = useSelector((state: RootState) => state.theme.value);
 
   useEffect(() => {
     dispatch(FetchVarieties());
@@ -58,14 +54,12 @@ const VarietyComponent = () => {
     ? varieties.filter((variety: any) => variety.crop_id === selectedCrop)
     : [];
 
-  const handleChangePage = (_: unknown, newPage: number) => {
+  const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleItemsPerPageChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
-    setRowsPerPage(event.target.value as number);
+  const handleItemsPerPageChange = (itemsPerPage: number) => {
+    setRowsPerPage(itemsPerPage);
     setPage(1);
   };
 
@@ -157,13 +151,12 @@ const VarietyComponent = () => {
           </div>
         )}
 
-        <TablePagination
+        <CustomPagination
           totalItems={filteredVarieties?.length || 0}
           currentPage={page}
-          handlePageChange={handleChangePage}
+          onPageChange={handlePageChange}
           itemsPerPage={rowsPerPage}
-          handleItemsPerPageChange={handleItemsPerPageChange}
-          isDarkMode={theme === "dark"}
+          onItemsPerPageChange={handleItemsPerPageChange}
         />
       </div>
 

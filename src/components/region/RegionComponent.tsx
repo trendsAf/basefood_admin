@@ -1,23 +1,20 @@
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { RootState } from "../../redux/store";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getRegions } from "../../redux/reducers/regions/regionSlice";
-import { FetchCountries } from "../../redux/reducers/countries/countrySlice";
-import TablePagination from "../common/TablePagination";
-import AddRegion from "./crude/AddRegion";
 import Skeleton from "react-loading-skeleton";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { FetchCountries } from "../../redux/reducers/countries/countrySlice";
+import { getRegions } from "../../redux/reducers/regions/regionSlice";
+import CustomPagination from "../common/pagination/CustomPagination";
+import AddRegion from "./crude/AddRegion";
 
 const RegionComponent = () => {
-  const theme = useSelector((state: RootState) => state.theme.value);
   const [addCountryModal, setAddCountryModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const [selectedCountry, setSelectedCountry] = useState<number | null>(null);
 
   const { regionList, isLoading } = useAppSelector((state) => state.regions);
@@ -40,14 +37,12 @@ const RegionComponent = () => {
     }
   }, [selectedCountry, dispatch]);
 
-  const handleChangePage = (_: unknown, newPage: number) => {
+  const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleItemsPerPageChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
-    setRowsPerPage(event.target.value as number);
+  const handleItemsPerPageChange = (itemsPerPage: number) => {
+    setRowsPerPage(itemsPerPage);
     setPage(1);
   };
 
@@ -149,13 +144,12 @@ const RegionComponent = () => {
           </table>
         </div>
 
-        <TablePagination
+        <CustomPagination
           totalItems={filteredRegionList.length}
           currentPage={page}
-          handlePageChange={handleChangePage}
+          onPageChange={handlePageChange}
           itemsPerPage={rowsPerPage}
-          handleItemsPerPageChange={handleItemsPerPageChange}
-          isDarkMode={theme === "dark"}
+          onItemsPerPageChange={handleItemsPerPageChange}
         />
       </div>
 

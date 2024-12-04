@@ -1,34 +1,32 @@
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { getCrops } from "../../redux/reducers/crops/cropSlice";
-import { getCropsCategory } from "../../redux/reducers/crops/cropCategorySlice";
-import AddCrop from "./crude/AddCrop";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import TablePagination from "../common/TablePagination";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import {
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  SelectChangeEvent,
-} from "@mui/material";
+import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getCropsCategory } from "../../redux/reducers/crops/cropCategorySlice";
+import { getCrops } from "../../redux/reducers/crops/cropSlice";
+import CustomPagination from "../common/pagination/CustomPagination";
+import AddCrop from "./crude/AddCrop";
 
 const CropsComponent = () => {
   const dispatch = useAppDispatch();
   const { cropList, isLoading } = useAppSelector((state) => state.crops);
   const { cropCategoryList } = useAppSelector((state) => state.cropCategory);
+
   const [addCropModal, setAddCropModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const theme = useSelector((state: RootState) => state.theme.value);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
 
   useEffect(() => {
     dispatch(getCrops());
@@ -44,18 +42,7 @@ const CropsComponent = () => {
   const handleCategoryChange = (event: SelectChangeEvent<string>) => {
     const categoryId = event.target.value ? parseInt(event.target.value) : null;
     setSelectedCategory(categoryId);
-    setPage(0);
-  };
-
-  const handleChangePage = (_: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleItemsPerPageChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
-    setRowsPerPage(event.target.value as number);
-    setPage(0);
+    setCurrentPage(1);
   };
 
   const toggleCropModal = () => {
@@ -66,9 +53,17 @@ const CropsComponent = () => {
     ? cropList.filter((crop: any) => crop.crop_category === selectedCategory)
     : cropList;
 
-  const indexOfLastCrop = (page + 1) * rowsPerPage;
-  const indexOfFirstCrop = Math.max(indexOfLastCrop - rowsPerPage, 0);
+  const totalItems = filteredCrops.length;
+  const indexOfLastCrop = currentPage * itemsPerPage;
+  const indexOfFirstCrop = Math.max(indexOfLastCrop - itemsPerPage, 0);
   const currentCrops = filteredCrops.slice(indexOfFirstCrop, indexOfLastCrop);
+
+  const handlePageChange = (page: number) => setCurrentPage(page);
+
+  const handleItemsPerPageChange = (newItemsPerPage: number) => {
+    setItemsPerPage(newItemsPerPage);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="dark:text-white p-6">
@@ -77,21 +72,19 @@ const CropsComponent = () => {
           <div className="flex items-center gap-8">
             <h1 className="text-2xl font-bold">Crops</h1>
             <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-              <InputLabel id="demo-select-small-label">
+              <InputLabel id="crop-category-select-label">
                 Select a category
               </InputLabel>
               <Select
-                labelId="demo-select-small-label"
-                id="demo-select-small"
-                onChange={handleCategoryChange}
-                label="CropCategory"
+                labelId="crop-category-select-label"
                 value={selectedCategory ? selectedCategory.toString() : ""}
+                onChange={handleCategoryChange}
+                label="Select a category"
+                size="small"
               >
-                {Array.isArray(cropCategoryList) &&
-                cropCategoryList.length === 0 ? (
+                {cropCategoryList.length === 0 ? (
                   <MenuItem>No categories found</MenuItem>
                 ) : (
-                  Array.isArray(cropCategoryList) &&
                   cropCategoryList.map((category: any) => (
                     <MenuItem value={category.id} key={category.id}>
                       {category.name}
@@ -110,7 +103,7 @@ const CropsComponent = () => {
           </button>
         </div>
 
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto mt-4">
           <table className="w-full text-left bg-white dark:bg-[#252525] border-separate border-spacing-0 p-2">
             <thead className="text-sm uppercase bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
               <tr>
@@ -120,8 +113,7 @@ const CropsComponent = () => {
             </thead>
             <tbody className="text-gray-700 dark:text-gray-300">
               {isLoading ? (
-                // Render skeleton rows while data is loading
-                [...Array(rowsPerPage)].map((_, idx) => (
+                [...Array(itemsPerPage)].map((_, idx) => (
                   <tr key={idx}>
                     <td className="p-3">
                       <Skeleton height={20} width={100} />
@@ -131,18 +123,13 @@ const CropsComponent = () => {
                     </td>
                   </tr>
                 ))
-              ) : Array.isArray(currentCrops) && currentCrops.length === 0 ? (
-                // Show message if no crops are available
+              ) : currentCrops.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={2}
-                    className="text-center py-4 text-lg mt-8 px-2"
-                  >
+                  <td colSpan={2} className="text-center py-4 text-lg">
                     No crops available
                   </td>
                 </tr>
-              ) : Array.isArray(currentCrops) ? (
-                // Map through crops and render rows
+              ) : (
                 currentCrops.map((crop) => (
                   <tr key={crop.id}>
                     <td className="px-3">{crop.name}</td>
@@ -152,32 +139,22 @@ const CropsComponent = () => {
                           <FaEye className="text-lg" />
                         </button>
                       </Link>
-                      <div>
-                        <BsThreeDotsVertical className="text-2xl cursor-pointer" />
-                      </div>
+                      <BsThreeDotsVertical className="text-2xl cursor-pointer" />
                     </td>
                   </tr>
                 ))
-              ) : (
-                // Handle unexpected scenarios
-                <tr>
-                  <td colSpan={2} className="text-center py-4 text-red-500">
-                    An error occurred while fetching crops.
-                  </td>
-                </tr>
               )}
             </tbody>
           </table>
         </div>
 
-        {filteredCrops.length > 0 && (
-          <TablePagination
-            isDarkMode={theme === "dark"}
-            totalItems={filteredCrops.length}
-            currentPage={page}
-            handlePageChange={handleChangePage}
-            itemsPerPage={rowsPerPage}
-            handleItemsPerPageChange={handleItemsPerPageChange}
+        {totalItems > 0 && (
+          <CustomPagination
+            currentPage={currentPage}
+            totalItems={totalItems}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            onItemsPerPageChange={handleItemsPerPageChange}
           />
         )}
       </div>
