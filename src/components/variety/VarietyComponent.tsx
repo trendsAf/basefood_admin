@@ -138,7 +138,7 @@ const VarietyComponent = () => {
                     <td className="px-3 border-b dark:border-white/20">
                       {variety.name}
                     </td>
-                    <td className="px-2 py-4 flex items-center gap-1 border-b dark:border-white/20">
+                    <td className="px-2 py-2 flex items-center gap-1 border-b dark:border-white/20">
                       <Link to={`/variety/${variety.id}`} state={variety}>
                         <button className="px-1 py-1 text-blue-500 rounded text-2xl">
                           <FaEye className="text-lg" />

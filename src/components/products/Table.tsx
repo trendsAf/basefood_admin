@@ -40,7 +40,7 @@ const Table: React.FC = () => {
               {productTableHeader.map((header, idx) => (
                 <th
                   key={idx}
-                  className={`py-2 text-md font-normal px-2 text-left dark:bg-[#1f2937] text-black dark:text-white ${idx === 0 ? " rounded-l-md" : ""} ${idx === productTableHeader.length - 1 ? "rounded-r-md" : ""}`}
+                  className={`py-2 text-md font-normal px-2 text-left dark:bg-[#1f2937] text-black dark:text-gray-300 ${idx === 0 ? " rounded-l-md" : ""} ${idx === productTableHeader.length - 1 ? "rounded-r-md" : ""}`}
                 >
                   {header}
                 </th>
@@ -51,7 +51,7 @@ const Table: React.FC = () => {
             {currentItems.map((item, idx) => (
               <tr
                 key={idx}
-                className={`px-2  dark:border-white/20 ${idx === currentItems.length - 1 ? "border-b-0" : "border-b-[0.5px]"}`}
+                className={`px-2  dark:border-gray-300 ${idx === currentItems.length - 1 ? "border-b-0" : "border-b-[0.5px]"}`}
               >
                 <td className="py-2 px-4 flex items-center gap-2 min-w-[200px]">
                   <img
@@ -59,20 +59,20 @@ const Table: React.FC = () => {
                     alt={item.name}
                     className="w-10 h-10 object-cover rounded-md mr-2"
                   />
-                  <span className="text-dark-gray dark:text-white">
+                  <span className="text-dark-gray dark:text-gray-300">
                     {item.name}
                   </span>
                 </td>
-                <td className="py-3 px-2 text-dark-gray dark:text-white">
+                <td className="py-3 px-2 text-dark-gray dark:text-gray-300">
                   {item.country}
                 </td>
-                <td className="py-3 px-2 text-dark-gray dark:text-white">
+                <td className="py-3 px-2 text-dark-gray dark:text-gray-300">
                   {item.region}
                 </td>
-                <td className="py-3 px-2 text-dark-gray dark:text-white">
+                <td className="py-3 px-2 text-dark-gray dark:text-gray-300">
                   {item.cropVariety}
                 </td>
-                <td className="py-3 px-2 text-dark-gray dark:text-white">
+                <td className="py-3 px-2 text-dark-gray dark:text-gray-300">
                   {item.price}
                 </td>
                 <td className="py-3 px-2">
