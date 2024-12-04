@@ -3,35 +3,30 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 
 import { MdAddCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import AddCropCategory from "./crude/AddCropCategory";
-import { getCropsCategory } from "../../redux/reducers/crops/cropCategorySlice";
-import TablePagination from "../common/TablePagination";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 import Skeleton from "react-loading-skeleton";
+import { Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { getCropsCategory } from "../../redux/reducers/crops/cropCategorySlice";
+import CustomPagination from "../common/pagination/CustomPagination";
+import AddCropCategory from "./crude/AddCropCategory";
 
 const CropCategoriesComponent = () => {
   const [addCropCategoryModal, setAddCropCategoryModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const theme = useSelector((state: RootState) => state.theme.value);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const dispatch = useAppDispatch();
   const { cropCategoryList, isLoading, error } = useAppSelector(
     (state) => state.cropCategory,
   );
 
-  const handleChangePage = (_: unknown, newPage: number) => {
+  const handleChangePage = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleItemsPerPageChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
-    setRowsPerPage(event.target.value as number);
+  const handleItemsPerPageChange = (itemsPerPage: number) => {
+    setRowsPerPage(itemsPerPage);
     setPage(1);
   };
 
@@ -131,13 +126,12 @@ const CropCategoriesComponent = () => {
         </div>
 
         {/* Pagination */}
-        <TablePagination
+        <CustomPagination
           totalItems={cropCategoryList.length}
           currentPage={page}
-          handlePageChange={handleChangePage}
+          onPageChange={handleChangePage}
           itemsPerPage={rowsPerPage}
-          handleItemsPerPageChange={handleItemsPerPageChange}
-          isDarkMode={theme === "dark"}
+          onItemsPerPageChange={handleItemsPerPageChange}
         />
       </div>
 

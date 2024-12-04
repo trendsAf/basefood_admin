@@ -6,14 +6,14 @@ import { useSelector } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { FetchCountries } from "../../redux/reducers/countries/countrySlice";
 import { RootState } from "../../redux/store";
-import TablePagination from "../common/TablePagination";
 import AddCountry from "./crude/AddCountries";
 import Skeleton from "react-loading-skeleton";
+import CustomPagination from "../common/pagination/CustomPagination";
 
 const ProducerProductComponent = () => {
   const [addCountryModal, setAddCountryModal] = useState(false);
   const [page, setPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
   const theme = useSelector((state: RootState) => state.theme.value);
   const dispatch = useAppDispatch();
 
@@ -23,24 +23,16 @@ const ProducerProductComponent = () => {
     error,
   } = useAppSelector((state) => state.countries);
 
-  // Fetch countries when the component mounts
   useEffect(() => {
     dispatch(FetchCountries());
   }, [dispatch]);
 
-  // Debugging logs
-  // useEffect(() => {
-  //   console.log("Countries =====================>", countries);
-  // }, [countries]);
-
-  const handleChangePage = (_: unknown, newPage: number) => {
+  const handlePageChange = (newPage: number) => {
     setPage(newPage);
   };
 
-  const handleItemsPerPageChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-  ) => {
-    setRowsPerPage(event.target.value as number);
+  const handleItemsPerPageChange = (itemsPerPage: number) => {
+    setRowsPerPage(itemsPerPage);
     setPage(1);
   };
 
@@ -48,7 +40,6 @@ const ProducerProductComponent = () => {
     setAddCountryModal(!addCountryModal);
   };
 
-  // Calculate current countries for the current page
   const indexOfLastCountry = page * rowsPerPage;
   const indexOfFirstCountry = indexOfLastCountry - rowsPerPage;
   const currentCountry = Array.isArray(countries)
@@ -69,7 +60,6 @@ const ProducerProductComponent = () => {
           </button>
         </div>
 
-        {/* checking error regarding APIs  */}
         {error ? (
           <p>
             Error loading countries:
@@ -85,7 +75,6 @@ const ProducerProductComponent = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-700 dark:text-gray-300">
-                {/* Loading Skeleton */}
                 {isLoading ? (
                   [...Array(rowsPerPage)].map((_, idx) => (
                     <tr key={idx}>
@@ -98,14 +87,12 @@ const ProducerProductComponent = () => {
                     </tr>
                   ))
                 ) : currentCountry.length === 0 ? (
-                  // Country Validation
                   <tr>
                     <td colSpan={2} className="text-center text-lg mt-8 px-2">
                       No countries available
                     </td>
                   </tr>
                 ) : (
-                  // Getting all countries
                   currentCountry.map((country: any, idx) => (
                     <tr
                       key={idx}
@@ -140,18 +127,15 @@ const ProducerProductComponent = () => {
           </div>
         )}
 
-        {/* Pagination */}
-        <TablePagination
-          isDarkMode={theme === "dark"}
-          totalItems={Array.isArray(countries) ? countries.length : 0}
+        <CustomPagination
           currentPage={page}
-          handlePageChange={handleChangePage}
+          totalItems={Array.isArray(countries) ? countries.length : 0}
           itemsPerPage={rowsPerPage}
-          handleItemsPerPageChange={handleItemsPerPageChange}
+          onPageChange={handlePageChange}
+          onItemsPerPageChange={handleItemsPerPageChange}
         />
       </div>
 
-      {/* Render form to add country */}
       {addCountryModal && (
         <AddCountry
           toggleAddCountry={toggleCountryModal}

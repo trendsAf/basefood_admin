@@ -3,21 +3,21 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { MdAddCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
-import TablePagination from "@mui/material/TablePagination";
 import AddProcessLevel from "./crude/AddProcessLevel";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { getCrops } from "../../redux/reducers/crops/cropSlice";
 import { FetchProcessLevel } from "../../redux/reducers/processLevel/processLevelSlice";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { FetchVarieties } from "../../redux/reducers/variety/varietySlice";
+import CustomPagination from "../common/pagination/CustomPagination";
 
 const ProcessLevelComponent = () => {
   const dispatch = useAppDispatch();
   const [addProcessLevelModal, setAddProcessLevelModal] = useState(false);
   const [selectedCropId, setSelectedCropId] = useState("");
   const [selectedVarietyId, setSelectedVarietyId] = useState("");
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(8);
 
   const { cropList } = useAppSelector((state) => state.crops);
   const { data: processStates } = useAppSelector((state) => state.processLevel);
@@ -43,20 +43,17 @@ const ProcessLevelComponent = () => {
       )
     : [];
 
-  const handleChangePage = (_: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
   const toggleAddProcessLevel = () => {
     setAddProcessLevelModal(!addProcessLevelModal);
   };
+
+  // Paginate filteredProcessStates
+  const indexOfLastItem = currentPage * rowsPerPage;
+  const indexOfFirstItem = indexOfLastItem - rowsPerPage;
+  const currentProcessStates = filteredProcessStates.slice(
+    indexOfFirstItem,
+    indexOfLastItem,
+  );
 
   return (
     <div className="dark:text-white p-6">
@@ -67,13 +64,9 @@ const ProcessLevelComponent = () => {
             <div className="flex items-center gap-2">
               {/* Crop dropdown */}
               <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                <InputLabel id="demo-select-small-label">
-                  Select a crop
-                </InputLabel>
+                <InputLabel id="crop-select-label">Select a crop</InputLabel>
                 <Select
-                  labelId="demo-select-small-label"
-                  id="demo-select-small"
-                  label="Crop"
+                  labelId="crop-select-label"
                   value={selectedCropId}
                   onChange={(e) => {
                     setSelectedCropId(e.target.value);
@@ -94,16 +87,14 @@ const ProcessLevelComponent = () => {
               </FormControl>
 
               {/* Variety dropdown */}
-              {selectedCropId ? (
+              {selectedCropId && (
                 <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                  <InputLabel id="demo-select-small-label">
+                  <InputLabel id="variety-select-label">
                     Select Variety
                   </InputLabel>
                   <Select
-                    labelId="demo-select-small-label"
-                    id="demo-select-small"
+                    labelId="variety-select-label"
                     value={selectedVarietyId}
-                    label="Variety"
                     onChange={(e) => setSelectedVarietyId(e.target.value)}
                   >
                     {Array.isArray(filteredVarieties) &&
@@ -118,8 +109,6 @@ const ProcessLevelComponent = () => {
                     )}
                   </Select>
                 </FormControl>
-              ) : (
-                ""
               )}
             </div>
           </div>
@@ -152,60 +141,47 @@ const ProcessLevelComponent = () => {
                     Please select a variety
                   </td>
                 </tr>
-              ) : filteredProcessStates.length === 0 ? (
+              ) : currentProcessStates.length === 0 ? (
                 <tr>
                   <td colSpan={2} className="text-center py-4">
                     No process states found for the selected variety
                   </td>
                 </tr>
               ) : (
-                filteredProcessStates
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((state: any, idx) => (
-                    <tr key={idx} className="">
-                      <td
-                        className={`px-3 py-2 ${
-                          idx === filteredProcessStates.length - 1
-                            ? "border-none"
-                            : "border-b dark:border-white/20"
-                        }`}
+                currentProcessStates.map((state: any, idx) => (
+                  <tr key={idx}>
+                    <td className="px-3 py-2 border-b dark:border-white/20">
+                      {state.process_state}
+                    </td>
+                    <td className="px-2 py-4 space-x-2 flex items-center gap-1 border-b dark:border-white/20">
+                      <Link
+                        to={`/process/${state.crop_variety_id}`}
+                        state={state}
                       >
-                        {state.process_state}
-                      </td>
-                      <td
-                        className={`px-2 py-4 space-x-2 flex items-center gap-1 ${
-                          idx === filteredProcessStates.length - 1
-                            ? "border-none"
-                            : "border-b dark:border-white/20 "
-                        }`}
-                      >
-                        <Link
-                          to={`/process/${state.crop_variety_id}`}
-                          state={state}
-                        >
-                          <button className="px-1 py-1 text-blue-500 rounded text-2xl">
-                            <FaEye className="text-lg" />
-                          </button>
-                        </Link>
-                        <div>
-                          <BsThreeDotsVertical className="text-2xl cursor-pointer" />
-                        </div>
-                      </td>
-                    </tr>
-                  ))
+                        <button className="px-1 py-1 text-blue-500 rounded text-2xl">
+                          <FaEye className="text-lg" />
+                        </button>
+                      </Link>
+                      <div>
+                        <BsThreeDotsVertical className="text-2xl cursor-pointer" />
+                      </div>
+                    </td>
+                  </tr>
+                ))
               )}
             </tbody>
           </table>
         </div>
         {selectedVarietyId && (
-          <TablePagination
-            component="div"
-            count={filteredProcessStates.length}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            rowsPerPageOptions={[5, 8, 10, 15]}
+          <CustomPagination
+            currentPage={currentPage}
+            totalItems={filteredProcessStates.length}
+            itemsPerPage={rowsPerPage}
+            onPageChange={(page) => setCurrentPage(page)}
+            onItemsPerPageChange={(items) => {
+              setRowsPerPage(items);
+              setCurrentPage(1);
+            }}
           />
         )}
       </div>
