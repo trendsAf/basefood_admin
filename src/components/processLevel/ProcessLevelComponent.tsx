@@ -131,19 +131,19 @@ const ProcessLevelComponent = () => {
             <tbody className="text-gray-700 dark:text-gray-300">
               {selectedCropId === "" ? (
                 <tr>
-                  <td colSpan={2} className="text-center py-4">
+                  <td colSpan={2} className="text-center py-2">
                     Please select a crop
                   </td>
                 </tr>
               ) : selectedVarietyId === "" ? (
                 <tr>
-                  <td colSpan={2} className="text-center py-4">
+                  <td colSpan={2} className="text-center py-2">
                     Please select a variety
                   </td>
                 </tr>
               ) : currentProcessStates.length === 0 ? (
                 <tr>
-                  <td colSpan={2} className="text-center py-4">
+                  <td colSpan={2} className="text-center py-2">
                     No process states found for the selected variety
                   </td>
                 </tr>
@@ -153,7 +153,7 @@ const ProcessLevelComponent = () => {
                     <td className="px-3 py-2 border-b dark:border-white/20">
                       {state.process_state}
                     </td>
-                    <td className="px-2 py-4 space-x-2 flex items-center gap-1 border-b dark:border-white/20">
+                    <td className="px-2 py-2 space-x-2 flex items-center gap-1 border-b dark:border-white/20">
                       <Link
                         to={`/process/${state.crop_variety_id}`}
                         state={state}

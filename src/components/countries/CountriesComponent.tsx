@@ -49,7 +49,7 @@ const ProducerProductComponent = () => {
   return (
     <div className="dark:text-white py-4">
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
-        <div className="flex items-center justify-between px-2 mb-4">
+        <div className="flex items-center justify-between px-2 mb-1">
           <h1 className="text-2xl font-medium ">Countries</h1>
           <button
             className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
@@ -73,7 +73,9 @@ const ProducerProductComponent = () => {
                   <th className="px-3 py-2 rounded-l-lg font-normal">
                     Country
                   </th>
-                  <th className="px-3 py-2 rounded-r-lg expand">Actions</th>
+                  <th className="px-3 py-2 font-normal rounded-r-lg expand">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody className="text-gray-700 dark:text-gray-300">
@@ -98,9 +100,9 @@ const ProducerProductComponent = () => {
                   currentCountry.map((country: any, idx) => (
                     <tr
                       key={idx}
-                      className="!border-b my-1 gap-1 !dark:border-gray-600"
+                      className="!border-b my-1 gap-1 !dark:border-white/20"
                     >
-                      <td className="px-3 border-b-[0.5px] dark:border-gray-600">
+                      <td className="px-3 border-b-[0.5px] dark:border-white/20">
                         <div className="flex items-center gap-3">
                           <img
                             src={`https://flagsapi.com/${country.code}/flat/64.png`}
@@ -110,8 +112,8 @@ const ProducerProductComponent = () => {
                           {country.name}
                         </div>
                       </td>
-                      <td className="px-2 py-2 gap-1 border-b-[0.5px] dark:border-gray-600">
-                        <div className="flex items-center space-x-3">
+                      <td className="px-2 py-2 gap-1 border-b-[0.5px] dark:border-white/20">
+                        <div className="flex items-center space-x-3 ml-2">
                           <button
                             className="text-blue-600 hover:text-blue-800"
                             title="View Details"
