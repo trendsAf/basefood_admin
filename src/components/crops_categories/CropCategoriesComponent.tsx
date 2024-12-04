@@ -56,7 +56,7 @@ const CropCategoriesComponent = () => {
   return (
     <div className="dark:text-white p-6">
       <div className="dark:bg-[#252525] bg-white px-5 pt-5 rounded">
-        <div className="flex items-center justify-between px-3 mb-4">
+        <div className="flex items-center justify-between px-3 mb-1">
           <h1 className="text-2xl font-medium ">Crop Categories</h1>
           <button
             className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
@@ -102,8 +102,10 @@ const CropCategoriesComponent = () => {
               ) : Array.isArray(currentCategories) ? (
                 currentCategories.map((crop) => (
                   <tr key={crop.id} className="border-b dark:border-white/20">
-                    <td className="px-3">{crop.name}</td>
-                    <td className="px-2 py-4 flex items-center gap-1">
+                    <td className="px-3 border-b dark:border-white/20">
+                      {crop.name}
+                    </td>
+                    <td className="px-2 border-b dark:border-white/20 py-2 flex items-center gap-1">
                       <Link to={`/crop/${crop.id}`} state={crop}>
                         <button className="px-1 py-1 text-blue-500 rounded text-2xl">
                           <FaEye className="text-lg" />

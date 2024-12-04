@@ -98,12 +98,12 @@ const CropsComponent = () => {
             className="bg-brand-blue px-6 py-2 flex items-center gap-1 text-xl rounded text-white"
             onClick={toggleCropModal}
           >
-            <MdAddCircle className="text-2xl" />
+            <MdAddCircle className="text-xl" />
             Add crop
           </button>
         </div>
 
-        <div className="overflow-x-auto mt-4">
+        <div className="overflow-x-auto mt-2">
           <table className="w-full text-left bg-white dark:bg-[#252525] border-separate border-spacing-0 p-2">
             <thead className="text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
               <tr>
@@ -132,8 +132,10 @@ const CropsComponent = () => {
               ) : (
                 currentCrops.map((crop) => (
                   <tr key={crop.id}>
-                    <td className="px-3">{crop.name}</td>
-                    <td className="px-2 py-4 space-x-2 flex items-center gap-1">
+                    <td className="px-3 border-b-[0.5px] dark:border-white/20">
+                      {crop.name}
+                    </td>
+                    <td className="px-2 py-2 space-x-2 flex items-center gap-1 border-b-[0.5px] dark:border-white/20">
                       <Link to={`/crop/${crop.id}`} state={crop}>
                         <button className="px-1 py-1 text-blue-500 rounded text-2xl">
                           <FaEye className="text-lg" />

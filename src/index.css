@@ -42,7 +42,7 @@ body::-webkit-scrollbar-thumb:hover {
       0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
   .expand {
-    @apply w-[13%];
+    @apply w-[5%];
   }
 }
 

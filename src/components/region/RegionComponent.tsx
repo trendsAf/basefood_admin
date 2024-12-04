@@ -129,7 +129,7 @@ const RegionComponent = () => {
                     <td className="px-3 border-b dark:border-white/20">
                       {region.region_name}
                     </td>
-                    <td className="px-2 py-4 flex items-center gap-1 border-b dark:border-white/20">
+                    <td className="px-2 py-2 flex items-center gap-1 border-b dark:border-white/20">
                       <Link to={`/region/${region.id}`} state={region}>
                         <button className="px-1 py-1 text-blue-500 rounded text-2xl">
                           <FaEye className="text-lg" />
