@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-// import ToggleSwitch from '../ToggleSwitch';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import CustomPagination from "../common/pagination/CustomPagination";
 import ToggleSwitch from "./ToggleSwitch";
 import { productsData } from "../../utils/products/productsData";
-// import Pagination from '../tables/Pagination';
+import { productTableHeader } from "../../utils/tables/tableUtils";
 
 const Table: React.FC = () => {
   const [products, setProducts] = useState(productsData);
@@ -37,37 +36,24 @@ const Table: React.FC = () => {
       <div className="table-container">
         <table className="min-w-full bg-white dark:bg-secondary-black border-collapse text-left">
           <thead>
-            <tr className=" bg-light-blue dark:bg-[#1f2937] rounded-lg">
-              <th className="py-2 text-md px-4 text-left dark:bg-[#1f2937] text-black dark:text-white rounded-l-sm">
-                Crop
-              </th>
-              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
-                Country
-              </th>
-              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
-                Region
-              </th>
-              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
-                Variety
-              </th>
-              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
-                Price
-              </th>
-              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white">
-                Active
-              </th>
-              <th className="py-2 text-md px-2 text-left dark:bg-[#1f2937] text-black dark:text-white rounded-r-sm">
-                Action
-              </th>
+            <tr className="">
+              {productTableHeader.map((header, idx) => (
+                <th
+                  key={idx}
+                  className={`py-2 text-md font-normal px-2 text-left dark:bg-[#1f2937] text-black dark:text-white ${idx === 0 ? " rounded-l-md" : ""} ${idx === productTableHeader.length - 1 ? "rounded-r-md" : ""}`}
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((item) => (
+            {currentItems.map((item, idx) => (
               <tr
-                key={item.id}
-                className={`px-2 border-t-[0.5px] dark:border-white/20 ${item.id === 1 ? "border-t-0" : ""}`}
+                key={idx}
+                className={`px-2  dark:border-white/20 ${idx === currentItems.length - 1 ? "border-b-0" : "border-b-[0.5px]"}`}
               >
-                <td className="py-3 px-4 flex items-center gap-2 min-w-[200px]">
+                <td className="py-2 px-4 flex items-center gap-2 min-w-[200px]">
                   <img
                     src={item.image}
                     alt={item.name}
