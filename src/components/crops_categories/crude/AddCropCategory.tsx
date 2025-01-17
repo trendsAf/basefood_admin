@@ -76,12 +76,12 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
           </div>
 
           {/* Display error if present */}
-          {error && <p className="text-red-500 text-center">{error}</p>}
+          {error && <p className="text-red-500 text-center">{/* {error} */}</p>}
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2 bg-brand-blue text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className="w-full py-2 bg-brand-blue text-white rounded-lg font-normal hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
             {isLoading ? "Adding category..." : "Add category"}
           </button>

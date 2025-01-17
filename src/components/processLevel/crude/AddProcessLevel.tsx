@@ -197,13 +197,13 @@ const AddProcessLevel = ({ toggleAddProcessLevel }: CropCategoryFormValues) => {
           {/* Error Message */}
           {error && (
             <div className="text-red-500 text-center mt-4">
-              {typeof error === "string" ? error : "An error occurred."}
+              {/* {typeof error === "string" ? error : "An error occurred."} */}
             </div>
           )}
 
           <button
             type="submit"
-            className="w-full py-2 bg-brand-blue text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className="w-full py-2 bg-brand-blue text-white rounded-lg font-normal hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Add Process"}

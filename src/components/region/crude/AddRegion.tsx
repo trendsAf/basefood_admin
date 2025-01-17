@@ -130,14 +130,14 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
 
           {error && (
             <p className="text-red-500 text-sm mt-2">
-              {typeof error === "string" ? error : "Failed to add region"}
+              {/* {typeof error === "string" ? error : "Failed to add region"} */}
             </p>
           )}
 
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2 bg-brand-blue text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
+            className="w-full py-2 bg-brand-blue text-white rounded-lg font-normal hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 disabled:opacity-50"
           >
             {isLoading ? "Adding Region..." : "Add Region"}
           </button>

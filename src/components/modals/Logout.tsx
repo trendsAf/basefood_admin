@@ -19,7 +19,7 @@ const LogoutModal: React.FC<LogoutModalProps> = ({
       <div className="bg-white dark:bg-[#252525] rounded-lg shadow-lg p-6 w-96">
         <div className="flex items-center mb-4">
           <GoAlert className="w-6 h-6 text-red mr-2" />
-          <h2 className="text-lg font-semibold dark:text-white">
+          <h2 className="text-lg font-normal dark:text-white">
             Confirm Logout
           </h2>
         </div>

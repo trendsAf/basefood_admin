@@ -151,7 +151,7 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
           {/* Submit Button */}
           <button
             type="submit"
-            className={`w-full py-2 rounded-lg font-semibold text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
+            className={`w-full py-2 rounded-lg font-normal text-white focus:outline-none focus:ring-2 focus:ring-opacity-50 ${
               isLoading
                 ? "bg-brand-blue cursor-not-allowed"
                 : "bg-brand-blue hover:bg-blue-600"
@@ -161,9 +161,10 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
             {isLoading ? "Adding crop..." : "Add Crop"}
           </button>
 
-          {/* Error Display */}
           {error && (
-            <p className="text-red-500 text-sm mt-2 text-center">{error}</p>
+            <p className="text-red-500 text-sm mt-2 text-center">
+              {/* {error} */}
+            </p>
           )}
         </form>
       </div>

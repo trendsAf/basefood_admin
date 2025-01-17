@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import Footer from "../common/Footer";
 import Navbar from "../common/Navbar";
 
 const PagesLayout = () => {
@@ -8,7 +7,7 @@ const PagesLayout = () => {
       <Navbar />
       {/* <main className="flex-1 pb-10">{children}</main> */}
       <Outlet />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

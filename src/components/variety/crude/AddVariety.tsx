@@ -7,14 +7,17 @@ import {
   Select,
   TextField,
 } from "@mui/material";
-import { CloudUpload } from "@mui/icons-material";
+// import { CloudUpload } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   FetchVarieties,
   PostVariety,
 } from "../../../redux/reducers/variety/varietySlice";
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  // useState
+} from "react";
 import { getCrops } from "../../../redux/reducers/crops/cropSlice";
 import { toast, ToastContainer } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
@@ -35,14 +38,14 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
   );
   const { isLoading, error } = useAppSelector((state) => state.viriety);
 
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  // const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     setImagePreview(URL.createObjectURL(file));
+  //   }
+  // };
 
   useEffect(() => {
     const fetchCrops = async () => {
@@ -99,7 +102,7 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
           className="flex  gap-6 px-8 pb-6"
         >
           {/* Image Upload */}
-          <div className="w-1/2 mb-4">
+          {/* <div className="w-1/2 mb-4">
             <input
               type="file"
               id="image-upload"
@@ -134,7 +137,7 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
                 {errors.image.message}
               </span>
             )}
-          </div>
+          </div> */}
 
           <div className="w-full flex flex-col mb-4 justify-between">
             <div className="flex flex-col items-center gap-6">
@@ -197,7 +200,7 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="w-full py-2 bg-brand-blue text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+              className="w-full py-2 mt-4 bg-brand-blue text-white rounded-lg font-normal hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               disabled={isLoading}
             >
               {isLoading ? "Adding variety..." : "Add variety"}
@@ -205,7 +208,9 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
 
             {/* Error Handling */}
             {error && (
-              <div className="mt-4 text-red-500 text-center">{error}</div>
+              <div className="mt-4 text-red-500 text-center">
+                {/* {error} */}
+              </div>
             )}
           </div>
         </form>

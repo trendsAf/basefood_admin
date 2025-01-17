@@ -62,8 +62,8 @@ const ProducerProductComponent = () => {
 
         {error ? (
           <p>
-            Error loading countries:
-            {typeof error === "string" ? error : "An unknown error occurred"}
+            {/* Error loading countries:
+            {typeof error === "string" ? error : "An unknown error occurred"} */}
           </p>
         ) : (
           <div className="overflow-x-auto">
