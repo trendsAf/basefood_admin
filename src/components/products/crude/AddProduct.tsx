@@ -135,7 +135,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 </Select>
                 {errors.crop_category && (
                   <p className="text-sm text-red mt-1">
-                    {errors.crop_category.message}
+                    {/* {errors.crop_category.message} */}
                   </p>
                 )}
               </>
@@ -179,7 +179,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 </Select>
                 {errors.crop_id && (
                   <p className="text-sm text-red mt-1">
-                    {errors.crop_id.message}
+                    {/* {errors.crop_id.message} */}
                   </p>
                 )}
               </>
@@ -219,7 +219,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 </Select>
                 {errors.crop_variety_id && (
                   <p className="text-sm text-red mt-1">
-                    {errors.crop_variety_id.message}
+                    {/* {errors.crop_variety_id.message} */}
                   </p>
                 )}
               </>
@@ -262,7 +262,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 </Select>
                 {errors.country_id && (
                   <p className="text-sm text-red mt-1">
-                    {errors.country_id.message}
+                    {/* {errors.country_id.message} */}
                   </p>
                 )}
               </>
@@ -302,7 +302,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                 </Select>
                 {errors.region_id && (
                   <p className="text-sm text-red mt-1">
-                    {errors.region_id.message}
+                    {/* {errors.region_id.message} */}
                   </p>
                 )}
               </>

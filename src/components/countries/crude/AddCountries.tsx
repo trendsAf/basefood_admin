@@ -106,7 +106,7 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
               </Select>
               {errors.country_name && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.country_name.message}
+                  {/* {errors.country_name.message} */}
                 </p>
               )}
             </FormControl>
@@ -127,11 +127,13 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
             />
           </div>
 
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          {error && (
+            <p className="text-red-500 text-sm mt-2">{/* {error} */}</p>
+          )}
 
           <button
             type="submit"
-            className="w-full py-2 bg-brand-blue text-white rounded-lg font-semibold hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className="w-full py-2 bg-brand-blue text-white rounded-lg font-narmal hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             disabled={isLoading}
           >
             {isLoading ? "Adding..." : "Add Country"}
