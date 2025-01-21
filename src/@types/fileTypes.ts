@@ -64,3 +64,16 @@ export type VarietyState = {
   error: string | null;
   data: string[];
 };
+
+export type ReducerTypes = {
+  isLoading: boolean;
+  data?: DynamicType;
+  error: string | null;
+  isVerified?: boolean;
+  message?: string | null;
+};
+
+export type LoginTypes = {
+  email: string;
+  password: string;
+};
