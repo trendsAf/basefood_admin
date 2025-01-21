@@ -9,11 +9,13 @@ import ProcessLevelComponent from "../components/processLevel/ProcessLevelCompon
 import CropCategoriesComponent from "../components/crops_categories/CropCategoriesComponent";
 import VarietyComponent from "../components/variety/VarietyComponent";
 import Products from "../pages/products/ProductsPage";
+import Login from "../pages/auth/Login";
 
 const AppRoutes = () => {
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <Routes>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="/crops" element={<CropsComponent />} />
