@@ -4,7 +4,11 @@ import { FaBars } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GiFruitBowl, GiThreeLeaves, GiWorld } from "react-icons/gi";
 import { GoHome } from "react-icons/go";
-import { MdEventRepeat, MdOutlineLogout } from "react-icons/md";
+import {
+  MdDataThresholding,
+  MdEventRepeat,
+  MdOutlineLogout,
+} from "react-icons/md";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import Logo from "../../assets/basefood_logo.png";
@@ -13,7 +17,7 @@ import { RootState } from "../../redux/store";
 import LogoutModal from "../modals/Logout";
 import ModeToggle from "./ModeToggle";
 import { MdHub } from "react-icons/md";
-import { AiOutlineProduct } from "react-icons/ai";
+// import { AiOutlineProduct } from "react-icons/ai";
 
 const tooltipTheme = createTheme({
   components: {
@@ -240,7 +244,7 @@ const Sidebar = ({
                   </Tooltip>
                 </ThemeProvider>
               </NavLink>
-              <NavLink to="products">
+              {/* <NavLink to="products">
                 <ThemeProvider theme={tooltipTheme}>
                   <Tooltip
                     title={`${isCollapsed ? "Products" : ""}`}
@@ -251,6 +255,23 @@ const Sidebar = ({
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Products
+                        </span>
+                      )}
+                    </li>
+                  </Tooltip>
+                </ThemeProvider>
+              </NavLink> */}
+              <NavLink to="/data">
+                <ThemeProvider theme={tooltipTheme}>
+                  <Tooltip
+                    title={`${isCollapsed ? "Products" : ""}`}
+                    placement="right"
+                  >
+                    <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
+                      <MdDataThresholding className="text-lg text-gray-900 dark:text-white" />
+                      {!isCollapsed && (
+                        <span className="ml-2 text-gray-900 dark:text-white">
+                          Analitics
                         </span>
                       )}
                     </li>

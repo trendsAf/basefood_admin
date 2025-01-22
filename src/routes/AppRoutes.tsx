@@ -10,6 +10,7 @@ import CropCategoriesComponent from "../components/crops_categories/CropCategori
 import VarietyComponent from "../components/variety/VarietyComponent";
 import Products from "../pages/products/ProductsPage";
 import Login from "../pages/auth/Login";
+import ChartData from "../components/chartData/ChartData";
 
 const AppRoutes = () => {
   return (
@@ -28,6 +29,7 @@ const AppRoutes = () => {
           <Route path="/process_level" element={<ProcessLevelComponent />} />
           <Route path="/variety" element={<VarietyComponent />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/data" element={<ChartData />} />
         </Route>
         <Route
           path="*"
