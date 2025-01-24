@@ -134,10 +134,10 @@ const ChartData: React.FC = () => {
             </button>
           </div>
           <CsvPreviewTable csvData={csvData} />
-          <div className="flex justify-between mt-4">
+          <div className="mx-auto flex flex-col w-full items-center mt-4">
             <button
               onClick={handleUpload}
-              className="px-4 w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
+              className="px-4 w-1/2 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
             >
               Submit
             </button>
