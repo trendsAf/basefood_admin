@@ -341,7 +341,7 @@ const AddProductModal: React.FC<AddProductModalProps> = ({
                   : "hover:bg-blue-600"
               }`}
             >
-              {isLoading ? "Submitting..." : "Add Crop"}
+              {isLoading ? "Submitting..." : "Add product"}
             </button>
           </div>
         </form>

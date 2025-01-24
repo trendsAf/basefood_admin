@@ -17,7 +17,7 @@ import { RootState } from "../../redux/store";
 import LogoutModal from "../modals/Logout";
 import ModeToggle from "./ModeToggle";
 import { MdHub } from "react-icons/md";
-// import { AiOutlineProduct } from "react-icons/ai";
+import { AiOutlineProduct } from "react-icons/ai";
 
 const tooltipTheme = createTheme({
   components: {
@@ -244,7 +244,7 @@ const Sidebar = ({
                   </Tooltip>
                 </ThemeProvider>
               </NavLink>
-              {/* <NavLink to="products">
+              <NavLink to="products">
                 <ThemeProvider theme={tooltipTheme}>
                   <Tooltip
                     title={`${isCollapsed ? "Products" : ""}`}
@@ -260,7 +260,7 @@ const Sidebar = ({
                     </li>
                   </Tooltip>
                 </ThemeProvider>
-              </NavLink> */}
+              </NavLink>
               <NavLink to="/data">
                 <ThemeProvider theme={tooltipTheme}>
                   <Tooltip
