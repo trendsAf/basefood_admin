@@ -118,8 +118,8 @@ const Sidebar = ({
             </button>
           </div>
 
-          <nav className="mt-6 flex flex-col justify-center">
-            <ul className="flex flex-col space-y-4">
+          <nav className="mt-6 flex flex-col justify-center text-sm 2xl:text-lg">
+            <ul className="flex flex-col space-y-2 2xl:space-y-4">
               <NavLink
                 to="/"
                 //@ts-ignore
@@ -131,7 +131,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer">
-                      <GoHome className="text-lg whitespace-nowrap text-gray-900 dark:text-white" />
+                      <GoHome className="text-base 2xl:text-lg whitespace-nowrap text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Dashboard
@@ -148,7 +148,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <GiWorld className="text-lg text-gray-900 dark:text-white" />
+                      <GiWorld className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Countries
@@ -165,7 +165,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <FaLocationDot className="text-lg text-gray-900 dark:text-white" />
+                      <FaLocationDot className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Region
@@ -182,7 +182,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <GiFruitBowl className="text-lg text-gray-900 dark:text-white" />
+                      <GiFruitBowl className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Crops category
@@ -200,7 +200,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <GiThreeLeaves className="text-lg text-gray-900 dark:text-white" />
+                      <GiThreeLeaves className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Crops
@@ -217,7 +217,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <MdHub className="text-lg text-gray-900 dark:text-white" />
+                      <MdHub className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Crop variety
@@ -234,7 +234,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <MdEventRepeat className="text-lg text-gray-900 dark:text-white" />
+                      <MdEventRepeat className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Process state
@@ -251,7 +251,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <AiOutlineProduct className="text-lg text-gray-900 dark:text-white" />
+                      <AiOutlineProduct className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Products
@@ -268,7 +268,7 @@ const Sidebar = ({
                     placement="right"
                   >
                     <li className="flex items-center px-2 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer rounded">
-                      <MdDataThresholding className="text-lg text-gray-900 dark:text-white" />
+                      <MdDataThresholding className="text-base 2xl:text-lg text-gray-900 dark:text-white" />
                       {!isCollapsed && (
                         <span className="ml-2 text-gray-900 dark:text-white">
                           Analitics
@@ -282,15 +282,19 @@ const Sidebar = ({
           </nav>
         </div>
 
-        <div className="flex flex-col space-y-2 py-4">
+        <div className="flex flex-col space-y-2 2xl:py-4 py-2">
           <ThemeProvider theme={tooltipTheme}>
             <Tooltip title={`${isCollapsed ? "Logout" : ""}`} placement="right">
               <button
                 onClick={handleLogoutClick}
-                className="flex items-center py-2 px-4  text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
+                className="flex items-center py-2 px-2 2xl:px-4  text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded"
               >
-                <MdOutlineLogout className="text-md" />
-                {!isCollapsed && <span className="ml-4">Logout</span>}
+                <MdOutlineLogout className="text-base 2xl:text-lg" />
+                {!isCollapsed && (
+                  <span className="2xl:ml-4 ml-2 text-base 2xl:text-lg">
+                    Logout
+                  </span>
+                )}
               </button>
             </Tooltip>
           </ThemeProvider>
