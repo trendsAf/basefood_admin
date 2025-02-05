@@ -11,12 +11,17 @@ import VarietyComponent from "../components/variety/VarietyComponent";
 import Products from "../pages/products/ProductsPage";
 import Login from "../pages/auth/Login";
 import ChartData from "../components/chartData/ChartData";
+import AdminResetPassword from "../pages/auth/AdminResetPassword";
 
 const AppRoutes = () => {
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/admin/reset_password/:token"
+          element={<AdminResetPassword />}
+        />
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="/crops" element={<CropsComponent />} />
