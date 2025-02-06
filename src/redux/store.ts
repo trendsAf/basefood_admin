@@ -8,6 +8,7 @@ import processLevelReducer from "./reducers/processLevel/processLevelSlice";
 import regionReducer from "./reducers/regions/regionSlice";
 import productReducer from "./reducers/products/productSlice";
 import loginReducer from "./reducers/auth/loginSlice";
+import resetPasswordReducer from "./reducers/auth/resetPasswordSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     regions: regionReducer,
     products: productReducer,
     login: loginReducer,
+    reset_password: resetPasswordReducer,
   },
 });
 

@@ -129,13 +129,13 @@ const Chart = () => {
   };
 
   return (
-    <div className="w-full bg-white dark:bg-[#252525] p-4 rounded-lg shadow-md">
+    <div className="w-full bg-white dark:bg-[#252525] p-4 rounded-lg shadow-md h-full">
       <ReactApexChart
         style={{ width: "100%" }}
         //@ts-ignore
         options={options}
         series={options.series}
-        height={500}
+        height="100%"
         width="100%"
         type="bar"
       />

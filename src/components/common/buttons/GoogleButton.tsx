@@ -9,7 +9,7 @@ const GoogleButton = () => {
   return (
     <button
       type="button"
-      className=" bg-[#e5e5e5] text-black px-5 py-3 w-full rounded-[5px] font-medium hover:bg-[#d1d0d0] transition-all helvetica duration-300 flex items-center justify-center gap-3"
+      className=" bg-[#e5e5e5] text-black px-5 py-3 w-full rounded-[5px] font-medium hover:bg-[#d1d0d0] transition-all duration-300 flex items-center justify-center gap-3 2xl:text-xl"
       onClick={() => handleGoogleLogin()}
     >
       <FcGoogle className="text-2xl" />

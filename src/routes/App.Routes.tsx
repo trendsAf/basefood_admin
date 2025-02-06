@@ -11,25 +11,33 @@ import VarietyComponent from "../components/variety/VarietyComponent";
 import Products from "../pages/products/ProductsPage";
 import Login from "../pages/auth/Login";
 import ChartData from "../components/chartData/ChartData";
+import AdminResetPassword from "../pages/auth/AdminResetPassword";
+import PrivateRoutes from "./Private.Routes";
 
 const AppRoutes = () => {
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <Routes>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/crops" element={<CropsComponent />} />
-          <Route path="/countries" element={<CountriesComponent />} />
-          <Route path="/regions" element={<RegionComponent />} />
-          <Route
-            path="/crop_categories"
-            element={<CropCategoriesComponent />}
-          />
-          <Route path="/process_level" element={<ProcessLevelComponent />} />
-          <Route path="/variety" element={<VarietyComponent />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/data" element={<ChartData />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/admin/reset_password/:token"
+          element={<AdminResetPassword />}
+        />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<RootLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/crops" element={<CropsComponent />} />
+            <Route path="/countries" element={<CountriesComponent />} />
+            <Route path="/regions" element={<RegionComponent />} />
+            <Route
+              path="/crop_categories"
+              element={<CropCategoriesComponent />}
+            />
+            <Route path="/process_level" element={<ProcessLevelComponent />} />
+            <Route path="/variety" element={<VarietyComponent />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/data" element={<ChartData />} />
+          </Route>
         </Route>
         <Route
           path="*"

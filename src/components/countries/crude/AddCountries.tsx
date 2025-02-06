@@ -38,11 +38,12 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
   const onSubmit = async (data: CountryFormValues) => {
     try {
       const res = await dispatch(PostCountry(data)).unwrap();
-      toast.success(res.message);
       dispatch(FetchCountries());
-      toggleAddCountry();
+      toast.success(res?.message);
+      setTimeout(() => {
+        toggleAddCountry();
+      }, 3500);
     } catch (error: any) {
-      // console.error("Failed to add country:", error);
       toast.error(error.message);
     }
   };
@@ -58,7 +59,6 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <ToastContainer position="top-right" autoClose={3000} />
       <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
       <div className="bg-white dark:bg-[#252525] rounded-lg  w-[40%] max-w-4xl  shadow-lg">
         <div className="flex items-center justify-between ">
@@ -140,6 +140,7 @@ const AddCountry = ({ toggleAddCountry, isInDarkMode }: CountryFormValues) => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

@@ -77,3 +77,8 @@ export type LoginTypes = {
   email: string;
   password: string;
 };
+export type ResetTypes = {
+  initial_password: string;
+  new_password: string;
+  confirm_password?: string;
+};
