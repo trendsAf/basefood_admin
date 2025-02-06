@@ -12,6 +12,7 @@ import Products from "../pages/products/ProductsPage";
 import Login from "../pages/auth/Login";
 import ChartData from "../components/chartData/ChartData";
 import AdminResetPassword from "../pages/auth/AdminResetPassword";
+import PrivateRoutes from "./Private.Routes";
 
 const AppRoutes = () => {
   return (
@@ -22,19 +23,21 @@ const AppRoutes = () => {
           path="/admin/reset_password/:token"
           element={<AdminResetPassword />}
         />
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="/crops" element={<CropsComponent />} />
-          <Route path="/countries" element={<CountriesComponent />} />
-          <Route path="/regions" element={<RegionComponent />} />
-          <Route
-            path="/crop_categories"
-            element={<CropCategoriesComponent />}
-          />
-          <Route path="/process_level" element={<ProcessLevelComponent />} />
-          <Route path="/variety" element={<VarietyComponent />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/data" element={<ChartData />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/" element={<RootLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="/crops" element={<CropsComponent />} />
+            <Route path="/countries" element={<CountriesComponent />} />
+            <Route path="/regions" element={<RegionComponent />} />
+            <Route
+              path="/crop_categories"
+              element={<CropCategoriesComponent />}
+            />
+            <Route path="/process_level" element={<ProcessLevelComponent />} />
+            <Route path="/variety" element={<VarietyComponent />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/data" element={<ChartData />} />
+          </Route>
         </Route>
         <Route
           path="*"

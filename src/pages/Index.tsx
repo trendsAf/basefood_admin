@@ -11,7 +11,7 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = () => {
   return (
-    <div className=" flex flex-col w-full pt-3 items-start  gap-3 dark:text-white">
+    <div className=" flex flex-col w-full pt-3 items-start  gap-3 dark:text-white h-[83vh] 2xl:h-[87vh]">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
         <InfoCard
           title="Total Users"

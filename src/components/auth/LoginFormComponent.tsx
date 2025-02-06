@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { decodeToken } from "../../utils/config/decode";
 import { login } from "../../redux/reducers/auth/loginSlice";
+import { CirclesWithBar, ThreeDots } from "react-loader-spinner";
 
 const LoginFormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -67,7 +68,10 @@ const LoginFormComponent = () => {
   return (
     <div>
       <ToastContainer />
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-md 2xl:max-w-lg"
+      >
         <div className="flex flex-col gap-6">
           <Controller
             name="email"
@@ -79,7 +83,7 @@ const LoginFormComponent = () => {
                 label="Email"
                 variant="outlined"
                 fullWidth
-                className="bg-white dark:bg-secondary-black"
+                className="bg-white "
                 error={!!errors.email}
                 helperText={errors.email?.message}
               />
@@ -117,11 +121,35 @@ const LoginFormComponent = () => {
 
           <div className="flex justify-center">
             <button
-              className="text-white text-center bg-brand-blue px-5 py-3 w-full rounded-[5px] font-normal hover:bg-blue-600 transition-all duration-300"
+              className="text-white text-center bg-brand-blue px-5 py-3 w-full rounded-[5px] font-bold hover:bg-blue-600 transition-all duration-300 xl:text-xl"
               type="submit"
               disabled={isLoading}
             >
-              {isLoading ? "Loading..." : "Login"}
+              {isLoading ? (
+                <div className="flex items-center gap-2 justify-center">
+                  <CirclesWithBar
+                    visible={true}
+                    height="30"
+                    width="30"
+                    color="#ffff"
+                    ariaLabel="puff-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                  Processing
+                  <ThreeDots
+                    visible={true}
+                    height="30"
+                    width="30"
+                    color="#ffff"
+                    ariaLabel="puff-loading"
+                    wrapperStyle={{}}
+                    wrapperClass=""
+                  />
+                </div>
+              ) : (
+                "Login"
+              )}
             </button>
           </div>
         </div>
@@ -129,7 +157,7 @@ const LoginFormComponent = () => {
       {error && <p className="text-red-500 text-center mt-2">{error}</p>}
       <div className="flex justify-center items-center w-full">
         <Link to={"/forgot_password"} className="w-full">
-          <button className="text-center helvetica text-sm my-5 text-brand-blue">
+          <button className="text-center text-sm xl:text-lg my-5 text-brand-blue">
             Forgot password?
           </button>
         </Link>
@@ -141,7 +169,7 @@ const LoginFormComponent = () => {
         <div className="flex justify-center my-4">
           <button
             type="button"
-            className=" bg-[#e5e5e5]  text-black px-5 py-3 w-full rounded-[5px] font-normal hover:bg-[#d1d0d0] transition-all helvetica duration-300 flex items-center justify-center gap-3"
+            className=" bg-[#e5e5e5] text-black px-5 py-3 w-full rounded-[5px] font-medium hover:bg-[#d1d0d0] transition-all  duration-300 flex items-center justify-center gap-3 2xl:text-xl"
           >
             <FaLinkedinIn className="text-2xl text-blue-700" />
             Continue with Linkedin
