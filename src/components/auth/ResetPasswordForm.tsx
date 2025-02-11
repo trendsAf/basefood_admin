@@ -4,12 +4,11 @@ import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
-import {
-  useAppDispatch,
-  //  useAppSelector
-} from "../../redux/hooks";
-import { useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useLocation, useNavigate } from "react-router-dom";
 import { resetPassword } from "../../redux/reducers/auth/resetPasswordSlice";
+import { toast } from "react-toastify";
+import { CirclesWithBar, ThreeDots } from "react-loader-spinner";
 
 interface FormData {
   initial_password: string;
@@ -39,12 +38,13 @@ const ResetPasswordForm = () => {
   const [showInitialPassword, setShowInitialPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const pathParts = location.pathname.split("/");
   const token = pathParts[pathParts.length - 1];
 
-  // const { data } = useAppSelector((state) => state.reset_password);
+  const { isLoading } = useAppSelector((state) => state.reset_password);
 
   const {
     control,
@@ -69,16 +69,18 @@ const ResetPasswordForm = () => {
       };
 
       if (token) {
-        await dispatch(resetPassword({ resetData, token }));
-        console.log(
-          `Reset data: ${JSON.stringify(resetData)}\n Token: ${token}`,
-        );
+        const res = await dispatch(resetPassword({ resetData, token }));
+        if (resetPassword.rejected.match(res)) {
+          toast.error(res.error?.message || "Error resetting password");
+        } else {
+          toast.success(res.payload?.message || "Password reset successfully");
+          navigate("/login");
+        }
       } else {
         throw new Error("Token is missing");
       }
-    } catch (error) {
-      console.error("Error during password reset:", error);
-      console.log(`token:${token}`);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
@@ -202,8 +204,33 @@ const ResetPasswordForm = () => {
             color="primary"
             type="submit"
             className="py-2"
+            disabled={isLoading}
           >
-            Submit
+            {isLoading ? (
+              <div className="flex items-center gap-2 justify-center">
+                <CirclesWithBar
+                  visible={true}
+                  height="30"
+                  width="30"
+                  color="#ffff"
+                  ariaLabel="puff-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+                Processing
+                <ThreeDots
+                  visible={true}
+                  height="30"
+                  width="30"
+                  color="#ffff"
+                  ariaLabel="puff-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                />
+              </div>
+            ) : (
+              "Reset"
+            )}
           </Button>
         </div>
       </form>

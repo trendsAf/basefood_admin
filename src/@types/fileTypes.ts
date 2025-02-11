@@ -31,6 +31,11 @@ export type AddProductState = {
   error: string | null;
   data: string[];
 };
+export type AddAnalyticState = {
+  isLoading: boolean;
+  error: string | null;
+  data: string;
+};
 
 export type GetProductState = {
   isLoading: boolean;

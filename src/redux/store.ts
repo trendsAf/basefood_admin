@@ -9,6 +9,7 @@ import regionReducer from "./reducers/regions/regionSlice";
 import productReducer from "./reducers/products/productSlice";
 import loginReducer from "./reducers/auth/loginSlice";
 import resetPasswordReducer from "./reducers/auth/resetPasswordSlice";
+import analyticsReducer from "./reducers/products/analiticSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     products: productReducer,
     login: loginReducer,
     reset_password: resetPasswordReducer,
+    analytics: analyticsReducer,
   },
 });
 

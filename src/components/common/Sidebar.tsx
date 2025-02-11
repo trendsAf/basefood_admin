@@ -261,7 +261,7 @@ const Sidebar = ({
                   </Tooltip>
                 </ThemeProvider>
               </NavLink>
-              <NavLink to="/data">
+              <NavLink to="/analitics">
                 <ThemeProvider theme={tooltipTheme}>
                   <Tooltip
                     title={`${isCollapsed ? "Products" : ""}`}
