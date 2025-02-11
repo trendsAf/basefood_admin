@@ -1,17 +1,17 @@
 import { SkeletonTheme } from "react-loading-skeleton";
 import { Route, Routes } from "react-router-dom";
-import RootLayout from "../components/layouts/RootLayout";
-import Dashboard from "../pages/Index";
-import CropsComponent from "../components/crops/CropsComponent";
 import CountriesComponent from "../components/countries/CountriesComponent";
-import RegionComponent from "../components/region/RegionComponent";
-import ProcessLevelComponent from "../components/processLevel/ProcessLevelComponent";
+import CropsComponent from "../components/crops/CropsComponent";
 import CropCategoriesComponent from "../components/crops_categories/CropCategoriesComponent";
+import RootLayout from "../components/layouts/RootLayout";
+import ProcessLevelComponent from "../components/processLevel/ProcessLevelComponent";
+import RegionComponent from "../components/region/RegionComponent";
 import VarietyComponent from "../components/variety/VarietyComponent";
-import Products from "../pages/products/ProductsPage";
-import Login from "../pages/auth/Login";
-import ChartData from "../components/chartData/ChartData";
+import Analitics from "../pages/analitics/Analitics";
 import AdminResetPassword from "../pages/auth/AdminResetPassword";
+import Login from "../pages/auth/Login";
+import Dashboard from "../pages/Index";
+import Products from "../pages/products/ProductsPage";
 import PrivateRoutes from "./Private.Routes";
 
 const AppRoutes = () => {
@@ -19,10 +19,7 @@ const AppRoutes = () => {
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route
-          path="/admin/reset_password/:token"
-          element={<AdminResetPassword />}
-        />
+        <Route path="/reset_password/:token" element={<AdminResetPassword />} />
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Dashboard />} />
@@ -36,7 +33,7 @@ const AppRoutes = () => {
             <Route path="/process_level" element={<ProcessLevelComponent />} />
             <Route path="/variety" element={<VarietyComponent />} />
             <Route path="/products" element={<Products />} />
-            <Route path="/data" element={<ChartData />} />
+            <Route path="/analitics" element={<Analitics />} />
           </Route>
         </Route>
         <Route

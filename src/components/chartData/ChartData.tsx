@@ -72,8 +72,6 @@ const ChartData: React.FC = () => {
       return;
     }
 
-    console.log("File to be uploaded:", file);
-    console.log("CSV Data:", csvData);
     toast.success("File uploaded successfully!", {
       position: "top-right",
       autoClose: 3000,
