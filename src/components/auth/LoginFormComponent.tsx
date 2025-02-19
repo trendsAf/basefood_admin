@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { yupResolver } from "@hookform/resolvers/yup";
 import { IconButton, TextField } from "@mui/material";
 import Cookies from "js-cookie";
@@ -45,7 +44,6 @@ const LoginFormComponent = () => {
   const onSubmit = async (data: LoginTypes) => {
     try {
       const res = await dispatch(login(data)).unwrap();
-      console.log(res, "Reeeeeesssssponse");
       if (res && res?.access_token) {
         Cookies.set("access_token", res?.access_token);
         toast.success("You're logged in");

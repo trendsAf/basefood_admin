@@ -1,10 +1,9 @@
 import React from "react";
-import InfoCard from "../components/InfoCard";
+import { FaStoreAlt, FaUsers } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { VscPreview } from "react-icons/vsc";
-import { FaUsers, FaStoreAlt } from "react-icons/fa";
 import Chart from "../components/graphs/Chart";
-
+import InfoCard from "../components/InfoCard";
 interface DashboardProps {
   isCollapsed?: boolean;
 }

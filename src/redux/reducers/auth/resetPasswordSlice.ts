@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   DynamicType,
@@ -18,7 +17,6 @@ export const resetPassword = createAsyncThunk(
         `/admin/reset_password/${token}`,
         resetData,
       );
-      console.log(response, "Reeeeeesppppooosd=>>>>>>>>>>>>");
       return response.data;
     } catch (error) {
       return rejectWithValue((error as DynamicType).response);

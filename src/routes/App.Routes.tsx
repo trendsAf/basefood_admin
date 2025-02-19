@@ -20,6 +20,7 @@ const AppRoutes = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/reset_password/:token" element={<AdminResetPassword />} />
+
         <Route element={<PrivateRoutes />}>
           <Route path="/" element={<RootLayout />}>
             <Route index element={<Dashboard />} />
