@@ -1,13 +1,13 @@
 import { useState } from "react";
-import AddProductModal from "../../components/products/crude/AddProduct";
-// import CustomSelect from "../../components/common/select/CustomSelect";
-import Table from "../../components/products/Table";
 import { MdAddCircle } from "react-icons/md";
 
+import { lazy } from "react";
+const AddProductModal = lazy(
+  () => import("../../components/products/crude/AddProduct"),
+);
+const Table = lazy(() => import("../../components/products/Table"));
+
 const ProductsPage = () => {
-  // const handleSortSelect = (option: string) => {
-  //   console.log("Selected sort option:", option);
-  // };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleProductModal = () => {
     setIsModalOpen(!isModalOpen);

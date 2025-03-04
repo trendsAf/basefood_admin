@@ -1,5 +1,5 @@
 import { createTheme, ThemeProvider, Tooltip } from "@mui/material";
-import { useEffect, useState } from "react";
+import { lazy, useEffect, useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GiFruitBowl, GiThreeLeaves, GiWorld } from "react-icons/gi";
@@ -14,10 +14,11 @@ import { NavLink } from "react-router-dom";
 import Logo from "../../assets/basefood_logo.png";
 import { base_food_white_logo } from "../../assets/images";
 import { RootState } from "../../redux/store";
-import LogoutModal from "../modals/Logout";
-import ModeToggle from "./ModeToggle";
 import { MdHub } from "react-icons/md";
 import { AiOutlineProduct } from "react-icons/ai";
+
+const LogoutModal = lazy(() => import("../modals/Logout"));
+const ModeToggle = lazy(() => import("./ModeToggle"));
 
 const tooltipTheme = createTheme({
   components: {

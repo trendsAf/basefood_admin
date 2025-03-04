@@ -1,13 +1,14 @@
-import React, { useEffect } from "react";
+import React, { lazy, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   base_food_black_logo,
   base_food_white_logo,
 } from "../../assets/images";
-import ModeToggle from "./ModeToggle";
 import { createTheme, ThemeProvider } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+
+const ModeToggle = lazy(() => import("./ModeToggle"));
 
 const Navbar: React.FC = () => {
   const theme = useSelector((state: RootState) => state.theme.value);

@@ -1,5 +1,8 @@
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
-import ResetPasswordForm from "../../components/auth/ResetPasswordForm";
+import { lazy } from "react";
+const ResetPasswordForm = lazy(
+  () => import("../../components/auth/ResetPasswordForm"),
+);
 
 const AdminResetPassword = () => {
   const theme = createTheme({

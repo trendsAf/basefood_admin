@@ -1,9 +1,11 @@
-import React from "react";
+import React, { lazy } from "react";
 import { FaStoreAlt, FaUsers } from "react-icons/fa";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import { VscPreview } from "react-icons/vsc";
-import Chart from "../components/graphs/Chart";
-import InfoCard from "../components/InfoCard";
+
+const InfoCard = lazy(() => import("../components/InfoCard"));
+const Chart = lazy(() => import("../components/graphs/Chart"));
+
 interface DashboardProps {
   isCollapsed?: boolean;
 }
