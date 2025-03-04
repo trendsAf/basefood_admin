@@ -23,36 +23,25 @@ import { toast, ToastContainer } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
 
 interface VarietyFormValues {
-  image?: string;
-  crop_variety_name?: string;
-  crop_id?: number;
+  crop_code?: string;
+  variety_name?: string;
+  variety_code?: number;
   toggleAddVariety: () => void;
 }
 
 const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
   const dispatch = useAppDispatch();
-
-  // Access the crops and loading state from Redux store
   const { cropList, isLoading: cropLoading } = useAppSelector(
     (state) => state.crops,
   );
   const { isLoading, error } = useAppSelector((state) => state.viriety);
 
-  // const [imagePreview, setImagePreview] = useState<string | null>(null);
-
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     setImagePreview(URL.createObjectURL(file));
-  //   }
-  // };
-
   useEffect(() => {
     const fetchCrops = async () => {
       try {
         await dispatch(getCrops()).unwrap();
-      } catch (error) {
-        toast.error("Failed to load crops. Please try again.");
+      } catch (error: any) {
+        toast.error("Failed to load crops. Please try again.", error?.message);
       }
     };
 
@@ -101,55 +90,17 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex  gap-6 px-8 pb-6"
         >
-          {/* Image Upload */}
-          {/* <div className="w-1/2 mb-4">
-            <input
-              type="file"
-              id="image-upload"
-              className="hidden"
-              {...register("image", { required: "Image is required" })}
-              onChange={(e) => {
-                handleImageChange(e);
-              }}
-            />
-            <label
-              htmlFor="image-upload"
-              className={`flex flex-col items-center justify-center w-full h-40 px-4 py-6 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer transition-all text-gray-600 dark:text-gray-300 text-sm ${
-                imagePreview
-                  ? "bg-cover bg-center"
-                  : "bg-gray-100 dark:bg-[#333] hover:bg-gray-200 dark:hover:bg-[#444]"
-              }`}
-              style={
-                imagePreview
-                  ? { backgroundImage: `url(${imagePreview})` }
-                  : undefined
-              }
-            >
-              {!imagePreview && (
-                <>
-                  <CloudUpload fontSize="large" className="mb-2" />
-                  <span>Upload an image</span>
-                </>
-              )}
-            </label>
-            {errors.image && (
-              <span className="text-sm text-red-500">
-                {errors.image.message}
-              </span>
-            )}
-          </div> */}
-
           <div className="w-full flex flex-col mb-4 justify-between">
             <div className="flex flex-col items-center gap-6">
               <FormControl
                 fullWidth
-                error={!!errors.crop_id}
+                error={!!errors.crop_code}
                 variant="outlined"
                 size="small"
               >
                 <InputLabel>Select a crop</InputLabel>
                 <Select
-                  {...register("crop_id", { required: "Crop is required" })}
+                  {...register("crop_code", { required: "Crop is required" })}
                   label="Select a crop"
                   className="dark:bg-[#252525] dark:text-white"
                   disabled={cropLoading}
@@ -178,26 +129,37 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
                     ]
                   )}
                 </Select>
-                {errors.crop_id && (
-                  <FormHelperText>{errors.crop_id.message}</FormHelperText>
+                {errors.crop_code && (
+                  <FormHelperText>{errors.crop_code.message}</FormHelperText>
                 )}
               </FormControl>
 
-              {/* Variety Name Input (MUI TextField) */}
               <TextField
-                {...register("crop_variety_name", {
+                {...register("variety_name", {
                   required: "Variety name is required",
                 })}
                 label="Variety name"
                 variant="outlined"
                 fullWidth
                 size="small"
-                error={!!errors.crop_variety_name}
-                helperText={errors.crop_variety_name?.message}
+                error={!!errors.variety_name}
+                helperText={errors.variety_name?.message}
+                className="dark:bg-[#252525] dark:text-white"
+              />
+
+              <TextField
+                {...register("variety_code", {
+                  required: "Variety code is required",
+                })}
+                label="Variety code"
+                variant="outlined"
+                fullWidth
+                size="small"
+                error={!!errors.variety_code}
+                helperText={errors.variety_code?.message}
                 className="dark:bg-[#252525] dark:text-white"
               />
             </div>
-            {/* Submit Button */}
             <button
               type="submit"
               className="w-full py-2 mt-4 bg-brand-blue text-white rounded-lg font-normal hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
@@ -206,7 +168,6 @@ const AddVariety = ({ toggleAddVariety }: VarietyFormValues) => {
               {isLoading ? "Adding variety..." : "Add variety"}
             </button>
 
-            {/* Error Handling */}
             {error && (
               <div className="mt-4 text-red-500 text-center">
                 {/* {error} */}

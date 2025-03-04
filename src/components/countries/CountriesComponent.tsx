@@ -70,14 +70,18 @@ const ProducerProductComponent = () => {
             <table className="w-full text-left border-separate border-spacing-0 p-2">
               <thead className="text-base bg-bg-gray dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
                 <tr>
-                  <th className="px-3 py-2 rounded-l-lg font-normal">
+                  <th className="px-3 py-2 rounded-l-lg font-normal whitespace-nowrap">
                     Country
+                  </th>
+                  <th className="px-3 py-2 font-normal whitespace-nowrap _expand">
+                    Country code
                   </th>
                   <th className="px-3 py-2 font-normal rounded-r-lg expand">
                     Actions
                   </th>
                 </tr>
               </thead>
+
               <tbody className="text-gray-700 dark:text-gray-300">
                 {isLoading ? (
                   [...Array(rowsPerPage)].map((_, idx) => (
@@ -105,12 +109,15 @@ const ProducerProductComponent = () => {
                       <td className="px-3 border-b-[0.5px] dark:border-white/20">
                         <div className="flex items-center gap-3">
                           <img
-                            src={`https://flagsapi.com/${country.code}/flat/64.png`}
-                            alt={`${country.name} flag`}
+                            src={`https://flagsapi.com/${country?.code}/flat/64.png`}
+                            alt={`${country?.name} flag`}
                             className="w-10"
                           />
-                          {country.name}
+                          {country?.name}
                         </div>
+                      </td>
+                      <td className="px-3 py-2 gap-1 border-b-[0.5px] dark:border-white/20">
+                        {country?.code}
                       </td>
                       <td className="px-2 py-2 gap-1 border-b-[0.5px] dark:border-white/20">
                         <div className="flex items-center space-x-3 ml-2">

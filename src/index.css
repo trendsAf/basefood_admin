@@ -44,6 +44,9 @@ body::-webkit-scrollbar-thumb:hover {
   .expand {
     @apply w-[5%];
   }
+  ._expand {
+    @apply w-[70%];
+  }
 }
 
 @keyframes popIn {

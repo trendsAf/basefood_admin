@@ -18,8 +18,9 @@ import {
 import { crop } from "../../../redux/reducers/crops/cropSlice";
 
 interface CropFormValues {
+  category_code?: string;
   crop_name?: string;
-  crop_category_id?: string;
+  crop_code?: string;
   toggleAddCrop: () => void;
 }
 
@@ -41,7 +42,7 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
     reset,
   } = useForm<CropFormValues>({
     defaultValues: {
-      crop_category_id: "",
+      category_code: "",
     },
   });
 
@@ -69,7 +70,7 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <ToastContainer position="top-right" autoClose={3000} />
       <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
-      <div className="bg-white dark:bg-[#252525] rounded-lg pb-4 w-[40%] max-w-4xl mx-4 _shadow ">
+      <div className="bg-white dark:bg-[#252525] rounded-lg pb-4 w-full md:w-1/2 xl:1/3 max-w-4xl mx-4 _shadow ">
         <div className="flex items-center justify-between ">
           <div className="w-full relative py-4">
             <h2 className="text-2xl font-medium text-center text-gray-900 dark:text-white">
@@ -89,35 +90,11 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-6 px-8 pb-4 py-2"
         >
-          <div className="flex flex-row-reverse items-center gap-4">
-            {/* Crop Name */}
-            <Controller
-              name="crop_name"
-              control={control}
-              rules={{ required: "Crop name is required" }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  variant="outlined"
-                  fullWidth
-                  size="small"
-                  placeholder="Enter crop name"
-                  error={!!errors.crop_name}
-                  helperText={errors.crop_name?.message}
-                  className="w-full"
-                />
-              )}
-            />
-
-            {/* Crop Category */}
-            <FormControl
-              fullWidth
-              size="small"
-              error={!!errors.crop_category_id}
-            >
+          <div className="flex flex-col items-center gap-4">
+            <FormControl fullWidth size="small" error={!!errors.category_code}>
               <InputLabel>Select crop category</InputLabel>
               <Controller
-                name="crop_category_id"
+                name="category_code"
                 control={control}
                 rules={{ required: "Crop category is required" }}
                 render={({ field }) => (
@@ -142,10 +119,44 @@ const AddCrop = ({ toggleAddCrop }: CropFormValues) => {
                   </Select>
                 )}
               />
-              {errors.crop_category_id && (
-                <p>{errors.crop_category_id.message}</p>
-              )}
+              {errors.category_code && <p>{errors.category_code.message}</p>}
             </FormControl>
+
+            <Controller
+              name="crop_name"
+              control={control}
+              rules={{ required: "Crop name is required" }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  placeholder="Enter crop name"
+                  error={!!errors.crop_name}
+                  helperText={errors.crop_name?.message}
+                  className="w-full"
+                />
+              )}
+            />
+
+            <Controller
+              name="crop_code"
+              control={control}
+              rules={{ required: "Crop code is required" }}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  variant="outlined"
+                  fullWidth
+                  size="small"
+                  placeholder="Enter crop code"
+                  error={!!errors.crop_code}
+                  helperText={errors.crop_code?.message}
+                  className="w-full"
+                />
+              )}
+            />
           </div>
 
           {/* Submit Button */}

@@ -18,8 +18,9 @@ import { toast, ToastContainer } from "react-toastify";
 import { IoMdClose } from "react-icons/io";
 
 interface RegionFormValues {
-  country_id?: string;
+  country_code?: string;
   region_name?: string;
+  region_code?: string;
   toggleAddRegion: () => void;
 }
 
@@ -60,7 +61,7 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="w-full h-full absolute inset-0 -z-10 backdrop-blur-sm"></div>
-      <div className="bg-white dark:bg-[#252525] rounded-lg  w-[40%] max-w-4xl _shadow">
+      <div className="bg-white dark:bg-[#252525] rounded-lg  w-4/5 md:w-1/2 xl:w-1/3 max-w-4xl _shadow">
         <div className="flex items-center justify-between ">
           <div className="w-full relative py-4">
             <h2 className="text-2xl font-medium text-center text-gray-900 dark:text-white">
@@ -80,12 +81,12 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-6 px-8 py-4 pb-8"
         >
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center gap-4">
             {/* Country Select Input */}
-            <FormControl fullWidth size="small" error={!!errors.country_id}>
+            <FormControl fullWidth size="small" error={!!errors.country_code}>
               <InputLabel>Select a country</InputLabel>
               <Select
-                {...register("country_id", {
+                {...register("country_code", {
                   required: "Country name is required",
                 })}
                 defaultValue=""
@@ -106,12 +107,11 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
                   ))
                 )}
               </Select>
-              {errors.country_id && (
-                <FormHelperText>{errors.country_id.message}</FormHelperText>
+              {errors.country_code && (
+                <FormHelperText>{errors.country_code.message}</FormHelperText>
               )}
             </FormControl>
 
-            {/* Country Region Input */}
             <TextField
               {...register("region_name", {
                 required: "Region is required",
@@ -123,6 +123,20 @@ const AddRegion = ({ toggleAddRegion }: RegionFormValues) => {
               size="small"
               error={!!errors.region_name}
               helperText={errors.region_name?.message}
+              InputLabelProps={{ className: "dark:text-gray-300" }}
+              className="dark:bg-[#252525] dark:text-white"
+            />
+            <TextField
+              {...register("region_code", {
+                required: "Region is required",
+              })}
+              type="text"
+              label="Region code"
+              variant="outlined"
+              fullWidth
+              size="small"
+              error={!!errors.region_code}
+              helperText={errors.region_code?.message}
               InputLabelProps={{ className: "dark:text-gray-300" }}
               className="dark:bg-[#252525] dark:text-white"
             />

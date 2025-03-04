@@ -36,7 +36,7 @@ const AppRoutes = () => {
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <Suspense
         fallback={
-          <div className="flex items-center justify-center h-screen bg-[#252525] gap-2">
+          <div className="flex items-center lg:flex-row flex-col justify-center h-screen bg-[#252525] gap-2">
             <RotatingSquare
               visible={true}
               height="100"
@@ -46,7 +46,7 @@ const AppRoutes = () => {
               wrapperStyle={{}}
               wrapperClass=""
             />
-            <div className="w-1/4 h-20">
+            <div className="w-1/4 h-auto">
               <img
                 src={logo}
                 alt="logo"
