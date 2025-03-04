@@ -24,7 +24,7 @@ const CropsComponent = () => {
   const { cropCategoryList } = useAppSelector((state) => state.cropCategory);
 
   const [addCropModal, setAddCropModal] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(8);
 
@@ -35,13 +35,12 @@ const CropsComponent = () => {
 
   useEffect(() => {
     if (cropCategoryList.length > 0 && selectedCategory === null) {
-      setSelectedCategory(cropCategoryList[0].id);
+      setSelectedCategory(String(cropCategoryList[0].id));
     }
   }, [cropCategoryList, selectedCategory]);
 
   const handleCategoryChange = (event: SelectChangeEvent<string>) => {
-    const categoryId = event.target.value ? parseInt(event.target.value) : null;
-    setSelectedCategory(categoryId);
+    setSelectedCategory(event.target.value);
     setCurrentPage(1);
   };
 
@@ -108,6 +107,7 @@ const CropsComponent = () => {
             <thead className="text-sm bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 overflow-hidden">
               <tr>
                 <th className="p-3 font-normal rounded-l-md">Crop name</th>
+                <th className="p-3 font-normal _expand">Crop code</th>
                 <th className="p-3 font-normal rounded-r-md expand">Action</th>
               </tr>
             </thead>
@@ -134,6 +134,9 @@ const CropsComponent = () => {
                   <tr key={crop.id}>
                     <td className="px-3 border-b-[0.5px] dark:border-white/20">
                       {crop.name}
+                    </td>
+                    <td className="px-3 border-b-[0.5px] dark:border-white/20">
+                      {crop.id}
                     </td>
                     <td className="px-2 py-2 space-x-2 flex items-center gap-1 border-b-[0.5px] dark:border-white/20">
                       <Link to={`/crop/${crop.id}`} state={crop}>

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
-import { DynamicType } from "../../../@types/fileTypes"; // Import DynamicType if needed
+import { DynamicType } from "../../../@types/fileTypes";
 import API from "../../api";
 
 export interface CropCategory {
@@ -37,7 +37,7 @@ export const getCropsCategory = createAsyncThunk(
   "crop/getCropsCategory",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await API.get("/general_routes/cropcategories", {
+      const { data } = await API.get("/general_routes/crop/categories", {
         headers: {
           "X-CSRF-TOKEN": `${Cookies.get("access_token")}`,
         },

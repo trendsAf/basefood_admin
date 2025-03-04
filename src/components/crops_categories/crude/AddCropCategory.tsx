@@ -9,13 +9,14 @@ import {
 } from "../../../redux/reducers/crops/cropCategorySlice";
 
 interface CropCategoryFormValues {
-  crop_category_name?: string;
+  category_code?: string;
+  category_name?: string;
   toggleAddCropCategory: () => void;
 }
 
 const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
   const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.cropCategory);
+  const { isLoading } = useAppSelector((state) => state.cropCategory);
 
   const {
     register,
@@ -33,7 +34,6 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
       dispatch(getCropsCategory());
     } catch (error: any) {
       toast.error(error.message);
-      console.error("Failed to add crop:", error);
     }
   };
 
@@ -61,22 +61,33 @@ const AddCropCategory = ({ toggleAddCropCategory }: CropCategoryFormValues) => {
           <div className="space-y-4">
             <div>
               <TextField
-                {...register("crop_category_name", {
+                {...register("category_name", {
                   required: "Crop category is required",
                 })}
                 label="Category Name"
                 variant="outlined"
                 fullWidth
                 size="small"
-                error={!!errors.crop_category_name}
-                helperText={errors.crop_category_name?.message}
+                error={!!errors.category_name}
+                helperText={errors.category_name?.message}
+                className="dark:bg-[#252525] dark:text-white"
+              />
+            </div>
+            <div>
+              <TextField
+                {...register("category_code", {
+                  required: "Crop category code is required",
+                })}
+                label="Category code"
+                variant="outlined"
+                fullWidth
+                size="small"
+                error={!!errors.category_code}
+                helperText={errors.category_code?.message}
                 className="dark:bg-[#252525] dark:text-white"
               />
             </div>
           </div>
-
-          {/* Display error if present */}
-          {error && <p className="text-red-500 text-center">{/* {error} */}</p>}
 
           <button
             type="submit"
