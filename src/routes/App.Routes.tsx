@@ -1,6 +1,8 @@
 import { SkeletonTheme } from "react-loading-skeleton";
 import { Route, Routes } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { RotatingSquare } from "react-loader-spinner";
+import logo from "../assets/basefood_logo.png";
 
 const UsedLink = lazy(() => import("../components/auth/UsedLink"));
 const PrivateRoutes = lazy(() => import("./Private.Routes"));
@@ -32,7 +34,28 @@ const CountriesComponent = lazy(
 const AppRoutes = () => {
   return (
     <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-      <Suspense fallback={<div>Page is Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="flex items-center justify-center h-screen bg-[#252525] gap-2">
+            <RotatingSquare
+              visible={true}
+              height="100"
+              width="100"
+              color="#2563EB"
+              ariaLabel="rotating-square-loading"
+              wrapperStyle={{}}
+              wrapperClass=""
+            />
+            <div className="w-1/4 h-20">
+              <img
+                src={logo}
+                alt="logo"
+                className="w-full h-full object-cover animate-pulse"
+              />
+            </div>
+          </div>
+        }
+      >
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
