@@ -1,7 +1,8 @@
 import Papa from "papaparse";
-import React, { ChangeEvent, DragEvent, useState } from "react";
+import React, { ChangeEvent, DragEvent, lazy, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import CsvPreviewTable from "../common/tables/CsvPreviewTable";
+
+const CsvPreviewTable = lazy(() => import("../common/tables/CsvPreviewTable"));
 
 const ChartData: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);

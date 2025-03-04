@@ -1,7 +1,10 @@
 // import ChartData from "../../components/chartData/ChartData";
 
-import { useState } from "react";
-import ChartDataModal from "../../components/chartData/ChartDataModal";
+import { lazy, useState } from "react";
+
+const ChartDataModal = lazy(
+  () => import("../../components/chartData/ChartDataModal"),
+);
 
 const Analitics = () => {
   const [openModal, setOpenModal] = useState(false);
