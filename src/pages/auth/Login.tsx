@@ -1,7 +1,11 @@
 import { TbPlant, TbChartBar, TbCloudComputing, TbUsers } from "react-icons/tb";
 import Logo from "../../assets/basefood_lowercase.png";
-import LoginFormComponent from "../../components/auth/LoginFormComponent";
 import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
+import { lazy } from "react";
+
+const LoginFormComponent = lazy(
+  () => import("../../components/auth/LoginFormComponent"),
+);
 
 const Login = () => {
   const features = [

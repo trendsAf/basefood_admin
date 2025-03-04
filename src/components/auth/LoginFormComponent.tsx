@@ -2,19 +2,30 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IconButton, TextField } from "@mui/material";
 import Cookies from "js-cookie";
 import { Controller, useForm } from "react-hook-form";
-import { FaLinkedinIn } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LoginTypes } from "../../@types/fileTypes";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { loginSchema } from "../../validations/formValidations";
-import GoogleButton from "../common/buttons/GoogleButton";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { decodeToken } from "../../utils/config/decode";
 import { login } from "../../redux/reducers/auth/loginSlice";
-import { CirclesWithBar, ThreeDots } from "react-loader-spinner";
+import { decodeToken } from "../../utils/config/decode";
+
+const GoogleButton = lazy(() => import("../common/buttons/GoogleButton"));
+const FaLinkedinIn = lazy(() =>
+  import("react-icons/fa").then((mod) => ({ default: mod.FaLinkedinIn })),
+);
+
+const CirclesWithBar = lazy(() =>
+  import("react-loader-spinner").then((mod) => ({
+    default: mod.CirclesWithBar,
+  })),
+);
+const ThreeDots = lazy(() =>
+  import("react-loader-spinner").then((mod) => ({ default: mod.ThreeDots })),
+);
 
 const LoginFormComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
