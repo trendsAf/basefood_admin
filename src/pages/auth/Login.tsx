@@ -41,7 +41,7 @@ const Login = () => {
             alt="baseFood"
           />
         </div>
-        <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-white p-12">
+        <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-white p-12 2xl:px-5">
           <h1 className="lg:text-3xl xl:text-4xl 2xl:text-5xl font-black mb-8">
             Cultivate smarter decisions
           </h1>
