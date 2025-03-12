@@ -24,3 +24,7 @@ doc
 *.sln
 *.sw?
 *.env
+
+tsconfig.app.tsbuildinfo
+tsconfig.node.tsbuildinfo
+README.yaml

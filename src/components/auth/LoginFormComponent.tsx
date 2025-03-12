@@ -12,19 +12,11 @@ import { lazy, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { login } from "../../redux/reducers/auth/loginSlice";
 import { decodeToken } from "../../utils/config/decode";
+import { CirclesWithBar, ThreeDots } from "react-loader-spinner";
 
 const GoogleButton = lazy(() => import("../common/buttons/GoogleButton"));
 const FaLinkedinIn = lazy(() =>
   import("react-icons/fa").then((mod) => ({ default: mod.FaLinkedinIn })),
-);
-
-const CirclesWithBar = lazy(() =>
-  import("react-loader-spinner").then((mod) => ({
-    default: mod.CirclesWithBar,
-  })),
-);
-const ThreeDots = lazy(() =>
-  import("react-loader-spinner").then((mod) => ({ default: mod.ThreeDots })),
 );
 
 const LoginFormComponent = () => {
