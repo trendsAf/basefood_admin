@@ -2,7 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { IconButton, TextField } from "@mui/material";
 import Cookies from "js-cookie";
 import { Controller, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  //  Link,
+  useNavigate,
+} from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LoginTypes } from "../../@types/fileTypes";
@@ -157,14 +160,14 @@ const LoginFormComponent = () => {
         </div>
       </form>
       {/* {error && <p className="text-red-500 text-center mt-2">{error}</p>} */}
-      <div className="flex justify-center items-center w-full">
+      {/* <div className="flex justify-center items-center w-full">
         <Link to={"/forgot_password"} className="w-full">
           <button className="text-center text-sm xl:text-lg my-5 text-brand-blue">
             Forgot password?
           </button>
         </Link>
-      </div>
-      <div>
+      </div> */}
+      <div className="mt-12">
         <div className="flex justify-center my-4">
           <GoogleButton />
         </div>
